@@ -10,8 +10,12 @@ public class Main {
 		for(;;) {
 				System.out.println(" AAAAAAAAAAAAAAAAAAAAA") ;
 				// JUancete eL PerReKeeTEkE
+				System.out.println("AAEEEEAA");
 			
 		}
+		
+		//gskjdnvdskbnfd
+		
 		
 	}
 
