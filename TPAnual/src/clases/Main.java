@@ -1,4 +1,4 @@
-package xdxdxd;
+package clases;
 
 public class Main {
 
