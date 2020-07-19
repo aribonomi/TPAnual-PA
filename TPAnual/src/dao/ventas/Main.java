@@ -1,4 +1,4 @@
-package clases;
+package dao.ventas;
 
 public class Main {
 
