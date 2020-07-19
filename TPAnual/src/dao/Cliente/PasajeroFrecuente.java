@@ -1,4 +1,4 @@
-package Cliente;
+package dao.Cliente;
 
 public class PasajeroFrecuente {
 	

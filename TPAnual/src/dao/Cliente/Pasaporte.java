@@ -1,4 +1,4 @@
-package Cliente;
+package dao.Cliente;
 
 import java.util.*;
 
