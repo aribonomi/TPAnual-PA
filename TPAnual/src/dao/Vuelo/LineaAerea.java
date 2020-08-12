@@ -2,11 +2,11 @@ package dao.Vuelo;
 
 public class LineaAerea {
 	private String alianza;
-	private LineaAerea nombreAerolinea;
+	private String nombreAerolinea;
 	private Vuelo vuelo;
 	
 	
-	public LineaAerea(String alianza, LineaAerea nombreAerolinea, Vuelo vuelo) {
+	public LineaAerea(String alianza, String nombreAerolinea, Vuelo vuelo) {
 		super();
 		this.alianza = alianza;
 		this.nombreAerolinea = nombreAerolinea;
@@ -30,12 +30,12 @@ public class LineaAerea {
 	}
 
 
-	public LineaAerea getNombreAerolinea() {
+	public String getNombreAerolinea() {
 		return nombreAerolinea;
 	}
 
 
-	public void setNombreAerolinea(LineaAerea nombreAerolinea) {
+	public void setNombreAerolinea(String nombreAerolinea) {
 		this.nombreAerolinea = nombreAerolinea;
 	}
 
