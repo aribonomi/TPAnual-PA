@@ -1,9 +1,17 @@
 package dao.util;
 
+import java.sql.*;
+
 public class BasesDeDatos {
 
 	public static void main(String[] args) {
-		System.out.println("Probando...");
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			System.out.println("FIN");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
