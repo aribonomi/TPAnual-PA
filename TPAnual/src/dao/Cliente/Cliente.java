@@ -1,102 +1,100 @@
 package dao.Cliente;
 
-import java.util.Date;
-
 public class Cliente {
 	
-	private String cuil;
-	private String DNI;
+	private String id_cliente;
+	private String nombre;
+	private String apellido;
+	private String dni;
+	private String cuit_cuil;
+	private String fecha_nacimiento;
 	private String email;
-	private Date FechaNacimiento;
-	private String nombreApellido;
-	private PasajeroFrecuente pasajerofrecuente;
-	private Pasaporte pasaporte;
-	private Telefono telefono;
 	private Direccion direccion;
+	private Telefono telefono;
+	private Pasaporte pasaporte;
+	private PasajeroFrecuente pasajeroFrecuente;
 	
-	public Cliente(String cuil, String DNI, String email, Date fechaNacimiento, String nombreApellido,
-			PasajeroFrecuente pasajerofrecuente, Pasaporte pasaporte, Telefono telefono, Direccion direccion) {
-		this.cuil = cuil;
-		this.DNI = DNI;
+	public Cliente(String id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
+			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
+			PasajeroFrecuente pasajeroFrecuente) {
+		this.id_cliente = id_cliente;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.cuit_cuil = cuit_cuil;
+		this.fecha_nacimiento = fecha_nacimiento;
 		this.email = email;
-		this.FechaNacimiento = fechaNacimiento;
-		this.nombreApellido = nombreApellido;
-		this.pasajerofrecuente = pasajerofrecuente;
-		this.pasaporte = pasaporte;
-		this.telefono = telefono;
 		this.direccion = direccion;
+		this.telefono = telefono;
+		this.pasaporte = pasaporte;
+		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
 
-	
-	public String getCuil() {
-		return cuil;
+	public String getId_cliente() {
+		return id_cliente;
 	}
-
-	public void setCuil(String cuil) {
-		this.cuil = cuil;
+	public void setId_cliente(String id_cliente) {
+		this.id_cliente = id_cliente;
 	}
-
-	public String getDNI() {
-		return DNI;
+	public String getNombre() {
+		return nombre;
 	}
-
-	public void setDNI(String dNI) {
-		DNI = dNI;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public String getDni() {
+		return dni;
+	}
+	public void setDmo(String dni) {
+		this.dni = dni;
+	}
+	public String getCuit_cuil() {
+		return cuit_cuil;
+	}
+	public void setCuit_cuil(String cuit_cuil) {
+		this.cuit_cuil = cuit_cuil;
+	}
+	public String getFecha_nacimiento() {
+		return fecha_nacimiento;
+	}
+	public void setFecha_nacimiento(String fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Date getFechaNacimiento() {
-		return FechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		FechaNacimiento = fechaNacimiento;
-	}
-
-	public String getNombreApellido() {
-		return nombreApellido;
-	}
-
-	public void setNombreApellido(String nombreApellido) {
-		this.nombreApellido = nombreApellido;
-	}
-
-	public PasajeroFrecuente getPasajerofrecuente() {
-		return pasajerofrecuente;
-	}
-
-	public void setPasajerofrecuente(PasajeroFrecuente pasajerofrecuente) {
-		this.pasajerofrecuente = pasajerofrecuente;
-	}
-
-	public Pasaporte getPasaporte() {
-		return pasaporte;
-	}
-
-	public void setPasaporte(Pasaporte pasaporte) {
-		this.pasaporte = pasaporte;
-	}
-
-	public Telefono getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(Telefono telefono) {
-		this.telefono = telefono;
-	}
-	public Direccion getDireccion() {
+	public Direccion getdireccion() {
 		return direccion;
 	}
-
-	public void setDireccion(Direccion direccion) {
+	public void setId_direccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+	public Telefono gettelefono() {
+		return telefono;
+	}
+	public void setId_telefono(Telefono telefono) {
+		this.telefono = telefono;
+	}
+	public Pasaporte getpasaporte() {
+		return pasaporte;
+	}
+	public void setId_pasaporte(Pasaporte pasaporte) {
+		this.pasaporte = pasaporte;
+	}
+	public PasajeroFrecuente getpasajeroFrecuente() {
+		return pasajeroFrecuente;
+	}
+	public void setpasajeroFrecuente(PasajeroFrecuente pasajeroFrecuente) {
+		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
 	
 }

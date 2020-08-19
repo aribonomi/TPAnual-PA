@@ -1,69 +1,71 @@
 package dao.Cliente;
 
+import dao.Vuelo.Pais;
+import dao.Vuelo.Provincia;
+
 public class Direccion {
 	
-	private String altura;
+	private int id_direccion;
 	private String calle;
+	private String altura;
 	private String ciudad;
-	private String CodigoPostal;
-	private String pais; //En el diagrama de clases dice que esto es un int Revisar
-	private String provincia; //En el diagrama de clases dice que esto es un int Revisar
+	private String codigoPostal; 
+	private Provincia provincia;
+	private Pais pais;
 	
-	public Direccion(String altura, String calle, String ciudad, String codigoPostal, String pais, String provincia) {
-		this.altura = altura;
+	public Direccion(int id_direccion, String calle, String altura, String ciudad, String codigoPostal,
+			Provincia provincia, Pais pais) {
+		this.id_direccion = id_direccion;
 		this.calle = calle;
-		this.ciudad = ciudad;
-		this.CodigoPostal = codigoPostal;
-		this.pais = pais;
-		this.provincia = provincia;
-	}
-
-	public String getAltura() {
-		return altura;
-	}
-
-	public void setAltura(String altura) {
 		this.altura = altura;
+		this.ciudad = ciudad;
+		this.codigoPostal = codigoPostal;
+		this.provincia = provincia;
+		this.pais = pais;
 	}
 
+	public int getId_direccion() {
+		return id_direccion;
+	}
+	public void setId_direccion(int id_direccion) {
+		this.id_direccion = id_direccion;
+	}
 	public String getCalle() {
 		return calle;
 	}
-
 	public void setCalle(String calle) {
 		this.calle = calle;
 	}
-
+	public String getAltura() {
+		return altura;
+	}
+	public void setAltura(String altura) {
+		this.altura = altura;
+	}
 	public String getCiudad() {
 		return ciudad;
 	}
-
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-
 	public String getCodigoPostal() {
-		return CodigoPostal;
+		return codigoPostal;
 	}
-
 	public void setCodigoPostal(String codigoPostal) {
-		CodigoPostal = codigoPostal;
+		this.codigoPostal = codigoPostal;
 	}
-
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
-	public String getProvincia() {
+	public Provincia getProvincia() {
 		return provincia;
 	}
-
-	public void setProvincia(String provincia) {
+	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-
+	public Pais getPais() {
+		return pais;
+	}
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+	
+	
 }

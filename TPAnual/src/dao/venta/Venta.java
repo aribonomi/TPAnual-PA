@@ -1,84 +1,75 @@
 package dao.venta;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import dao.Cliente.Cliente;
-import dao.Vuelo.LineaAerea;
+import dao.Vuelo.Aerolinea;
 import dao.Vuelo.Vuelo;
 
 public class Venta {
+	
+	private int id_Venta;
 	private Cliente cliente;
-	private String formaDePago;
-	private LocalDate horaDeVenta;
 	private Vuelo vuelo;
-	private LineaAerea lineaAerea;
+	private Aerolinea aerolinea;
+	private Date fecha;
+	private String formaDePago;
 	
-	
-	public Venta(Cliente cliente, String formaDePago, LocalDate horaDeVenta, Vuelo vuelo, LineaAerea lineaAerea) {
-		super();
+	public Venta(int id_Venta, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, Date fecha, String formaDePago) {
+		this.id_Venta = id_Venta;
 		this.cliente = cliente;
-		this.formaDePago = formaDePago;
-		this.horaDeVenta = horaDeVenta;
 		this.vuelo = vuelo;
-		this.lineaAerea = lineaAerea;
+		this.aerolinea = aerolinea;
+		this.fecha = fecha;
+		this.formaDePago = formaDePago;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Venta \nCliente = " + cliente + "\nFormaDePago = " + formaDePago + "\nHoraDeVenta = " + horaDeVenta
-				+ "\nVuelo = " + vuelo + "\nLineaAerea = " + lineaAerea;
+	public int getId_Venta() {
+		return id_Venta;
 	}
 
+	public void setId_Venta(int id_Venta) {
+		this.id_Venta = id_Venta;
+	}
 
 	public Cliente getCliente() {
 		return cliente;
 	}
 
-
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
-
-	public String getFormaDePago() {
-		return formaDePago;
-	}
-
-
-	public void setFormaDePago(String formaDePago) {
-		this.formaDePago = formaDePago;
-	}
-
-
-	public LocalDate getHoraDeVenta() {
-		return horaDeVenta;
-	}
-
-
-	public void setHoraDeVenta(LocalDate horaDeVenta) {
-		this.horaDeVenta = horaDeVenta;
-	}
-
 
 	public Vuelo getVuelo() {
 		return vuelo;
 	}
 
-
 	public void setVuelo(Vuelo vuelo) {
 		this.vuelo = vuelo;
 	}
 
-
-	public LineaAerea getLineaAerea() {
-		return lineaAerea;
+	public Aerolinea getAerolinea() {
+		return aerolinea;
 	}
 
+	public void setAerolinea(Aerolinea aerolinea) {
+		this.aerolinea = aerolinea;
+	}
 
-	public void setLineaAerea(LineaAerea lineaAerea) {
-		this.lineaAerea = lineaAerea;
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getFormaDePago() {
+		return formaDePago;
+	}
+
+	public void setFormaDePago(String formaDePago) {
+		this.formaDePago = formaDePago;
 	}
 	
 	

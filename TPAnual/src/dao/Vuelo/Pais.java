@@ -2,19 +2,19 @@ package dao.Vuelo;
 
 public class Pais {
 	
-	private String id;
+	private String id_pais;
 	private String nombrePais;
 	
-	public Pais(String id, String nombrePais) {
-		this.id = id;
+	public Pais(String id_pais, String nombrePais) {
+		this.id_pais = id_pais;
 		this.nombrePais = nombrePais;
 	}
 	
-	public String getId() {
-		return id;
+	public String getId_pais() {
+		return id_pais;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setId_pais(String id_pais) {
+		this.id_pais = id_pais;
 	}
 	public String getNombrePais() {
 		return nombrePais;

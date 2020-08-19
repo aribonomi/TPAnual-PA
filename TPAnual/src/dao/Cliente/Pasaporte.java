@@ -1,64 +1,67 @@
 package dao.Cliente;
 
 import java.util.*;
+import dao.Vuelo.Pais;
 
 public class Pasaporte {
 	
-	private String autridadDeEmision;
+	private int id_Pasaporte;
+	private String numero;
+	private String autoridadEmision;
 	private Date fechaEmision;
 	private Date fechaVencimiento;
-	private String nroPasaporte;
-	private String paisDeEmision;
+	private Pais paisEmision;
 	
-	public Pasaporte(String autridadDeEmision, Date fechaEmision, Date fechaVencimiento, String nroPasaporte, String paisDeEmision) {
-		this.autridadDeEmision = autridadDeEmision;
+	
+	public Pasaporte(int id_Pasaporte, String numero, String autoridadEmision, Date fechaEmision, Date fechaVencimiento,
+			Pais paisEmision) {
+		this.id_Pasaporte = id_Pasaporte;
+		this.numero = numero;
+		this.autoridadEmision = autoridadEmision;
 		this.fechaEmision = fechaEmision;
 		this.fechaVencimiento = fechaVencimiento;
-		this.nroPasaporte = nroPasaporte;
-		this.paisDeEmision = paisDeEmision;
+		this.paisEmision = paisEmision;
 	}
-
-	public String getAutridadDeEmision() {
-		return autridadDeEmision;
+	
+	
+	public int getId_Pasaporte() {
+		return id_Pasaporte;
 	}
-
-	public void setAutridadDeEmision(String autridadDeEmision) {
-		this.autridadDeEmision = autridadDeEmision;
+	public void setId_Pasaporte(int id_Pasaporte) {
+		this.id_Pasaporte = id_Pasaporte;
 	}
-
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	public String getAutoridadEmision() {
+		return autoridadEmision;
+	}
+	public void setAutoridadEmision(String autoridadEmision) {
+		this.autoridadEmision = autoridadEmision;
+	}
 	public Date getFechaEmision() {
 		return fechaEmision;
 	}
-
 	public void setFechaEmision(Date fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
-
 	public Date getFechaVencimiento() {
 		return fechaVencimiento;
 	}
-
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
-
-	public String getNroPasaporte() {
-		return nroPasaporte;
+	public Pais getPaisEmision() {
+		return paisEmision;
 	}
-
-	public void setNroPasaporte(String nroPasaporte) {
-		this.nroPasaporte = nroPasaporte;
-	}
-
-	public String getPaisDeEmision() {
-		return paisDeEmision;
-	}
-
-	public void setPaisDeEmision(String paisDeEmision) {
-		this.paisDeEmision = paisDeEmision;
+	public void setPaisEmision(Pais paisEmision) {
+		this.paisEmision = paisEmision;
 	}
 	
 	
 	
-
+	
 }

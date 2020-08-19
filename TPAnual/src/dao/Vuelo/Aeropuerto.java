@@ -2,16 +2,35 @@ package dao.Vuelo;
 
 public class Aeropuerto {
 	
+	private int id_Aeropuerto;
+	private String identificacion;
 	private String ciudad;
-	private String idAeropuerto;
 	private Pais pais;
 	private Provincia provincia;
 	
-	public Aeropuerto(String ciudad, String idAeropuerto, Pais pais, Provincia provincia) {
+	public Aeropuerto(int id_Aeropuerto, String identificacion, String ciudad, Pais pais, Provincia provincia) {
+		super();
+		this.id_Aeropuerto = id_Aeropuerto;
+		this.identificacion = identificacion;
 		this.ciudad = ciudad;
-		this.idAeropuerto = idAeropuerto;
 		this.pais = pais;
 		this.provincia = provincia;
+	}
+
+	public int getId_Aeropuerto() {
+		return id_Aeropuerto;
+	}
+
+	public void setId_Aeropuerto(int id_Aeropuerto) {
+		this.id_Aeropuerto = id_Aeropuerto;
+	}
+
+	public String getIdentificacion() {
+		return identificacion;
+	}
+
+	public void setIdentificacion(String identificacion) {
+		this.identificacion = identificacion;
 	}
 
 	public String getCiudad() {
@@ -20,14 +39,6 @@ public class Aeropuerto {
 
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
-	}
-
-	public String getIdAeropuerto() {
-		return idAeropuerto;
-	}
-
-	public void setIdAeropuerto(String idAeropuerto) {
-		this.idAeropuerto = idAeropuerto;
 	}
 
 	public Pais getPais() {
@@ -45,5 +56,5 @@ public class Aeropuerto {
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-
+	
 }

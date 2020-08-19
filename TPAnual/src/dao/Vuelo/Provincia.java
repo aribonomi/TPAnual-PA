@@ -2,19 +2,19 @@ package dao.Vuelo;
 
 public class Provincia {
 	
-	private String id;
+	private String id_provincia;
 	private String nombreProvincia;
 	
-	public Provincia(String id, String nombreProvincia) {
-		this.id = id;
+	public Provincia(String id_provincia, String nombreProvincia) {
+		this.id_provincia = id_provincia;
 		this.nombreProvincia = nombreProvincia;
 	}
 	
-	public String getId() {
-		return id;
+	public String getId_provincia() {
+		return id_provincia;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setId_provincia(String id_provincia) {
+		this.id_provincia = id_provincia;
 	}
 	public String getNombreProvincia() {
 		return nombreProvincia;

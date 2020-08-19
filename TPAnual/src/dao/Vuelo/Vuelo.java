@@ -4,23 +4,44 @@ import java.util.Date;
 
 public class Vuelo {
 	
+	private int id_Vuelo;
+	private String numero;
+	private int cantidadAsientos;
 	private Aeropuerto aeropuertoLlegada;
 	private Aeropuerto aeropuertoSalida;
-	private int cantidadAsientos;
-	private Date fechaHoraLlegada;
-	private Date fechaHoraSalida;
-	private String nroDeVuelo;
-	private String tiempoDeVuelo;
+	private Date fechaLlegada;
+	private Date fechaSalida;
+	private Date tiempoVuelo;
 	
-	public Vuelo(Aeropuerto aeropuertoLlegada, Aeropuerto aeropuertoSalida, int cantidadAsientos, Date fechaHoraLlegada,
-			Date fechaHoraSalida, String nroDeVuelo, String tiempoDeVuelo) {
+	public Vuelo(int id_Vuelo, String numero, int cantidadAsientos, Aeropuerto aeropuertoLlegada,
+			Aeropuerto aeropuertoSalida, Date fechaLlegada, Date fechaSalida, Date tiempoVuelo) {
+		this.id_Vuelo = id_Vuelo;
+		this.numero = numero;
+		this.cantidadAsientos = cantidadAsientos;
 		this.aeropuertoLlegada = aeropuertoLlegada;
 		this.aeropuertoSalida = aeropuertoSalida;
+		this.fechaLlegada = fechaLlegada;
+		this.fechaSalida = fechaSalida;
+		this.tiempoVuelo = tiempoVuelo;
+	}
+
+	public int getId_Vuelo() {
+		return id_Vuelo;
+	}
+	public void setId_Vuelo(int id_Vuelo) {
+		this.id_Vuelo = id_Vuelo;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	public int getCantidadAsientos() {
+		return cantidadAsientos;
+	}
+	public void setCantidadAsientos(int cantidadAsientos) {
 		this.cantidadAsientos = cantidadAsientos;
-		this.fechaHoraLlegada = fechaHoraLlegada;
-		this.fechaHoraSalida = fechaHoraSalida;
-		this.nroDeVuelo = nroDeVuelo;
-		this.tiempoDeVuelo = tiempoDeVuelo;
 	}
 	public Aeropuerto getAeropuertoLlegada() {
 		return aeropuertoLlegada;
@@ -34,38 +55,24 @@ public class Vuelo {
 	public void setAeropuertoSalida(Aeropuerto aeropuertoSalida) {
 		this.aeropuertoSalida = aeropuertoSalida;
 	}
-	public int getCantidadAsientos() {
-		return cantidadAsientos;
+	public Date getFechaLlegada() {
+		return fechaLlegada;
 	}
-	public void setCantidadAsientos(int cantidadAsientos) {
-		this.cantidadAsientos = cantidadAsientos;
+	public void setFechaLlegada(Date fechaLlegada) {
+		this.fechaLlegada = fechaLlegada;
 	}
-	public Date getFechaHoraLlegada() {
-		return fechaHoraLlegada;
+	public Date getFechaSalida() {
+		return fechaSalida;
 	}
-	public void setFechaHoraLlegada(Date fechaHoraLlegada) {
-		this.fechaHoraLlegada = fechaHoraLlegada;
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
 	}
-	public Date getFechaHoraSalida() {
-		return fechaHoraSalida;
+	public Date getTiempoVuelo() {
+		return tiempoVuelo;
 	}
-	public void setFechaHoraSalida(Date fechaHoraSalida) {
-		this.fechaHoraSalida = fechaHoraSalida;
+	public void setTiempoVuelo(Date tiempoVuelo) {
+		this.tiempoVuelo = tiempoVuelo;
 	}
-	public String getNroDeVuelo() {
-		return nroDeVuelo;
-	}
-	public void setNroDeVuelo(String nroDeVuelo) {
-		this.nroDeVuelo = nroDeVuelo;
-	}
-	public String getTiempoDeVuelo() {
-		return tiempoDeVuelo;
-	}
-	public void setTiempoDeVuelo(String tiempoDeVuelo) {
-		this.tiempoDeVuelo = tiempoDeVuelo;
-	}
-	
-	
 	
 
 }
