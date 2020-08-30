@@ -15,6 +15,10 @@ public class ImplDAOClientes implements ClienteDAO{
 		super();
 		this.listaClientes = listaClientes;
 	}
+	
+	public ImplDAOClientes() {
+		
+	}
 
 	@Override
 	public void altaCliente(Cliente cliente) {
