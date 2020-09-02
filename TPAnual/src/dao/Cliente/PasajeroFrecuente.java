@@ -7,13 +7,14 @@ public class PasajeroFrecuente {
 	private int id_pasajeroFrecuente;
 	private String categoria;
 	private String numero;
-	//FALTA ALIANZA REY
+	private Alianza alianza;
 	private Aerolinea aerolinea;
 	
-	public PasajeroFrecuente(int id_pasajeroFrecuente, String categoria, String numero, Aerolinea aerolinea) {
+	public PasajeroFrecuente(int id_pasajeroFrecuente, String categoria, String numero, Alianza alianza, Aerolinea aerolinea) {
 		this.id_pasajeroFrecuente = id_pasajeroFrecuente;
 		this.categoria = categoria;
 		this.numero = numero;
+		this.alianza = alianza;
 		this.aerolinea = aerolinea;
 	}
 
@@ -41,6 +42,16 @@ public class PasajeroFrecuente {
 	public void setAerolinea(Aerolinea aerolinea) {
 		this.aerolinea = aerolinea;
 	}
+
+	public Alianza getAlianza() {
+		return alianza;
+	}
+
+	public void setAlianza(Alianza alianza) {
+		this.alianza = alianza;
+	}
+	
+	
 	
 	
 	

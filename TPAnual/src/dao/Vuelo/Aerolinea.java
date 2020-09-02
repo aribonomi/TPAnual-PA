@@ -2,17 +2,20 @@ package dao.Vuelo;
 
 import java.util.List;
 
+import dao.Cliente.Alianza;
+
 public class Aerolinea {
 
 	private int id_aeroLinea;
 	private String nombre;
 	private List<Vuelo> vuelos;
-	// Alianza
+	private Alianza alianza;
 	
-	public Aerolinea(int id_aeroLinea, String nombre, List<Vuelo> vuelos) {
+	public Aerolinea(int id_aeroLinea, String nombre, List<Vuelo> vuelos, Alianza alianza) {
 		this.id_aeroLinea = id_aeroLinea;
 		this.nombre = nombre;
 		this.vuelos = vuelos;
+		this.alianza = alianza;
 	}
 
 	public int getId_aeroLinea() {
@@ -38,6 +41,16 @@ public class Aerolinea {
 	public void setVuelos(List<Vuelo> vuelos) {
 		this.vuelos = vuelos;
 	}
+
+	public Alianza getAlianza() {
+		return alianza;
+	}
+
+	public void setAlianza(Alianza alianza) {
+		this.alianza = alianza;
+	}
+	
+	
 
 	
 	
