@@ -4,16 +4,20 @@ import java.util.List;
 
 import dao.Cliente.Cliente;
 import dao.Interfaces.ClienteDAO;
+import dao.util.ConexionMySQL;
 
 public class ImplDAOClientes implements ClienteDAO{
 	
 	List<Cliente> listaClientes;
+	ConexionMySQL sql;
 	
 	
 
 	public ImplDAOClientes(List<Cliente> listaClientes) {
 		super();
 		this.listaClientes = listaClientes;
+		sql = new ConexionMySQL();
+		
 	}
 	
 	public ImplDAOClientes() {
