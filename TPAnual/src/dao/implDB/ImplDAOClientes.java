@@ -1,6 +1,10 @@
 package dao.implDB;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+
+import com.mysql.cj.xdevapi.Statement;
 
 import dao.Cliente.Cliente;
 import dao.Interfaces.ClienteDAO;
@@ -32,7 +36,22 @@ public class ImplDAOClientes implements ClienteDAO{
 
 	@Override
 	public void bajaCliente(String dni) {
+		Connection con = null;
+		Statement st = null;
 		
+		try {
+			con.setAutoCommit(false);
+			
+			
+			con.commit();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 
