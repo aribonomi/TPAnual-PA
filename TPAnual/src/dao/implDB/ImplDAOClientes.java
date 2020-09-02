@@ -28,7 +28,7 @@ public class ImplDAOClientes implements ClienteDAO{
 
 	@Override
 	public void bajaCliente(String dni) {
-		// TODO Auto-generated method stub
+		//sjvsdjknvjdnvjkdsnv
 		
 	}
 
