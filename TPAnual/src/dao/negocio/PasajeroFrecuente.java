@@ -1,6 +1,4 @@
-package dao.Cliente;
-
-import dao.Vuelo.Aerolinea;
+package dao.negocio;
 
 public class PasajeroFrecuente {
 	

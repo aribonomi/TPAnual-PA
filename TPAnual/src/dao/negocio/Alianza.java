@@ -1,4 +1,4 @@
-package dao.Cliente;
+package dao.negocio;
 
 public enum Alianza {
 	SKYTEAM,

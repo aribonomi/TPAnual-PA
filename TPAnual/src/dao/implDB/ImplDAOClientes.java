@@ -1,48 +1,149 @@
 package dao.implDB;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import java.util.List;
-
-import dao.Cliente.Cliente;
 import dao.Interfaces.ClienteDAO;
+import dao.negocio.Cliente;
+import dao.util.ConexionMySQL;
 
-public class ImplDAOClientes implements ClienteDAO{
-	
-	List<Cliente> listaClientes;
-	
-	
+public class ImplDAOClientes implements ClienteDAO {
 
-	public ImplDAOClientes(List<Cliente> listaClientes) {
-		super();
-		this.listaClientes = listaClientes;
-	}
-	
-	public ImplDAOClientes() {
-		
-	}
+
+	ConexionMySQL sql = new ConexionMySQL();
+
+
 
 	@Override
 	public void altaCliente(Cliente cliente) {
-		listaClientes.add(cliente);
-		
+
+		Connection conexion = null;
+		CallableStatement cst = null;
+
+		try {
+
+			conexion = sql.getConnection();
+			cst = conexion.prepareCall("call prog_avanzada.add_cliente(?, ?, ?, ?, ?)");
+
+			cst.setString(1,cliente.getNombre());
+			cst.setString(2, cliente.getApellido());
+			cst.setString(3, cliente.getDni());
+			//cst.setDate(4, (Date) cliente.getFechaNacimiento());
+			cst.setString(4, cliente.getCuit_cuil());
+			cst.setString(5, cliente.getEmail());
+
+			cst.execute();
+
+			conexion.close();
+
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void bajaCliente(String dni) {
-		
-		
+
+		Connection conexion = null;
+		CallableStatement cst = null;
+
+       
+		try {
+			conexion = sql.getConnection();
+			cst = conexion.prepareCall("call prog_avanzada.delete_cliente(?)");
+			cst.setString(1, dni);
+			cst.execute();
+			conexion.close();
+
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void modificarCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		
+
+		Connection conexion = null;
+		CallableStatement cst = null;
+
+       
+
+		try {
+
+
+			//cliente.setNombre("Juan");
+			//cliente.setApellido("Maxw");
+			//cliente.setDNI("42296105");
+			//cliente.setCuil("cuit");
+			//cliente.setEmail("juan_09@hotmail");
+
+			conexion = sql.getConnection();
+			cst = conexion.prepareCall("call prog_avanzada.update_cliente (?, ?, ?, ?, ?)");
+
+			cst.setString(1,cliente.getNombre());
+			cst.setString(2, cliente.getApellido());
+			cst.setString(3, cliente.getDni());
+			//cst.setDate(4, (Date) cliente.getFechaNacimiento());
+			cst.setString(4, cliente.getCuit_cuil());
+			cst.setString(5, cliente.getEmail());
+
+
+			cst.execute();
+
+			conexion.close();
+
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void consultaCliente(String dni) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
+
+		Connection conexion = null;
+		PreparedStatement ps = null;
+
+        Cliente cliente = new Cliente();
+
+        try {
+
+        	conexion = sql.getConnection();
+        	String query = "SELECT * FROM prog_avanzada.cliente WHERE dni=?";
+        	ps = conexion.prepareStatement(query);
+
+
+        	ps.setString(1, dni);
+        	ResultSet rs = ps.executeQuery();
+
+        	while(rs.next()) {
+
+        		cliente.setId_cliente(rs.getInt("id_cliente"));
+        		cliente.setNombre(rs.getString(("nombre")));
+        		cliente.setApellido(rs.getString("apellido"));
+        		cliente.setDni(rs.getString("dni"));
+        		// cliente.setFechaNacimiento(rs.getDate("fecha_de_nacimiento"));
+        		cliente.setEmail(rs.getString("email"));
+        		cliente.setCuit_cuil(rs.getString("cuit_cuil"));
+
+        	}
+
+        	conexion.close();
+
+       
+
+        } catch (SQLException e) {
+
+        	e.printStackTrace();
+        }
+
+	}
 }

@@ -1,7 +1,4 @@
-package dao.Cliente;
-
-import dao.Vuelo.Pais;
-import dao.Vuelo.Provincia;
+package dao.negocio;
 
 public class Direccion {
 	

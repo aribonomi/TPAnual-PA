@@ -1,6 +1,6 @@
 package dao.Interfaces;
 
-import dao.Vuelo.Vuelo;
+import dao.negocio.Vuelo;
 
 public interface VuelosDAO {
 

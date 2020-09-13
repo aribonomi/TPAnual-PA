@@ -1,4 +1,4 @@
-package dao.Vuelo;
+package dao.negocio;
 
 import java.util.Date;
 

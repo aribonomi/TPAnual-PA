@@ -1,8 +1,6 @@
-package dao.Vuelo;
+package dao.negocio;
 
 import java.util.List;
-
-import dao.Cliente.Alianza;
 
 public class Aerolinea {
 

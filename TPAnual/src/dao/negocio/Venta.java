@@ -1,10 +1,6 @@
-package dao.venta;
+package dao.negocio;
 
 import java.util.Date;
-
-import dao.Cliente.Cliente;
-import dao.Vuelo.Aerolinea;
-import dao.Vuelo.Vuelo;
 
 public class Venta {
 	

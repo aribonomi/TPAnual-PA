@@ -1,6 +1,6 @@
 package dao.Interfaces;
 
-import dao.Cliente.Cliente;
+import dao.negocio.Cliente;
 
 public interface ClienteDAO {
 	

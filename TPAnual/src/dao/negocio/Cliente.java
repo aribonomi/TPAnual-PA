@@ -1,8 +1,8 @@
-package dao.Cliente;
+package dao.negocio;
 
 public class Cliente {
 	
-	private String id_cliente;
+	private int id_cliente;
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -14,7 +14,7 @@ public class Cliente {
 	private Pasaporte pasaporte;
 	private PasajeroFrecuente pasajeroFrecuente;
 	
-	public Cliente(String id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
+	public Cliente(int id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
 			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
 			PasajeroFrecuente pasajeroFrecuente) {
 		this.id_cliente = id_cliente;
@@ -29,11 +29,15 @@ public class Cliente {
 		this.pasaporte = pasaporte;
 		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
+	
+	public Cliente() {
+		
+	}
 
-	public String getId_cliente() {
+	public int getId_cliente() {
 		return id_cliente;
 	}
-	public void setId_cliente(String id_cliente) {
+	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
 	}
 	public String getNombre() {
@@ -51,7 +55,7 @@ public class Cliente {
 	public String getDni() {
 		return dni;
 	}
-	public void setDmo(String dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public String getCuit_cuil() {
@@ -96,5 +100,6 @@ public class Cliente {
 	public void setpasajeroFrecuente(PasajeroFrecuente pasajeroFrecuente) {
 		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
+
 	
 }

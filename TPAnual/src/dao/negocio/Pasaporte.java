@@ -1,7 +1,6 @@
-package dao.Cliente;
+package dao.negocio;
 
 import java.util.*;
-import dao.Vuelo.Pais;
 
 public class Pasaporte {
 	
