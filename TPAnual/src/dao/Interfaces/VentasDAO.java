@@ -1,10 +1,12 @@
 package dao.Interfaces;
 
-public interface VentasDAO {
+import dao.negocio.Venta;
+
+public interface VentasDAO extends DAOManager<Venta, String>{
 	
-	public void altaVenta();
+	/*public void altaVenta();
 	public void bajaVenta();
 	public void modificarVenta();
-	public void consultaVenta();
+	public void consultaVenta();*/
 
 }

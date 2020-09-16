@@ -1,12 +1,12 @@
 package dao.implDB;
 
-import dao.Interfaces.DireccionDAO;
-import dao.negocio.Direccion;
+import dao.Interfaces.PasajeroFrecuenteDAO;
+import dao.negocio.PasajeroFrecuente;
 
-public class DireccionDaoImplMysql implements DireccionDAO{
+public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 
 	@Override
-	public void alta(Direccion objeto) {
+	public void alta(PasajeroFrecuente objeto) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -18,7 +18,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	}
 
 	@Override
-	public void modificacion(Direccion objeto) {
+	public void modificacion(PasajeroFrecuente objeto) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -28,9 +28,5 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-
 
 }

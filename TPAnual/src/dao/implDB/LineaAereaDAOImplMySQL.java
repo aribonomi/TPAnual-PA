@@ -1,12 +1,12 @@
 package dao.implDB;
 
-import dao.Interfaces.DireccionDAO;
-import dao.negocio.Direccion;
+import dao.Interfaces.LineaAereaDAO;
+import dao.negocio.Aerolinea;
 
-public class DireccionDaoImplMysql implements DireccionDAO{
+public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 
 	@Override
-	public void alta(Direccion objeto) {
+	public void alta(Aerolinea objeto) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -18,7 +18,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	}
 
 	@Override
-	public void modificacion(Direccion objeto) {
+	public void modificacion(Aerolinea objeto) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -28,9 +28,5 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-
 
 }

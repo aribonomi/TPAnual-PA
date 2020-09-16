@@ -1,10 +1,12 @@
 package dao.Interfaces;
 
-public interface LineaAereaDAO {
+import dao.negocio.Aerolinea;
 
-	public void altaLineaAerea();
+public interface LineaAereaDAO extends DAOManager<Aerolinea, String>{
+
+	/*public void altaLineaAerea();
 	public void bajaLineaAerea();
 	public void modificarLineaAerea();
-	public void consultaLineaAerea();
+	public void consultaLineaAerea();*/
 	
 }

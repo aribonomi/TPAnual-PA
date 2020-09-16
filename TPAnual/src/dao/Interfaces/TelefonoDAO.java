@@ -1,5 +1,7 @@
 package dao.Interfaces;
 
-public interface TelefonoDAO {
+import dao.negocio.Telefono;
+
+public interface TelefonoDAO extends DAOManager<Telefono, String>{
 
 }

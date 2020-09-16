@@ -1,5 +1,7 @@
 package dao.Interfaces;
 
-public interface PaisDAO {
+import dao.negocio.Pais;
+
+public interface PaisDAO extends DAOManager<Pais, String>{
 
 }

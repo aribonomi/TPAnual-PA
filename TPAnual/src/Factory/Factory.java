@@ -8,7 +8,7 @@ public class Factory {
 
 	public static ClienteDAO getClienteDaoImplMysql() {
 
-		return new ImplDAOClientes();
+		return new ClienteDAOImplMySQL();
 	}
 
 	public static AeropuertoDAO getAeropuertoDaoImplMysql() {
@@ -23,52 +23,51 @@ public class Factory {
 
 	}
 
-//	public static LineaAereaDAO getLineaAereaDaoImplMysql() {
-//
-//		return new LineaAereaDaoImplMysql();
-//	}
-//
-//
-//	public static PaisDAO getPaisDao() {
-//
-//		return new PaisDaoImplMysql();
-//	}
-//
-//	public static PasajeroFrecuenteDAO getPasajeroFrecuenteDaoImplMysql() {
-//
-//
-//		return new PasajeroFrecuenteDaoImplMysql();
-//
-//	}
-//
-//	public static PasaporteDAO getPasaporteDaoImplMysql() {
-//
-//
-//		return new PasaporteDaoImplMysql();
-//	}
-//
-//
-//
-//	public static ProvinciaDAO getProvinciaDaoImplMysql() {
-//
-//		return new ProvinciaDaoImplMysql();
-//	}
-//
-//
-//	public static TelefonoDAO getTelefonoDaoImplMysql() {
-//
-//		return new TelefonoDaoImplMysql();
-//	}
-//
-//
-//    public static VentasDAO getVentasDaoImplMysql() {
-//   
-//    	return new VentasDaoImplMysql();
-//    }
-//
-//    public static VuelosDAO getVuelosDaoImplMysql() {
-//
-//    	return new VuelosDaoImplMysql();
-//    }
+	public static LineaAereaDAO getLineaAereaDaoImplMysql() {
 
+		return new LineaAereaDAOImplMySQL();
+	}
+
+
+	public static PaisDAO getPaisDao() {
+
+		return new PaisDAOImplMySQL();
+	}
+
+	public static PasajeroFrecuenteDAO getPasajeroFrecuenteDaoImplMysql() {
+
+
+		return new PasajeroFrecuenteDAOImplMySQL();
+
+	}
+
+	public static PasaporteDAO getPasaporteDaoImplMysql() {
+
+
+		return new PasaporteDAOImplMySQL();
+	}
+
+
+
+	public static ProvinciaDAO getProvinciaDaoImplMysql() {
+
+		return new ProvinciaDAOImplMySQL();
+	}
+
+
+	public static TelefonoDAO getTelefonoDaoImplMysql() {
+
+		return new TelefonoDAOImplMySQL();
+	}
+
+
+    public static VentasDAO getVentasDaoImplMysql() {
+   
+    	return new VentasDAOImplMySQL();
+    }
+
+    public static VuelosDAO getVuelosDaoImplMysql() {
+
+    	return new VuelosDAOImplMySQL();
+    }
 }

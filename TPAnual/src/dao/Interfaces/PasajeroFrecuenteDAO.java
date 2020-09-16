@@ -1,5 +1,7 @@
 package dao.Interfaces;
 
-public interface PasajeroFrecuenteDAO {
+import dao.negocio.PasajeroFrecuente;
+
+public interface PasajeroFrecuenteDAO extends DAOManager<PasajeroFrecuente, String>{
 
 }

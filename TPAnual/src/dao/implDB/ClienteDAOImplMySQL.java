@@ -9,7 +9,7 @@ import dao.Interfaces.ClienteDAO;
 import dao.negocio.Cliente;
 import dao.util.ConexionMySQL;
 
-public class ImplDAOClientes implements ClienteDAO {
+public class ClienteDAOImplMySQL implements ClienteDAO {
 
 //
 	ConexionMySQL sql = new ConexionMySQL();
@@ -17,7 +17,7 @@ public class ImplDAOClientes implements ClienteDAO {
 
 
 	@Override
-	public void altaCliente(Cliente cliente) {
+	public void alta(Cliente cliente) {
 
 		Connection conexion = null;
 		CallableStatement cst = null;
@@ -46,7 +46,7 @@ public class ImplDAOClientes implements ClienteDAO {
 	}
 
 	@Override
-	public void bajaCliente(String dni) {
+	public void baja(String dni) {
 
 		Connection conexion = null;
 		CallableStatement cst = null;
@@ -67,7 +67,7 @@ public class ImplDAOClientes implements ClienteDAO {
 	}
 
 	@Override
-	public void modificarCliente(Cliente cliente) {
+	public void modificacion(Cliente cliente) {
 
 		Connection conexion = null;
 		CallableStatement cst = null;
@@ -106,7 +106,7 @@ public class ImplDAOClientes implements ClienteDAO {
 	}
 
 	@Override
-	public void consultaCliente(String dni) {
+	public void consulta(String dni) {
 
 
 		Connection conexion = null;

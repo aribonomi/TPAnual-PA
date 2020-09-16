@@ -6,25 +6,25 @@ import dao.negocio.Aeropuerto;
 public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 
 	@Override
-	public void altaAeropuerto(Aeropuerto aeropuerto) {
+	public void alta(Aeropuerto objeto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void bajaAeropuerto(Aeropuerto aeropuerto) {
+	public void baja(String id) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modificacionAeropuerto(Aeropuerto aeropuerto) {
+	public void modificacion(Aeropuerto objeto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void consultaAeropuerto(Aeropuerto aeropuerto) {
+	public void consulta(String id) {
 		// TODO Auto-generated method stub
 		
 	}

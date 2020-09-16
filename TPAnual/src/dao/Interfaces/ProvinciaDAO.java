@@ -1,5 +1,7 @@
 package dao.Interfaces;
 
-public interface ProvinciaDAO {
+import dao.negocio.Provincia;
+
+public interface ProvinciaDAO extends DAOManager<Provincia, String>{
 
 }
