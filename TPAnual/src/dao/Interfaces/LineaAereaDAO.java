@@ -1,12 +1,15 @@
 package dao.Interfaces;
 
+import java.util.List;
+
 import dao.negocio.Aerolinea;
 
-public interface LineaAereaDAO extends DAOManager<Aerolinea, String>{
+public interface LineaAereaDAO{
 
-	/*public void altaLineaAerea();
-	public void bajaLineaAerea();
-	public void modificarLineaAerea();
-	public void consultaLineaAerea();*/
+	public void altaLineaAerea(Aerolinea aerolinea);
+	public void bajaLineaAerea(String id_aerolinea);
+	public void modificarLineaAerea(Aerolinea aerolinea);
+	public LineaAereaDAO getLineaArea(String id_aerolinea);
+	//public List<LineaAerea> consultaLineaAerea(;
 	
 }

@@ -9,7 +9,7 @@ public class Aerolinea {
 	private List<Vuelo> vuelos;
 	private Alianza alianza;
 	
-	public Aerolinea(int id_aeroLinea, String nombre, List<Vuelo> vuelos, Alianza alianza) {
+	public Aerolinea(String nombre, List<Vuelo> vuelos, Alianza alianza) {
 		this.id_aeroLinea = id_aeroLinea;
 		this.nombre = nombre;
 		this.vuelos = vuelos;
@@ -46,6 +46,12 @@ public class Aerolinea {
 
 	public void setAlianza(Alianza alianza) {
 		this.alianza = alianza;
+	}
+
+	@Override
+	public String toString() {
+		return "Aerolinea [id_aeroLinea=" + id_aeroLinea + ", nombre=" + nombre + ", vuelos=" + vuelos + ", alianza="
+				+ alianza + "]";
 	}
 	
 	

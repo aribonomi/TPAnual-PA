@@ -14,7 +14,7 @@ public class Cliente {
 	private Pasaporte pasaporte;
 	private PasajeroFrecuente pasajeroFrecuente;
 	
-	public Cliente(int id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
+	public Cliente(String nombre, String apellido, String dni, String cuit_cuil,
 			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
 			PasajeroFrecuente pasajeroFrecuente) {
 		this.id_cliente = id_cliente;
@@ -99,6 +99,14 @@ public class Cliente {
 	}
 	public void setpasajeroFrecuente(PasajeroFrecuente pasajeroFrecuente) {
 		this.pasajeroFrecuente = pasajeroFrecuente;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id_cliente=" + id_cliente + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", cuit_cuil=" + cuit_cuil + ", fecha_nacimiento=" + fecha_nacimiento + ", email=" + email
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", pasaporte=" + pasaporte
+				+ ", pasajeroFrecuente=" + pasajeroFrecuente + "]";
 	}
 
 	

@@ -4,124 +4,128 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.Interfaces.AeropuertoDAO;
 import dao.negocio.Aeropuerto;
 import dao.negocio.Direccion;
+import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
 public class AeropuertoDaoImplMysql implements AeropuertoDAO {
-	
-	ConexionMySQL sql;
-	
-	public AeropuertoDaoImplMysql() {
-		this.sql = new ConexionMySQL();
-	}
 
-	final String INSERTAR = "INSERT INTO aeropuerto (codigo_aeropuerto, ciudad, id_pais, id_provincia) VALUES(?,?,?,?)";
-	final String ELIMINAR = "DELETE FROM aeropuerto WHERE id_aeropuerto = ?";
+	ConexionMySQL sql = new ConexionMySQL();
+	final String add = "INSERT INTO prog_avanzada.aeropuerto (codigo_aeropuerto, ciudad) VALUES(?,?)";
+	final String delete = "DELETE FROM prog_avanzada.aeropuerto WHERE codigo_aeropuerto = ?";
+	final String update = "UPDATE prog_avanzada.aeropuerto set codigo_aeropuerto = ?, ciudad = ? WHERE codigo_aeropuerto = ? ";
+	final String ListAll = "SELECT * FROM prog_avanzada.aeropuerto";
+	final String get = "SELECT * FROM prog_avanzada.aeropuerto WHERE codigo_aeropuerto = ?";
 	
-	final String CONSULTAR = "SELECT * FROM aeropuerto WHERE id_aeropuerto = ?";
-
 	@Override
-	public void alta(Aeropuerto objeto) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(INSERTAR);
-			
-			pst.setString(1, objeto.getIdentificacion());
-			pst.setString(2, objeto.getCiudad());
-			pst.setInt(3, objeto.getPais().getId_pais());
-			pst.setInt(4, objeto.getProvincia().getId_provincia());
-			
-			int registrosIngresados = pst.executeUpdate();
-			
-			System.out.println(registrosIngresados+" registro(s) ingresado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
+	public void altaAeropuerto(Aeropuerto aeropuerto) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {		
+			conexion = sql.getConnection();
+			ps = conexion.prepareStatement(add);
+			ps.setString(1, aeropuerto.getIdentificacion());
+			ps.setString(2, aeropuerto.getCiudad());
+			ps.executeUpdate();	
+			} 
+			catch (SQLException e) { e.printStackTrace();}
+			finally {	
+			try {ps.close();conexion.close();}
+			catch(Exception e) {e.printStackTrace();}
 		}
 		
 	}
+		
 
 	@Override
-	public void baja(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
+	public void bajaAeropuerto(String codigo_aeropuerto) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
 		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(ELIMINAR);
-			
-			pst.setString(1, id);//Este id es un String y el id de mySQL es un int. No se si eso va a traer problemas
-			
-			int registrosActualizados = pst.executeUpdate();
-			
-			System.out.println(registrosActualizados+" registro(s) actualizado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
+		conexion = sql.getConnection();
+		ps = conexion.prepareCall(delete);
+		ps.setString(1, codigo_aeropuerto);
+		ps.executeUpdate();	
+		conexion.close();
+	} 
+		catch (SQLException e) {e.printStackTrace();}
 	}
 
 	@Override
-	public void modificacion(Aeropuerto objeto) {
-		// TODO Auto-generated method stub
+	public void modificacionAeropuerto(Aeropuerto aeropuerto) {
 		
-	}
-
-	@Override
-	public void consulta(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
 		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(CONSULTAR);
-			ResultSet rs = pst.executeQuery();
-			
-			pst.setString(1, id);
-			
-			Aeropuerto a = new Aeropuerto(0, null, null, null, null);
-			
-			while(rs.next()) {
-				a.setId_Aeropuerto(rs.getInt("id_aeropuerto"));
-				a.setIdentificacion(rs.getString("codigo_aeropuerto"));
-				a.setCiudad(rs.getNString("ciudad"));
-				a.getPais().setId_pais(rs.getInt("id_pais"));
-				a.getProvincia().setId_provincia(rs.getInt("id_provincia"));
-				System.out.println(a.toString());
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(update);
+			ps.setString(1, aeropuerto.getIdentificacion());
+			ps.setString(2, aeropuerto.getCiudad());
 		
+
+	     	ps.executeUpdate();
+			conexion.close();
+			} catch (SQLException e) {e.printStackTrace();}	
+		}
+
+	@Override
+	public List<Aeropuerto> ListAllAeropuerto() {
+		
+	Connection conexion = null;
+	PreparedStatement ps = null;
+	List<Aeropuerto> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListAll);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+			 
+		String identificador = (rs.getString(("numero_vuelo")));
+		String ciudad = (rs.getString("ciudad"));
+			   
+		Aeropuerto aeropuerto = new Aeropuerto(identificador,ciudad,null,null);
+		 lista.add(aeropuerto);
+	     }
+			conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
 	}
+		
+
+
+	@Override
+	public Aeropuerto getAeropuerto(String codigo_aeropuerto) {
+		
+
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(get);
+	    ps.setString(1, codigo_aeropuerto);
+	    ResultSet rs = ps.executeQuery();
+			    
+		while(rs.next()) {
+			 
+		String identificador = (rs.getString(("numero_vuelo")));
+	    String ciudad = (rs.getString("ciudad"));
+	   
+		Aeropuerto aeropuerto = new Aeropuerto(identificador,ciudad,null,null);
+		return aeropuerto;
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;}
 
 }

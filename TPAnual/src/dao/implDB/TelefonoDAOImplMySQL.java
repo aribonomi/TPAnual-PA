@@ -4,123 +4,125 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.Interfaces.TelefonoDAO;
 import dao.negocio.Direccion;
 import dao.negocio.Telefono;
+import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
 public class TelefonoDAOImplMySQL implements TelefonoDAO{
 
-	ConexionMySQL sql;
+	ConexionMySQL sql = new ConexionMySQL();
+	final String add = "INSERT INTO prog_avanzada.telefono (personal, celular, laboral) VALUES(?,?,?)";
+	final String delete = "DELETE FROM prog_avanzada.telefono WHERE id_telefono = ?";
+	final String update = "UPDATE prog_avanzada.telefono set personal = ?, celular = ?, laboral = ? WHERE id_telefono = ? ";
+	final String ListAll = "SELECT * FROM prog_avanzada.telefono";
+	final String get = "SELECT * FROM prog_avanzada.telefono WHERE id_telefono = ?";
 	
-	public TelefonoDAOImplMySQL() {
-		this.sql = new ConexionMySQL();
-	}
-
-	final String INSERTAR = "INSERT INTO telefono (personal, celular, labolar) VALUES(?,?,?)";
-	final String ELIMINAR = "DELETE FROM telefono WHERE id_telefono = ?";
-	
-	final String CONSULTAR = "SELECT * FROM telefono WHERE id_telefono = ?";
 	
 	@Override
-	public void alta(Telefono objeto) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(INSERTAR);
-			
-			pst.setString(1, objeto.getPersona());
-			pst.setString(2, objeto.getCelular());
-			pst.setString(3, objeto.getLaboral());
-			
-			int registrosIngresados = pst.executeUpdate();
-			
-			System.out.println(registrosIngresados+" registro(s) ingresado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
+	public void addTelefono(Telefono telefono) {
 		
+		Connection conexion = null;
+		PreparedStatement ps = null;
 		
-	}
-
-	@Override
-	public void baja(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(ELIMINAR);
-			
-			pst.setString(1, id);//Este id es un String y el id de mySQL es un int. No se si eso va a traer problemas
-			
-			int registrosActualizados = pst.executeUpdate();
-			
-			System.out.println(registrosActualizados+" registro(s) actualizado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
-
-	@Override
-	public void modificacion(Telefono objeto) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void consulta(String id) {
-
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(CONSULTAR);
-			ResultSet rs = pst.executeQuery();
-			
-			pst.setString(1, id);
-			
-			Telefono t = new Telefono(0, null, null, null);
-			
-			while(rs.next()) {
-				t.setId_Telefono(rs.getInt("id_telefono"));
-				t.setPersona(rs.getString("personal"));
-				t.setCelular(rs.getString("celular"));
-				t.setLaboral(rs.getNString("labolar"));
-				System.out.println(t.toString());
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
+		try {		
+			conexion = sql.getConnection();
+			ps = conexion.prepareStatement(add);
+			ps.setString(1, telefono.getPersona());
+			ps.setString(2, telefono.getCelular());
+			ps.setString(3, telefono.getLaboral());
+			ps.executeUpdate();	
+			} 
+			catch (SQLException e) { e.printStackTrace();}
+			finally {	
+			try {ps.close();conexion.close();}
+			catch(Exception e) {e.printStackTrace();}
 		}
 	}
+		
+	@Override
+	public void deleteTelefono(String id_telefono) {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		try {
+		conexion = sql.getConnection();
+		ps = conexion.prepareCall(delete);
+		ps.setString(1, id_telefono);
+		ps.executeUpdate();	
+		conexion.close();
+	} 
+		catch (SQLException e) {e.printStackTrace();}
+	}
+	@Override
+	public void updateTelefono(Telefono telefono) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(update);
 
+			ps.setString(1, telefono.getPersona());
+			ps.setString(2, telefono.getCelular());
+			ps.setString(3, telefono.getLaboral());
+	
+	     	ps.executeUpdate();
+			conexion.close();
+			} catch (SQLException e) {e.printStackTrace();}	
+		}
+	@Override
+	public List<Telefono> ListAllTelefono() {
+		Connection conexion = null;
+		 PreparedStatement ps = null;
+		 List<Telefono> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListAll);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+			 
+		String personal = (rs.getString("personal"));
+		String celular = (rs.getString("celular"));
+		String laboral = rs.getString("laboral");
+				
+		Telefono telefono = new Telefono(personal,celular,laboral);	
+		lista.add(telefono);
+	     }
+			conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
+	}
+		
+		
+	
+	@Override
+	public Telefono getTelefono(String id_telefono) {
+		
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(get);
+	    ps.setString(1, id_telefono);
+	    ResultSet rs = ps.executeQuery();
+	
+		while(rs.next()) {
+			 
+	    String personal = (rs.getString("personal"));
+		String celular = (rs.getString("celular"));
+		String laboral = rs.getString("laboral");
+		
+		Telefono telefono = new Telefono(personal,celular,laboral);	
+		return telefono;	
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;
+	}
 }

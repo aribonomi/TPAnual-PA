@@ -4,132 +4,125 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.cj.xdevapi.Statement;
 
 import dao.Interfaces.DireccionDAO;
 import dao.negocio.Direccion;
+import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
 public class DireccionDaoImplMysql implements DireccionDAO{
 	
-	ConexionMySQL sql;
+	ConexionMySQL sql = new ConexionMySQL();
+	final String add = "INSERT INTO prog_avanzada.direccion (altura, calle, ciudad, codigo_postal) VALUES(?,?,?,?)";
+	final String delete = "DELETE FROM prog_avanzada.direccion WHERE id_direccion = ?";
+	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ? WHERE id_direccion = ? ";
+	final String ListAll = "SELECT * FROM prog_avanzada.direccion";
+	final String get = "SELECT * FROM prog_avanzada.direccion WHERE id_direccion = ?";
 	
-	public DireccionDaoImplMysql() {
-		this.sql = new ConexionMySQL();
-	}
 
-	final String INSERTAR = "INSERT INTO direccion (altura, calle, ciudad, codigo_postal, id_pais, id_provincia) VALUES(?,?,?,?,?,?)";
-	final String ELIMINAR = "DELETE FROM direccion WHERE id_direccion = ?";
-	
-	final String CONSULTAR = "SELECT * FROM direccion WHERE id_direccion = ?";
-	
 	@Override
-	public void alta(Direccion objeto) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(INSERTAR);
-			
-			pst.setString(1, objeto.getAltura());
-			pst.setString(2, objeto.getCalle());
-			pst.setString(3, objeto.getCiudad());
-			pst.setString(4, objeto.getCodigoPostal());
-			pst.setInt(5, objeto.getPais().getId_pais());//Cambié los id de provincia y país a int
-			pst.setInt(6, objeto.getProvincia().getId_provincia());
-			
-			int registrosIngresados = pst.executeUpdate();
-			
-			System.out.println(registrosIngresados+" registro(s) ingresado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
+	public void altaDireccion(Direccion direccion) {
+	
+		Connection conexion = null;
+		PreparedStatement ps = null;
 		
-	}
-
-	@Override
-	public void baja(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(ELIMINAR);
-			
-			pst.setString(1, id);//Este id es un String y el id de mySQL es un int. No se si eso va a traer problemas
-			
-			int registrosActualizados = pst.executeUpdate();
-			
-			System.out.println(registrosActualizados+" registro(s) actualizado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
+		try {		
+			conexion = sql.getConnection();
+			ps = conexion.prepareStatement(add);
+			ps.setString(1, direccion.getAltura());
+			ps.setString(2, direccion.getCalle());
+			ps.setString(3, direccion.getCiudad());
+			ps.setString(4, direccion.getCodigoPostal());
+			ps.executeUpdate();	
+		} 
+			catch (SQLException e) { e.printStackTrace();}
+			finally {	
+			try {ps.close();conexion.close();}
+			catch(Exception e) {e.printStackTrace();}
 		}
 	}
 
 	@Override
-	public void modificacion(Direccion objeto) {
-		// TODO Auto-generated method stub
+	public void bajaDireccion(String id_direccion) {
 		
-	}
-
-	@Override
-	public void consulta(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
+		Connection conexion = null;
+		PreparedStatement ps = null;
 		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(CONSULTAR);
-			ResultSet rs = pst.executeQuery();
-			
-			pst.setString(1, id);
-			
-			Direccion d = new Direccion(0, null, null, null, null, null, null);
-			
-			while(rs.next()) {
-				d.setId_direccion(rs.getInt("id_direccion"));
-				d.setAltura(rs.getString("altura"));
-				d.setCalle(rs.getString("calle"));
-				d.setCiudad(rs.getNString("ciudad"));
-				d.setCodigoPostal("codigo_postal");
-				d.getPais().setId_pais(rs.getInt("id_pais"));
-				d.getProvincia().setId_provincia(rs.getInt("id_provincia"));
-				System.out.println(d.toString());
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
+		conexion = sql.getConnection();
+		ps = conexion.prepareCall(delete);
+		ps.setString(1, id_direccion);
+		ps.executeUpdate();	
+		conexion.close();
+	} 
+		catch (SQLException e) {e.printStackTrace();}
 	}
-
+		
+	@Override
+	public void modificacionDireccion(Direccion direccion) {
 	
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(update);
+			ps.setString(1, direccion.getAltura());
+			ps.setString(2, direccion.getCalle());
+			ps.setString(3, direccion.getCiudad());
+			ps.setString(4, direccion.getCodigoPostal());
+	     	ps.executeUpdate();
+			conexion.close();
+			} catch (SQLException e) {e.printStackTrace();}	
+		}
 	
-
-
-}
+	@Override
+	public List<Direccion> ListAllDireccion() {
+		Connection conexion = null;
+		 PreparedStatement ps = null;
+		 List<Direccion> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListAll);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+		  String altura = (rs.getString(("altura")));
+		  String calle = (rs.getString(("calle")));
+		  String ciudad = (rs.getString(("ciudad")));
+		  String codigo_postal = (rs.getString(("codigo_postal")));
+		  Direccion direccion = new Direccion(altura, calle, ciudad, codigo_postal,null,null);
+		  lista.add(direccion);
+	     }
+		  conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
+	}
+	
+	@Override
+	public Direccion getDireccion(String id_direccion) {
+		
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(get);
+	    ps.setString(1, id_direccion);
+	    ResultSet rs = ps.executeQuery();
+			    
+		while(rs.next()) {
+		
+		String altura = (rs.getString(("altura")));
+		String calle = (rs.getString(("calle")));
+		String ciudad = (rs.getString(("ciudad")));
+		String codigo_postal = (rs.getString(("codigo_postal")));
+		Direccion direccion = new Direccion(altura, calle, ciudad, codigo_postal,null,null);
+		return direccion;
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;}
+	}

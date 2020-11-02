@@ -4,125 +4,117 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.Interfaces.PasajeroFrecuenteDAO;
 import dao.negocio.Direccion;
 import dao.negocio.PasajeroFrecuente;
+import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
 public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
+
+    ConexionMySQL sql = new ConexionMySQL();
+	final String add = "INSERT INTO prog_avanzada.pasajero_frecuente (categoria,numero) VALUES(?,?)";
+	final String delete = "DELETE FROM prog_avanzada.pasajero_frecuente WHERE id_pasajero_frecuente = ?";
+	final String update = "UPDATE prog_avanzada.pasajero_frecuente set categoria = ?, numero = ?  WHERE id_pasajero_frecuente = ? ";
+	final String ListAll = "SELECT * FROM prog_avanzada.pasajero_frecuente";
+	final String get = "SELECT * FROM prog_avanzada.pasajero_frecuente WHERE id_pasajero_frecuente = ?";
 	
-	ConexionMySQL sql;
 
-	final String INSERTAR = "INSERT INTO pasajero_frecuente (alianza, numero, categoria, id_aerolinea) VALUES(?,?,?,?,?)";
-	final String ELIMINAR = "DELETE FROM pasajero_frecuente WHERE id_pasajero_frecuente = ?";
+	@Override
+	public void addPasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {		
+			conexion = sql.getConnection();
+			ps = conexion.prepareStatement(add);
+			ps.setString(1, pasajerofrecuente.getCategoria());
+			ps.setString(2, pasajerofrecuente.getNumero());
+			ps.executeUpdate();	
+					} 
+			catch (SQLException e) { e.printStackTrace();}
+			finally {	
+			try {ps.close();conexion.close();}
+			catch(Exception e) {e.printStackTrace();}
+		}
+	}
+
+	@Override
+	public void deletePasajeroFrecuente(String id_pasajero_frecuente) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+		conexion = sql.getConnection();
+		ps = conexion.prepareCall(delete);
+		ps.setString(1, id_pasajero_frecuente);
+		ps.executeUpdate();	
+		conexion.close();
+	} 
+		catch (SQLException e) {e.printStackTrace();}
+	}
 	
-	final String CONSULTAR = "SELECT * FROM pasajero_frecuente WHERE id_pasajero_frecuente = ?";
+
+	@Override
+	public void updatePasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(update);
+			ps.setString(1, pasajerofrecuente.getCategoria());
+			ps.setString(2, pasajerofrecuente.getNumero());
+	     	ps.executeUpdate();
+			conexion.close();
+			} catch (SQLException e) {e.printStackTrace();}	
+		}
 	
-	public PasajeroFrecuenteDAOImplMySQL() {
-		this.sql = new ConexionMySQL();
-	}
-
 	@Override
-	public void alta(PasajeroFrecuente objeto) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(INSERTAR);
-			
-			pst.setString(1, objeto.getAlianza().toString());
-			pst.setString(2, objeto.getNumero());
-			pst.setString(3, objeto.getCategoria());
-			pst.setInt(4, objeto.getAerolinea().getId_aeroLinea());
-			
-			int registrosIngresados = pst.executeUpdate();
-			
-			System.out.println(registrosIngresados+" registro(s) ingresado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
+	public List<PasajeroFrecuente> ListAllPasajeroFrecuente() {
+		Connection conexion = null;
+		 PreparedStatement ps = null;
+		 List<PasajeroFrecuente> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListAll);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+			 
+		String categoria = (rs.getString(("categoria")));
+		String numero = (rs.getString("numero"));
+		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(categoria,numero,null,null);	
+		 lista.add(pasajerofrecuente);
+	     }
+			conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
 	}
-
+		
 	@Override
-	public void baja(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(ELIMINAR);
-			
-			pst.setString(1, id);//Este id es un String y el id de mySQL es un int. No se si eso va a traer problemas
-			
-			int registrosActualizados = pst.executeUpdate();
-			
-			System.out.println(registrosActualizados+" registro(s) actualizado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
+	public PasajeroFrecuente getPasajeroFrecuente(String id_pasajero_frecuente) {
 
-	@Override
-	public void modificacion(PasajeroFrecuente objeto) {
-		// TODO Auto-generated method stub
-		
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(get);
+	    ps.setString(1, id_pasajero_frecuente);
+	    ResultSet rs = ps.executeQuery();
+			    
+		while(rs.next()) {
+		String categoria = (rs.getString(("categoria")));
+	    String numero = (rs.getString("numero"));
+		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(categoria,numero,null,null);	
+		return pasajerofrecuente;	
 	}
-
-	@Override
-	public void consulta(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(CONSULTAR);
-			ResultSet rs = pst.executeQuery();
-			
-			pst.setString(1, id);
-			
-			PasajeroFrecuente p = new PasajeroFrecuente(0, null, null, null, null);
-			
-			while(rs.next()) {
-				p.setId_pasajeroFrecuente(rs.getInt("id_pasajero_frecuente"));
-				//No se cómo setear una alianza porque es un enumerator
-				p.setNumero(rs.getString("numero"));
-				p.setCategoria(rs.getString("categoria"));
-				p.getAerolinea().setId_aeroLinea(rs.getInt("id_aerolinea"));
-				
-				System.out.println(p.toString());
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;}
 	}
-
-}

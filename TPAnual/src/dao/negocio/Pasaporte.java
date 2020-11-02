@@ -7,14 +7,14 @@ public class Pasaporte {
 	private int id_Pasaporte;
 	private String numero;
 	private String autoridadEmision;
-	private Date fechaEmision;
-	private Date fechaVencimiento;
+	private String fechaEmision;
+	private String fechaVencimiento;
 	private Pais paisEmision;
 	
 	
-	public Pasaporte(int id_Pasaporte, String numero, String autoridadEmision, Date fechaEmision, Date fechaVencimiento,
+	public Pasaporte(String numero, String autoridadEmision, String fechaEmision, String fechaVencimiento,
 			Pais paisEmision) {
-		this.id_Pasaporte = id_Pasaporte;
+		
 		this.numero = numero;
 		this.autoridadEmision = autoridadEmision;
 		this.fechaEmision = fechaEmision;
@@ -41,16 +41,16 @@ public class Pasaporte {
 	public void setAutoridadEmision(String autoridadEmision) {
 		this.autoridadEmision = autoridadEmision;
 	}
-	public Date getFechaEmision() {
+	public String getFechaEmision() {
 		return fechaEmision;
 	}
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(String fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
-	public Date getFechaVencimiento() {
+	public String getFechaVencimiento() {
 		return fechaVencimiento;
 	}
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(String fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 	public Pais getPaisEmision() {
@@ -58,6 +58,14 @@ public class Pasaporte {
 	}
 	public void setPaisEmision(Pais paisEmision) {
 		this.paisEmision = paisEmision;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Pasaporte [id_Pasaporte=" + id_Pasaporte + ", numero=" + numero + ", autoridadEmision="
+				+ autoridadEmision + ", fechaEmision=" + fechaEmision + ", fechaVencimiento=" + fechaVencimiento
+				+ ", paisEmision=" + paisEmision + "]";
 	}
 	
 	

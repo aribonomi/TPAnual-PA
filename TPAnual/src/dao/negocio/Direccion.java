@@ -10,7 +10,7 @@ public class Direccion {
 	private Provincia provincia;
 	private Pais pais;
 	
-	public Direccion(int id_direccion, String calle, String altura, String ciudad, String codigoPostal,
+	public Direccion(String calle, String altura, String ciudad, String codigoPostal,
 			Provincia provincia, Pais pais) {
 		this.id_direccion = id_direccion;
 		this.calle = calle;
@@ -62,6 +62,12 @@ public class Direccion {
 	}
 	public void setPais(Pais pais) {
 		this.pais = pais;
+	}
+
+	@Override
+	public String toString() {
+		return "Direccion [id_direccion=" + id_direccion + ", calle=" + calle + ", altura=" + altura + ", ciudad="
+				+ ciudad + ", codigoPostal=" + codigoPostal + ", provincia=" + provincia + ", pais=" + pais + "]";
 	}
 	
 	

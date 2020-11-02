@@ -8,8 +8,8 @@ public class PasajeroFrecuente {
 	private Alianza alianza;
 	private Aerolinea aerolinea;
 	
-	public PasajeroFrecuente(int id_pasajeroFrecuente, String categoria, String numero, Alianza alianza, Aerolinea aerolinea) {
-		this.id_pasajeroFrecuente = id_pasajeroFrecuente;
+	public PasajeroFrecuente(String categoria, String numero, Alianza alianza, Aerolinea aerolinea) {
+		
 		this.categoria = categoria;
 		this.numero = numero;
 		this.alianza = alianza;
@@ -47,6 +47,12 @@ public class PasajeroFrecuente {
 
 	public void setAlianza(Alianza alianza) {
 		this.alianza = alianza;
+	}
+
+	@Override
+	public String toString() {
+		return "PasajeroFrecuente [id_pasajeroFrecuente=" + id_pasajeroFrecuente + ", categoria=" + categoria
+				+ ", numero=" + numero + ", alianza=" + alianza + ", aerolinea=" + aerolinea + "]";
 	}
 	
 	

@@ -8,7 +8,7 @@ public class Aeropuerto {
 	private Pais pais;
 	private Provincia provincia;
 	
-	public Aeropuerto(int id_Aeropuerto, String identificacion, String ciudad, Pais pais, Provincia provincia) {
+	public Aeropuerto(String identificacion, String ciudad, Pais pais, Provincia provincia) {
 		super();
 		this.id_Aeropuerto = id_Aeropuerto;
 		this.identificacion = identificacion;
@@ -55,6 +55,12 @@ public class Aeropuerto {
 
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
+	}
+
+	@Override
+	public String toString() {
+		return "Aeropuerto [id_Aeropuerto=" + id_Aeropuerto + ", identificacion=" + identificacion + ", ciudad="
+				+ ciudad + ", pais=" + pais + ", provincia=" + provincia + "]";
 	}
 	
 }

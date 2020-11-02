@@ -9,13 +9,12 @@ public class Vuelo {
 	private int cantidadAsientos;
 	private Aeropuerto aeropuertoLlegada;
 	private Aeropuerto aeropuertoSalida;
-	private Date fechaLlegada;
-	private Date fechaSalida;
-	private Date tiempoVuelo;
+	private String fechaLlegada;
+	private String fechaSalida;
+	private String tiempoVuelo;
 	
-	public Vuelo(int id_Vuelo, String numero, int cantidadAsientos, Aeropuerto aeropuertoLlegada,
-			Aeropuerto aeropuertoSalida, Date fechaLlegada, Date fechaSalida, Date tiempoVuelo) {
-		this.id_Vuelo = id_Vuelo;
+	public Vuelo(String numero, int cantidadAsientos,String fechaLlegada, String fechaSalida, String tiempoVuelo, Aeropuerto aeropuertoLlegada,Aeropuerto aeropuertoSalida) {
+		
 		this.numero = numero;
 		this.cantidadAsientos = cantidadAsientos;
 		this.aeropuertoLlegada = aeropuertoLlegada;
@@ -24,6 +23,10 @@ public class Vuelo {
 		this.fechaSalida = fechaSalida;
 		this.tiempoVuelo = tiempoVuelo;
 	}
+	public Vuelo() { }
+	
+	
+	
 
 	public int getId_Vuelo() {
 		return id_Vuelo;
@@ -55,23 +58,30 @@ public class Vuelo {
 	public void setAeropuertoSalida(Aeropuerto aeropuertoSalida) {
 		this.aeropuertoSalida = aeropuertoSalida;
 	}
-	public Date getFechaLlegada() {
+	public String getFechaLlegada() {
 		return fechaLlegada;
 	}
-	public void setFechaLlegada(Date fechaLlegada) {
+	public void setFechaLlegada(String fechaLlegada) {
 		this.fechaLlegada = fechaLlegada;
 	}
-	public Date getFechaSalida() {
+	public String getFechaSalida() {
 		return fechaSalida;
 	}
-	public void setFechaSalida(Date fechaSalida) {
+	public void setFechaSalida(String fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
-	public Date getTiempoVuelo() {
+	public String getTiempoVuelo() {
 		return tiempoVuelo;
 	}
-	public void setTiempoVuelo(Date tiempoVuelo) {
+	public void setTiempoVuelo(String tiempoVuelo) {
 		this.tiempoVuelo = tiempoVuelo;
+	}
+	@Override
+	public String toString() {
+		return "Vuelo [id_Vuelo=" + id_Vuelo + ", numero=" + numero + ", cantidadAsientos=" + cantidadAsientos
+				+ ", aeropuertoLlegada=" + aeropuertoLlegada + ", aeropuertoSalida=" + aeropuertoSalida
+				+ ", fechaLlegada=" + fechaLlegada + ", fechaSalida=" + fechaSalida + ", tiempoVuelo=" + tiempoVuelo
+				+ "]";
 	}
 	
 

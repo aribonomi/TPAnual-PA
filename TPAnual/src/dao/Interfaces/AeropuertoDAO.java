@@ -1,12 +1,17 @@
 package dao.Interfaces;
 
+import java.util.List;
+
 import dao.negocio.Aeropuerto;
 
-public interface AeropuertoDAO extends DAOManager<Aeropuerto, String>{
+public interface AeropuertoDAO{
 	
-	/*public void altaAeropuerto(Aeropuerto aeropuerto);
-	public void bajaAeropuerto(Aeropuerto aeropuerto);
+	public void altaAeropuerto(Aeropuerto aeropuerto);
+	public void bajaAeropuerto(String codigo_aeropuerto);
 	public void modificacionAeropuerto(Aeropuerto aeropuerto);
-	public void consultaAeropuerto(Aeropuerto aeropuerto);*/
+	public List<Aeropuerto> ListAllAeropuerto();
+	public Aeropuerto getAeropuerto(String codigo_aeropuerto);
+	
+	
 
 }

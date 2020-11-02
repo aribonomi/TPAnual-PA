@@ -1,13 +1,16 @@
 package dao.Interfaces;
 
 
+import java.util.List;
+
 import dao.negocio.Cliente;
 
-public interface ClienteDAO extends DAOManager<Cliente, String>{
+public interface ClienteDAO{
 	
-	/*public void altaCliente(Cliente cliente);
+	public void altaCliente(Cliente cliente);
 	public void bajaCliente(String dni);
 	public void modificarCliente(Cliente cliente);
-	public void consultaCliente(String dni);*/
+	public Cliente getCliente(String dni);
+	public List<Cliente> ListAllCliente();
 
 }

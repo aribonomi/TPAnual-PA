@@ -8,17 +8,19 @@ public class Venta {
 	private Cliente cliente;
 	private Vuelo vuelo;
 	private Aerolinea aerolinea;
-	private Date fecha;
+	private String fecha;
 	private String formaDePago;
 	
-	public Venta(int id_Venta, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, Date fecha, String formaDePago) {
-		this.id_Venta = id_Venta;
+	public Venta(String fecha, String formaDePago, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea) {
+		
 		this.cliente = cliente;
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;
 		this.fecha = fecha;
 		this.formaDePago = formaDePago;
 	}
+	
+	public Venta() {}
 
 	public int getId_Venta() {
 		return id_Venta;
@@ -52,11 +54,11 @@ public class Venta {
 		this.aerolinea = aerolinea;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -66,6 +68,12 @@ public class Venta {
 
 	public void setFormaDePago(String formaDePago) {
 		this.formaDePago = formaDePago;
+	}
+
+	@Override
+	public String toString() {
+		return "Venta [id_Venta=" + id_Venta + ", cliente=" + cliente + ", vuelo=" + vuelo + ", aerolinea=" + aerolinea
+				+ ", fecha=" + fecha + ", formaDePago=" + formaDePago + "]";
 	}
 	
 	

@@ -1,12 +1,15 @@
 package dao.Interfaces;
 
+import java.util.List;
+
 import dao.negocio.Vuelo;
 
-public interface VuelosDAO extends DAOManager<Vuelo, String>{
+public interface VuelosDAO {
 
-	/*public void altaVuelo(Vuelo vuelo);
+	public void altaVuelo(Vuelo vuelo);
 	public void bajaVuelo(String nroDeVuelo);
 	public void modificarVuelo(Vuelo vuelo);
-	public void consultaVuelo(String nroDeVuelo);*/
+	public List<Vuelo> ListAllVuelo();
+	public Vuelo getVuelos(String nroDeVuelo);
 	
 }

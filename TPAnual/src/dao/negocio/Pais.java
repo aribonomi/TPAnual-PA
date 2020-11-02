@@ -5,7 +5,7 @@ public class Pais {
 	private int id_pais;
 	private String nombrePais;
 	
-	public Pais(int id_pais, String nombrePais) {
+	public Pais(String nombrePais) {
 		this.id_pais = id_pais;
 		this.nombrePais = nombrePais;
 	}
@@ -21,6 +21,11 @@ public class Pais {
 	}
 	public void setNombrePais(String nombrePais) {
 		this.nombrePais = nombrePais;
+	}
+
+	@Override
+	public String toString() {
+		return "Pais [id_pais=" + id_pais + ", nombrePais=" + nombrePais + "]";
 	}
 	
 	

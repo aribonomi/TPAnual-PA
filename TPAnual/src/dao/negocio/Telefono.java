@@ -7,8 +7,8 @@ public class Telefono {
 	private String celular;
 	private String laboral;
 	
-	public Telefono(int id_Telefono, String persona, String celular, String laboral) {
-		this.id_Telefono = id_Telefono;
+	public Telefono(String persona, String celular, String laboral) {
+		
 		this.persona = persona;
 		this.celular = celular;
 		this.laboral = laboral;
@@ -37,6 +37,12 @@ public class Telefono {
 	}
 	public void setLaboral(String laboral) {
 		this.laboral = laboral;
+	}
+
+	@Override
+	public String toString() {
+		return "Telefono [id_Telefono=" + id_Telefono + ", persona=" + persona + ", celular=" + celular + ", laboral="
+				+ laboral + "]";
 	}
 	
 }

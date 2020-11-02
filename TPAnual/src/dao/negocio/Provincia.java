@@ -5,8 +5,8 @@ public class Provincia {
 	private int id_provincia;
 	private String nombreProvincia;
 	
-	public Provincia(int id_provincia, String nombreProvincia) {
-		this.id_provincia = id_provincia;
+	public Provincia(String nombreProvincia) {
+		
 		this.nombreProvincia = nombreProvincia;
 	}
 	
@@ -21,6 +21,11 @@ public class Provincia {
 	}
 	public void setNombreProvincia(String nombreProvincia) {
 		this.nombreProvincia = nombreProvincia;
+	}
+
+	@Override
+	public String toString() {
+		return "Provincia [id_provincia=" + id_provincia + ", nombreProvincia=" + nombreProvincia + "]";
 	}
 	
 

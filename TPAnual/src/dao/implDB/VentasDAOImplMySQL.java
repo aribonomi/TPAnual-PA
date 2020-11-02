@@ -5,125 +5,124 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.Interfaces.VentasDAO;
 import dao.negocio.Direccion;
 import dao.negocio.Venta;
+import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
 public class VentasDAOImplMySQL implements VentasDAO{
 	
-	ConexionMySQL sql;
+    ConexionMySQL sql = new ConexionMySQL();
+	final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago) VALUES(?,?)";
+	final String delete = "DELETE FROM prog_avanzada.ventas WHERE id_ventas = ?";
+	final String update = "UPDATE prog_avanzada.ventas set id_ventas = ? , fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
+	final String ListALL = "SELECT * FROM prog_avanzada.ventas";
+	final String get = "SELECT * FROM prog_avanzada.ventas WHERE id_ventas = ?";
+	  
+	@Override
+	public void altaVenta(Venta venta) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {		
+			conexion = sql.getConnection();
+			ps = conexion.prepareStatement(add);
+			
+			ps.setString(1, venta.getFecha());
+			ps.setString(2, venta.getFormaDePago());
+			ps.executeUpdate();	
+					} 
+			catch (SQLException e) { e.printStackTrace();}
+		finally {	
+			try {ps.close();conexion.close();}
+			catch(Exception e) {e.printStackTrace();}
+		}
+		
+	}
+	@Override
+	public void bajaVenta(String id_venta) {
+		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+		conexion = sql.getConnection();
+		ps = conexion.prepareCall(delete);
+		ps.setString(1, id_venta);
+		ps.executeUpdate();	
+		conexion.close();
+	} 
+		catch (SQLException e) {e.printStackTrace();}
+	}
+	@Override
+	public void modificarVenta(Venta venta) {
 	
-	public VentasDAOImplMySQL() {
-		this.sql = new ConexionMySQL();
-	}
-
-	final String INSERTAR = "INSERT INTO ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?)";
-	final String ELIMINAR = "DELETE FROM ventas WHERE id_venta = ?";
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		
+		try {
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(update);
+			ps.setString(1, venta.getFecha());
+			ps.setString(2, venta.getFormaDePago());
+	     	ps.executeUpdate();
+			conexion.close();
+			} catch (SQLException e) {e.printStackTrace();}	
+		}
 	
-	final String CONSULTAR = "SELECT * FROM ventas WHERE id_venta = ?";
-
 	@Override
-	public void alta(Venta objeto) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(INSERTAR);
-			
-			pst.setDate(1, new Date(objeto.getFecha().getTime()));
-			pst.setString(2, objeto.getFormaDePago());
-			pst.setInt(3, objeto.getCliente().getId_cliente());
-			pst.setInt(4, objeto.getVuelo().getId_Vuelo());
-			pst.setInt(5, objeto.getAerolinea().getId_aeroLinea());
-			int registrosIngresados = pst.executeUpdate();
-			
-			System.out.println(registrosIngresados+" registro(s) ingresado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
+	public List<Venta> ListAllVenta() {
 		
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<Venta> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListALL);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+			 
+		
+		String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
+		String forma_pago = (rs.getString("forma_pago"));
+		
+		Venta venta = new Venta(fecha_hora_venta,forma_pago,null,null,null);
+		lista.add(venta);
+		 
+	     }
+			conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
+	}
+		
+	@Override
+	public Venta getVentas(String id_venta) {
+		
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(get);
+	    ps.setString(1, id_venta);
+	    ResultSet rs = ps.executeQuery();
+			    
+		while(rs.next()) {
+			 
+	   String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
+		String forma_pago = (rs.getString("forma_pago"));
+			
+		Venta venta = new Venta(fecha_hora_venta,forma_pago,null,null,null);
+		return venta;
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;}
 	}
 
-	@Override
-	public void baja(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(ELIMINAR);
-			
-			pst.setString(1, id);//Este id es un String y el id de mySQL es un int. No se si eso va a traer problemas
-			
-			int registrosActualizados = pst.executeUpdate();
-			
-			System.out.println(registrosActualizados+" registro(s) actualizado(s)");
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
-
-	@Override
-	public void modificacion(Venta objeto) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void consulta(String id) {
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = sql.getConnection();
-			pst = con.prepareStatement(CONSULTAR);
-			ResultSet rs = pst.executeQuery();
-			
-			pst.setString(1, id);
-			
-			Venta d = new Venta(0, null, null, null, null, null);
-			
-			while(rs.next()) {
-				d.setId_Venta(rs.getInt("id_venta"));
-				d.setFecha(rs.getDate("fecha_hora_venta"));
-				d.setFormaDePago(rs.getString("forma_pago"));
-				d.getCliente().setId_cliente(rs.getInt("id_cliente"));
-				d.getVuelo().setId_Vuelo(rs.getInt("id_vuelo"));
-				d.getAerolinea().setId_aeroLinea(rs.getInt("id_aerolinea"));
-				System.out.println(d.toString());
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-				pst.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
-
-}
+	
