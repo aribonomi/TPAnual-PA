@@ -15,11 +15,11 @@ import dao.util.ConexionMySQL;
 public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 
 	ConexionMySQL sql = new ConexionMySQL();
-	final String add = "INSERT INTO prog_avanzada.provincia (fecha_hora_venta, forma_pago) VALUES(?,?)";
-	final String delete = "DELETE FROM prog_avanzada.provincia WHERE id_ventas = ?";
-	final String update = "UPDATE prog_avanzada.provincia set id_ventas = ? , fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
+	final String add = "INSERT INTO prog_avanzada.provincia (nombre_provincia) VALUES(?)";
+	final String delete = "DELETE FROM prog_avanzada.provincia WHERE id_provincia = ?";
+	final String update = "UPDATE prog_avanzada.provincia set nombre_provincia = ? WHERE id_provincia = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.provincia";
-    final String get = "SELECT * FROM prog_avanzada.provincia WHERE id_ventas = ?";
+    final String get = "SELECT * FROM prog_avanzada.provincia WHERE id_provincia = ?";
 	
 	@Override
 	public void addProvincia(Provincia provincia) {
