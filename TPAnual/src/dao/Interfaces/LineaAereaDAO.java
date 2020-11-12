@@ -9,7 +9,7 @@ public interface LineaAereaDAO{
 	public void altaLineaAerea(Aerolinea aerolinea);
 	public void bajaLineaAerea(String id_aerolinea);
 	public void modificarLineaAerea(Aerolinea aerolinea);
-	public LineaAereaDAO getLineaArea(String id_aerolinea);
+	public Aerolinea getLineaArea(String id_aerolinea);
 	//public List<LineaAerea> consultaLineaAerea(;
 	
 }

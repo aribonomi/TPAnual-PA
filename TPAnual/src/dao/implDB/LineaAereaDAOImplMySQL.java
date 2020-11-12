@@ -82,7 +82,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	
 
 	@Override
-	public LineaAereaDAO getLineaArea(String id_aerolinea) {
+	public Aerolinea getLineaArea(String id_aerolinea) {
 		
 
 		Connection conexion = null;
@@ -99,7 +99,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	    String alianza = (rs.getString(("alianza")));
 	  
 	    Aerolinea aerolinea = null;
-	   // return LineaAerea;
+	    return aerolinea;
 	    
 	}
 	conexion.close();
