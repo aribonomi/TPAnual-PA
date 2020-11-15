@@ -6,15 +6,14 @@ public class Aerolinea {
 
 	private int id_aeroLinea;
 	private String nombre;
-	private List<Vuelo> vuelos;
 	private Alianza alianza;
 	
-	public Aerolinea(String nombre, List<Vuelo> vuelos, Alianza alianza) {
-		this.id_aeroLinea = id_aeroLinea;
+	public Aerolinea(String nombre, Alianza alianza) {
+		
 		this.nombre = nombre;
-		this.vuelos = vuelos;
 		this.alianza = alianza;
 	}
+	
 
 	public int getId_aeroLinea() {
 		return id_aeroLinea;
@@ -32,13 +31,6 @@ public class Aerolinea {
 		this.nombre = nombre;
 	}
 
-	public List<Vuelo> getVuelos() {
-		return vuelos;
-	}
-
-	public void setVuelos(List<Vuelo> vuelos) {
-		this.vuelos = vuelos;
-	}
 
 	public Alianza getAlianza() {
 		return alianza;
@@ -50,9 +42,10 @@ public class Aerolinea {
 
 	@Override
 	public String toString() {
-		return "Aerolinea [id_aeroLinea=" + id_aeroLinea + ", nombre=" + nombre + ", vuelos=" + vuelos + ", alianza="
-				+ alianza + "]";
+		return "Aerolinea \nID =" + id_aeroLinea + " \nNombre= " + nombre + "\nAlianza=" + alianza;
 	}
+
+	
 	
 	
 

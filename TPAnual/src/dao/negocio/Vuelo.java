@@ -12,8 +12,9 @@ public class Vuelo {
 	private String fechaLlegada;
 	private String fechaSalida;
 	private String tiempoVuelo;
+	private Aerolinea aerolinea;
 	
-	public Vuelo(String numero, int cantidadAsientos,String fechaLlegada, String fechaSalida, String tiempoVuelo, Aeropuerto aeropuertoLlegada,Aeropuerto aeropuertoSalida) {
+	public Vuelo(String numero, int cantidadAsientos,String fechaLlegada, String fechaSalida, String tiempoVuelo, Aeropuerto aeropuertoLlegada,Aeropuerto aeropuertoSalida, Aerolinea aerolinea) {
 		
 		this.numero = numero;
 		this.cantidadAsientos = cantidadAsientos;
@@ -22,6 +23,7 @@ public class Vuelo {
 		this.fechaLlegada = fechaLlegada;
 		this.fechaSalida = fechaSalida;
 		this.tiempoVuelo = tiempoVuelo;
+		this.aerolinea = aerolinea;
 	}
 	public Vuelo() { }
 	
@@ -76,13 +78,24 @@ public class Vuelo {
 	public void setTiempoVuelo(String tiempoVuelo) {
 		this.tiempoVuelo = tiempoVuelo;
 	}
+	
+	
+	public Aerolinea getAerolinea() {
+		return aerolinea;
+	}
+	public void setAerolinea(Aerolinea aerolinea) {
+		this.aerolinea = aerolinea;
+	}
 	@Override
 	public String toString() {
-		return "Vuelo [id_Vuelo=" + id_Vuelo + ", numero=" + numero + ", cantidadAsientos=" + cantidadAsientos
-				+ ", aeropuertoLlegada=" + aeropuertoLlegada + ", aeropuertoSalida=" + aeropuertoSalida
-				+ ", fechaLlegada=" + fechaLlegada + ", fechaSalida=" + fechaSalida + ", tiempoVuelo=" + tiempoVuelo
-				+ "]";
+		return "Vuelo \nID= " + id_Vuelo + "\nNúmero= " + numero + "\nCantidadAsientos= " + cantidadAsientos
+				+ "\nAeropuerto Llegada= " + aeropuertoLlegada + "\nAeropuerto Salida= " + aeropuertoSalida
+				+ "\nFecha Llegada= " + fechaLlegada + "\nFecha Salida= " + fechaSalida + "\nTiempo Vuelo= " + tiempoVuelo
+				+ "\nAerolinea= " + aerolinea;
 	}
+	
+	
+	
 	
 
 }

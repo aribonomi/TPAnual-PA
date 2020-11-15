@@ -99,7 +99,7 @@ public void altaVuelo(Vuelo vuelo) {
 		 String fechaLlegada = (rs.getString("fecha_hora_llegada"));
 	     String fechaSalida = (rs.getString("fecha_hora_salida"));
 		 String tiempoVuelo = rs.getString("tiempo_vuelo");
-		 Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null);	
+		 Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null, null);	
 					
 		 lista.add(vuelo);
 		 
@@ -128,7 +128,7 @@ public void altaVuelo(Vuelo vuelo) {
 	    String fechaLlegada = (rs.getString("fecha_hora_llegada"));
 		String fechaSalida = (rs.getString("fecha_hora_salida"));
 		String tiempoVuelo = rs.getString("tiempo_vuelo");
-		Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null);	
+		Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null, null);	
 		return vuelo;	
 	}
 	conexion.close();

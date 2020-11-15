@@ -99,7 +99,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	    String alianza = (rs.getString(("alianza")));
 	    alianza.toUpperCase();
 	  
-	    Aerolinea aerolinea = new Aerolinea(numero, null, Alianza.valueOf(alianza));
+	    Aerolinea aerolinea = new Aerolinea(numero, Alianza.valueOf(alianza));
 	    return aerolinea;
 	    
 	}
