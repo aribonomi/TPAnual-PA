@@ -11,5 +11,6 @@ public interface DireccionDAO{
 	public void modificacionDireccion(Direccion direccion);
 	public List<Direccion> ListAllDireccion();
 	public Direccion getDireccion(String id_direccion);
+	public Direccion obtenerUltimo();
 
 }

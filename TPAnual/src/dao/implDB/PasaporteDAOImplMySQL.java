@@ -17,11 +17,12 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	
 	ConexionMySQL sql = new ConexionMySQL();
 	
-	final String add = "INSERT INTO prog_avanzada.pasaporte (numero_pasaporte,autoridad_emision,fecha_emision,fecha_vencimiento) VALUES(?,?,?,?)";
-	final String delete = "DELETE FROM prog_avanzada.pasaporte WHERE id_ventas = ?";
-	final String update = "UPDATE prog_avanzada.pasaporte set id_ventas = ? , fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
+	final String add = "INSERT INTO prog_avanzada.pasaporte (numero_pasaporte,autoridad_emision,fecha_emision,fecha_vencimiento, id_pais) VALUES(?,?,?,?,?)";
+	final String delete = "DELETE FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
+	final String update = "UPDATE prog_avanzada.pasaporte set numero_pasaporte = ? , autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ?, id_pais = ? WHERE id_pasaporte = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.pasaporte";
-    final String get = "SELECT * FROM prog_avanzada.pasaporte WHERE id_ventas = ?";
+    final String get = "SELECT * FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
+    final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasaporte ORDER BY id_ventas DESC LIMIT 1";
     
 	@Override
 	public void addPasaporte(Pasaporte pasaporte) {
@@ -36,6 +37,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			ps.setString(2, pasaporte.getAutoridadEmision());
 			ps.setString(3, pasaporte.getFechaEmision());
 			ps.setString(4, pasaporte.getFechaVencimiento());
+			ps.setInt(5, pasaporte.getPaisEmision().getId_pais());
 			ps.executeUpdate();	
 					} 
 			catch (SQLException e) { e.printStackTrace();}
@@ -54,7 +56,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 		try {
 		conexion = sql.getConnection();
 		ps = conexion.prepareCall(delete);
-		ps.setString(1, numero_pasaporte);
+		ps.setInt(1, Integer.parseInt(numero_pasaporte));
 		ps.executeUpdate();	
 		conexion.close();
 	} 
@@ -73,6 +75,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			ps.setString(2, pasaporte.getAutoridadEmision());
 			ps.setString(3, pasaporte.getFechaEmision());
 			ps.setString(4, pasaporte.getFechaVencimiento());
+			ps.setInt(5, pasaporte.getPaisEmision().getId_pais());
 			
 	     	ps.executeUpdate();
 			conexion.close();
@@ -122,6 +125,28 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
 
 		Pasaporte pasaporte = new Pasaporte(numero,autoridadEmision,fecha_emision,fecha_vencimiento,null);
+		return pasaporte;	
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;
+	}
+	@Override
+	public Pasaporte obtenerUltimo() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(OBTENERULTIMO);
+	    ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+		String id = rs.getString("id_pasaporte");
+	    String numero = (rs.getString("nombre_pasaporte"));
+	    String autoridadEmision = (rs.getString("autoridad_emision"));
+	    String fecha_emision = (rs.getString("fecha_emision"));
+	    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
+
+		Pasaporte pasaporte = new Pasaporte(Integer.parseInt(id), numero,autoridadEmision,fecha_emision,fecha_vencimiento,null);
 		return pasaporte;	
 	}
 	conexion.close();

@@ -11,5 +11,6 @@ public interface PasajeroFrecuenteDAO{
 	public void updatePasajeroFrecuente(PasajeroFrecuente pasajerofrecuente);
 	public List<PasajeroFrecuente> ListAllPasajeroFrecuente();
 	public PasajeroFrecuente getPasajeroFrecuente(String id_pasajero_frecuente);
+	public PasajeroFrecuente obtenerUltimo();
 
 }

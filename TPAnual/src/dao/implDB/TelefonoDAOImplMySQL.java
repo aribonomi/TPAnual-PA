@@ -21,6 +21,7 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 	final String update = "UPDATE prog_avanzada.telefono set personal = ?, celular = ?, laboral = ? WHERE id_telefono = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.telefono";
 	final String get = "SELECT * FROM prog_avanzada.telefono WHERE id_telefono = ?";
+	final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.telefono ORDER BY id_telefono DESC LIMIT 1";
 	
 	
 	@Override
@@ -119,6 +120,30 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 		String laboral = rs.getString("laboral");
 		
 		Telefono telefono = new Telefono(personal,celular,laboral);	
+		return telefono;	
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;
+	}
+
+	@Override
+	public Telefono obtenerUltimo() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(OBTENERULTIMO);
+	    ResultSet rs = ps.executeQuery();
+	
+		while(rs.next()) {
+			 
+	    String id = (rs.getString("id_telefono"));
+		String personal = (rs.getString("personal"));
+		String celular = (rs.getString("celular"));
+		String laboral = rs.getString("laboral");
+		
+		Telefono telefono = new Telefono(Integer.parseInt(id), personal,celular,laboral);	
 		return telefono;	
 	}
 	conexion.close();

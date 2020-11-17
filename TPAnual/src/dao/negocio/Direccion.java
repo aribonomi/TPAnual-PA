@@ -10,8 +10,16 @@ public class Direccion {
 	private Provincia provincia;
 	private Pais pais;
 	
-	public Direccion(String calle, String altura, String ciudad, String codigoPostal,
-			Provincia provincia, Pais pais) {
+	public Direccion(String calle, String altura, String ciudad, String codigoPostal, Provincia provincia, Pais pais) {
+		this.calle = calle;
+		this.altura = altura;
+		this.ciudad = ciudad;
+		this.codigoPostal = codigoPostal;
+		this.provincia = provincia;
+		this.pais = pais;
+	}
+	
+	public Direccion(int id_direccion, String calle, String altura, String ciudad, String codigoPostal, Provincia provincia, Pais pais) {
 		this.id_direccion = id_direccion;
 		this.calle = calle;
 		this.altura = altura;

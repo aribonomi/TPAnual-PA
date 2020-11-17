@@ -15,6 +15,20 @@ public class PasajeroFrecuente {
 		this.alianza = alianza;
 		this.aerolinea = aerolinea;
 	}
+	
+	
+
+	public PasajeroFrecuente(int id_pasajeroFrecuente, String categoria, String numero, Alianza alianza,
+			Aerolinea aerolinea) {
+		super();
+		this.id_pasajeroFrecuente = id_pasajeroFrecuente;
+		this.categoria = categoria;
+		this.numero = numero;
+		this.alianza = alianza;
+		this.aerolinea = aerolinea;
+	}
+
+
 
 	public int getId_pasajeroFrecuente() {
 		return id_pasajeroFrecuente;

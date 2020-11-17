@@ -22,6 +22,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ? WHERE id_direccion = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.direccion";
 	final String get = "SELECT * FROM prog_avanzada.direccion WHERE id_direccion = ?";
+	final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.direccion ORDER BY id_direccion DESC LIMIT 1";
 	
 
 	@Override
@@ -125,4 +126,27 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
 	return null;}
+
+	@Override
+	public Direccion obtenerUltimo() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(OBTENERULTIMO);
+	    ResultSet rs = ps.executeQuery();
+			    
+		while(rs.next()) {
+		String id = rs.getString("id_direccion");
+		String altura = (rs.getString(("altura")));
+		String calle = (rs.getString(("calle")));
+		String ciudad = (rs.getString(("ciudad")));
+		String codigo_postal = (rs.getString(("codigo_postal")));
+		Direccion direccion = new Direccion(Integer.parseInt(id),altura, calle, ciudad, codigo_postal,null,null);
+		return direccion;
 	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;
+	}
+}

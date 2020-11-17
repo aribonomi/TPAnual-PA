@@ -13,6 +13,13 @@ public class Telefono {
 		this.celular = celular;
 		this.laboral = laboral;
 	}
+	
+	public Telefono(int id_Telefono, String persona, String celular, String laboral) {
+		this.id_Telefono = id_Telefono;
+		this.persona = persona;
+		this.celular = celular;
+		this.laboral = laboral;
+	}
 
 	public int getId_Telefono() {
 		return id_Telefono;

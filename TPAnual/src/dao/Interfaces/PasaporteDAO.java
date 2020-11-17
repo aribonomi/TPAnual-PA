@@ -11,5 +11,6 @@ public interface PasaporteDAO{
 	public void updatePasaporte(Pasaporte pasaporte);
 	public List<Pasaporte> ListAllPasaporte();
 	public Pasaporte getPasaporte(String numero_pasaporte);
+	public Pasaporte obtenerUltimo();
 	
 }

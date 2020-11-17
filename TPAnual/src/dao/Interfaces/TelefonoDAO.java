@@ -12,5 +12,6 @@ public interface TelefonoDAO{
 	public void updateTelefono(Telefono telefono);
 	public List<Telefono> ListAllTelefono();
     public Telefono getTelefono(String id_telefono);
+    public Telefono obtenerUltimo();
 
 }

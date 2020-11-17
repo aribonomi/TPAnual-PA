@@ -16,9 +16,10 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 
 	
 	ConexionMySQL sql = new ConexionMySQL();
-	final String add = "INSERT INTO prog_avanzada.cliente (nombre, apellido, dni, fecha_de_nacimiento, cuit_cuil, email) VALUES(?,?,?,?,?,?)";
+	final String add = "INSERT INTO prog_avanzada.cliente (nombre, apellido, dni, fecha_de_nacimiento, cuit_cuil, email, id_direccion, id_telefono, id_pasaporte, id_pasajero_frecuente) VALUES(?,?,?,?,?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.cliente WHERE dni = ?";
-	final String update = "UPDATE prog_avanzada.cliente set nombre = ?, apellido = ?, dni = ? , fecha_hora_nacimiento = ?, cuit_cuil = ?, email = ? WHERE dni = ? ";
+	final String update = "UPDATE prog_avanzada.cliente set nombre = ?, apellido = ?, dni = ? , fecha_hora_nacimiento = ?, "
+		+ "cuit_cuil = ?, email = ? WHERE dni = ?, id_direccion=?, id_telefono=?, id_pasaporte=?, id_pasajero_frecuente=? WHERE id_cliente=? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.cliente";
 	final String get = "SELECT * FROM prog_avanzada.cliente WHERE dni = ?";
 
@@ -38,6 +39,10 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			ps.setString(4, cliente.getFecha_nacimiento());
 			ps.setString(5, cliente.getCuit_cuil());
 			ps.setString(6, cliente.getEmail());
+			ps.setInt(7, cliente.getdireccion().getId_direccion());
+			ps.setInt(8, cliente.gettelefono().getId_Telefono());
+			ps.setInt(9, cliente.getpasaporte().getId_Pasaporte());
+			ps.setInt(10, cliente.getpasajeroFrecuente().getId_pasajeroFrecuente());
 
 			ps.executeUpdate();	
 					} 
@@ -81,6 +86,10 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			ps.setString(4, cliente.getFecha_nacimiento());
 			ps.setString(5, cliente.getCuit_cuil());
 			ps.setString(6, cliente.getEmail());
+			ps.setInt(7, cliente.getdireccion().getId_direccion());
+			ps.setInt(8, cliente.gettelefono().getId_Telefono());
+			ps.setInt(9, cliente.getpasaporte().getId_Pasaporte());
+			ps.setInt(10, cliente.getpasajeroFrecuente().getId_pasajeroFrecuente());
 
 	     	ps.executeUpdate();
 			conexion.close();
