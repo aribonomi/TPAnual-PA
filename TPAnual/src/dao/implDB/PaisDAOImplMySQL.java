@@ -119,6 +119,26 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
 	return null;}
+
+	@Override
+	public List<String> obtenerNombres() {
+		Connection conexion = null;
+		 PreparedStatement ps = null;
+		 List<String> lista= new ArrayList<>();
+		 try {
+		 conexion = sql.getConnection();
+	     ps = conexion.prepareStatement(ListAll);
+		 ResultSet rs = ps.executeQuery();    
+		 while(rs.next()) {
+		
+			String nombrepais = (rs.getString(("nombre_pais")));  
+			lista.add(nombrepais);
+	    }
+			conexion.close();
+					
+		 } catch (SQLException e) {e.printStackTrace();}
+		return lista;	
+	}
 }
 
 	

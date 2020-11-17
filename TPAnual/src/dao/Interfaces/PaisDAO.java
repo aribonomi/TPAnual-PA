@@ -11,5 +11,6 @@ public interface PaisDAO{
 	public void updatePais(Pais pais);
 	public List<Pais> ListAllPais();
 	public Pais getPais(String nombre_pais);
+	public List<String> obtenerNombres();
 	
 }

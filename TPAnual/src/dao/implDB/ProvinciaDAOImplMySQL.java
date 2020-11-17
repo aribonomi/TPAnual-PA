@@ -112,5 +112,26 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	return null;
 	}
 
+	@Override
+	public List<String> obtenerNombres() {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<String> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListAll);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+				 
+			String nombre_p = (rs.getString("nombre_provincia"));
+			
+			lista.add(nombre_p);
+		    }
+			conexion.close();
+					
+		} catch (SQLException e) {e.printStackTrace();}
+		return lista;	
+	}
+
 
 }

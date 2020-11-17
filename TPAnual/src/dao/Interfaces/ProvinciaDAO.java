@@ -11,5 +11,6 @@ public interface ProvinciaDAO{
 	public void updateProvincia(Provincia provincia);
 	public List<Provincia> ListAllProvincia();
 	public Provincia getProvincia(String nombre_provincia);
+	public List<String> obtenerNombres();
 	
 }
