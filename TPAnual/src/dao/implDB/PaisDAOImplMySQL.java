@@ -21,7 +21,7 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	final String update = "UPDATE prog_avanzada.pais set nombre_pais = ? WHERE id_pais = ? ";
     final String ListAll = "SELECT * FROM prog_avanzada.pais";
 	final String get = "SELECT * FROM prog_avanzada.pais WHERE nombre_pais = ?";
-	
+	final static String OBTENERID = "SELECT id_pais FROM prog_avanzada.pais WHERE nombre_pais = ?";	
 	@Override
 	public void addPais(Pais pais) {
 		
@@ -119,4 +119,6 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
 	return null;}
-	}
+}
+
+	
