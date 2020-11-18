@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Aerolinea {
 
-	private int id_aeroLinea;
+	private Integer id_aeroLinea;
 	private String nombre;
 	private Alianza alianza;
 	
@@ -15,11 +15,11 @@ public class Aerolinea {
 	}
 	
 
-	public int getId_aeroLinea() {
+	public Integer getId_aeroLinea() {
 		return id_aeroLinea;
 	}
 
-	public void setId_aeroLinea(int id_aeroLinea) {
+	public void setId_aeroLinea(Integer id_aeroLinea) {
 		this.id_aeroLinea = id_aeroLinea;
 	}
 
