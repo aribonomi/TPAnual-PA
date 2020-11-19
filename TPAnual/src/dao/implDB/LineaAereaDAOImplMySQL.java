@@ -74,6 +74,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 		
 			ps.setString(1, aerolinea.getNombre());
 			ps.setString(2, aerolinea.getAlianza().name());
+			ps.setInt(3, aerolinea.getId_aeroLinea());
 	
 	     	ps.executeUpdate();
 			conexion.close();
