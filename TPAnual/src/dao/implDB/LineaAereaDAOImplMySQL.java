@@ -15,7 +15,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 
     ConexionMySQL sql = new ConexionMySQL();
 	final String add = "INSERT INTO prog_avanzada.aerolinea (nombre_aerolinea, alianza) VALUES(?,?)";
-	final String delete = "DELETE FROM prog_avanzada.aerolinea WHERE id_aeropuerto = ?";
+	final String delete = "DELETE FROM prog_avanzada.aerolinea WHERE id_aerolinea = ?";
 	final String update = "UPDATE prog_avanzada.aerolinea set nombre_aerolinea = ?, alianza = ? WHERE id_aerolinea = ? ";
 	final String consulta = "SELECT * FROM prog_avanzada.aerolinea";
 	final String get = "SELECT * FROM prog_avanzada.aerolinea WHERE id_aerolinea = ?";
