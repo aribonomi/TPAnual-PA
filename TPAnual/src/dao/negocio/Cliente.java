@@ -17,7 +17,6 @@ public class Cliente {
 	public Cliente(String nombre, String apellido, String dni, String cuit_cuil,
 			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
 			PasajeroFrecuente pasajeroFrecuente) {
-		this.id_cliente = id_cliente;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -30,6 +29,25 @@ public class Cliente {
 		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
 	
+	public Cliente(int id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
+			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
+			PasajeroFrecuente pasajeroFrecuente) {
+		super();
+		this.id_cliente = id_cliente;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.cuit_cuil = cuit_cuil;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.email = email;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.pasaporte = pasaporte;
+		this.pasajeroFrecuente = pasajeroFrecuente;
+	}
+
+
+
 	public Cliente() {
 		
 	}

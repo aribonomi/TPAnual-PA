@@ -10,12 +10,24 @@ public class Aeropuerto {
 	
 	public Aeropuerto(String identificacion, String ciudad, Pais pais, Provincia provincia) {
 		super();
+		this.identificacion = identificacion;
+		this.ciudad = ciudad;
+		this.pais = pais;
+		this.provincia = provincia;
+	}
+	
+	
+
+	public Aeropuerto(int id_Aeropuerto, String identificacion, String ciudad, Pais pais, Provincia provincia) {
+		super();
 		this.id_Aeropuerto = id_Aeropuerto;
 		this.identificacion = identificacion;
 		this.ciudad = ciudad;
 		this.pais = pais;
 		this.provincia = provincia;
 	}
+
+
 
 	public int getId_Aeropuerto() {
 		return id_Aeropuerto;

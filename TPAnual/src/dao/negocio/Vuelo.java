@@ -26,10 +26,21 @@ public class Vuelo {
 		this.aerolinea = aerolinea;
 	}
 	public Vuelo() { }
-	
-	
-	
 
+	public Vuelo(int id_Vuelo, String numero, int cantidadAsientos, Aeropuerto aeropuertoLlegada,
+			Aeropuerto aeropuertoSalida, String fechaLlegada, String fechaSalida, String tiempoVuelo,
+			Aerolinea aerolinea) {
+		super();
+		this.id_Vuelo = id_Vuelo;
+		this.numero = numero;
+		this.cantidadAsientos = cantidadAsientos;
+		this.aeropuertoLlegada = aeropuertoLlegada;
+		this.aeropuertoSalida = aeropuertoSalida;
+		this.fechaLlegada = fechaLlegada;
+		this.fechaSalida = fechaSalida;
+		this.tiempoVuelo = tiempoVuelo;
+		this.aerolinea = aerolinea;
+	}
 	public int getId_Vuelo() {
 		return id_Vuelo;
 	}

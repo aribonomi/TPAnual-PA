@@ -21,6 +21,18 @@ public class Venta {
 	}
 	
 	public Venta() {}
+	
+	
+
+	public Venta(int id_Venta, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, String fecha, String formaDePago) {
+		super();
+		this.id_Venta = id_Venta;
+		this.cliente = cliente;
+		this.vuelo = vuelo;
+		this.aerolinea = aerolinea;
+		this.fecha = fecha;
+		this.formaDePago = formaDePago;
+	}
 
 	public int getId_Venta() {
 		return id_Venta;

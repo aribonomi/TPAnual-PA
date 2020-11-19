@@ -15,6 +15,16 @@ public class Aerolinea {
 	}
 	
 
+	public Aerolinea(Integer id_aeroLinea, String nombre, Alianza alianza) {
+		super();
+		this.id_aeroLinea = id_aeroLinea;
+		this.nombre = nombre;
+		this.alianza = alianza;
+	}
+
+
+
+
 	public Integer getId_aeroLinea() {
 		return id_aeroLinea;
 	}
