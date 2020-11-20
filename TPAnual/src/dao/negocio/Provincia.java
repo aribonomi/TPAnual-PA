@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class Provincia {
 	
-	private int id_provincia;
+	private Integer id_provincia;
 	private String nombreProvincia;
 	
 	public Provincia(String nombreProvincia) {
@@ -10,10 +10,16 @@ public class Provincia {
 		this.nombreProvincia = nombreProvincia;
 	}
 	
-	public int getId_provincia() {
+	public Provincia(Integer id_provincia, String nombreProvincia) {
+		super();
+		this.id_provincia = id_provincia;
+		this.nombreProvincia = nombreProvincia;
+	}
+
+	public Integer getId_provincia() {
 		return id_provincia;
 	}
-	public void setId_provincia(int id_provincia) {
+	public void setId_provincia(Integer id_provincia) {
 		this.id_provincia = id_provincia;
 	}
 	public String getNombreProvincia() {

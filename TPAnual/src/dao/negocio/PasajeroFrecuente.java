@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class PasajeroFrecuente {
 	
-	private int id_pasajeroFrecuente;
+	private Integer id_pasajeroFrecuente;
 	private String categoria;
 	private String numero;
 	private Alianza alianza;
@@ -18,7 +18,7 @@ public class PasajeroFrecuente {
 	
 	
 
-	public PasajeroFrecuente(int id_pasajeroFrecuente, String categoria, String numero, Alianza alianza,
+	public PasajeroFrecuente(Integer id_pasajeroFrecuente, String categoria, String numero, Alianza alianza,
 			Aerolinea aerolinea) {
 		super();
 		this.id_pasajeroFrecuente = id_pasajeroFrecuente;
@@ -30,10 +30,10 @@ public class PasajeroFrecuente {
 
 
 
-	public int getId_pasajeroFrecuente() {
+	public Integer getId_pasajeroFrecuente() {
 		return id_pasajeroFrecuente;
 	}
-	public void setId_pasajeroFrecuente(int id_pasajeroFrecuente) {
+	public void setId_pasajeroFrecuente(Integer id_pasajeroFrecuente) {
 		this.id_pasajeroFrecuente = id_pasajeroFrecuente;
 	}
 	public String getCategoria() {

@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class Direccion {
 	
-	private int id_direccion;
+	private Integer id_direccion;
 	private String calle;
 	private String altura;
 	private String ciudad;
@@ -19,7 +19,7 @@ public class Direccion {
 		this.pais = pais;
 	}
 	
-	public Direccion(int id_direccion, String calle, String altura, String ciudad, String codigoPostal, Provincia provincia, Pais pais) {
+	public Direccion(Integer id_direccion, String calle, String altura, String ciudad, String codigoPostal, Provincia provincia, Pais pais) {
 		this.id_direccion = id_direccion;
 		this.calle = calle;
 		this.altura = altura;
@@ -29,10 +29,10 @@ public class Direccion {
 		this.pais = pais;
 	}
 
-	public int getId_direccion() {
+	public Integer getId_direccion() {
 		return id_direccion;
 	}
-	public void setId_direccion(int id_direccion) {
+	public void setId_direccion(Integer id_direccion) {
 		this.id_direccion = id_direccion;
 	}
 	public String getCalle() {

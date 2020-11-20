@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class Telefono {
 	
-	private int id_Telefono;
+	private Integer id_Telefono;
 	private String persona;
 	private String celular;
 	private String laboral;
@@ -14,17 +14,17 @@ public class Telefono {
 		this.laboral = laboral;
 	}
 	
-	public Telefono(int id_Telefono, String persona, String celular, String laboral) {
+	public Telefono(Integer id_Telefono, String persona, String celular, String laboral) {
 		this.id_Telefono = id_Telefono;
 		this.persona = persona;
 		this.celular = celular;
 		this.laboral = laboral;
 	}
 
-	public int getId_Telefono() {
+	public Integer getId_Telefono() {
 		return id_Telefono;
 	}
-	public void setId_Telefono(int id_Telefono) {
+	public void setId_Telefono(Integer id_Telefono) {
 		this.id_Telefono = id_Telefono;
 	}
 	public String getPersona() {

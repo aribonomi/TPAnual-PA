@@ -7,15 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.Interfaces.ClienteDAO;
-import dao.negocio.Cliente;
-import dao.negocio.Vuelo;
+import Factory.Factory;
+import dao.Interfaces.*;
+import dao.negocio.*;
 import dao.util.ConexionMySQL;
 
 public class ClienteDAOImplMySQL implements ClienteDAO {
 
 	
 	ConexionMySQL sql = new ConexionMySQL();
+	DireccionDAO direccionDAO = new Factory().getDireccionDaoImplMysql();
+	TelefonoDAO telefonoDAO = new Factory().getTelefonoDaoImplMysql();
+	PasaporteDAO pasaporteDAO = new Factory().getPasaporteDaoImplMysql();
+	PasajeroFrecuenteDAO pfDAO = new Factory().getPasajeroFrecuenteDaoImplMysql();
+	
 	final String add = "INSERT INTO prog_avanzada.cliente (nombre, apellido, dni, fecha_de_nacimiento, cuit_cuil, email, id_direccion, id_telefono, id_pasaporte, id_pasajero_frecuente) VALUES(?,?,?,?,?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.cliente WHERE dni = ?";
 	final String update = "UPDATE prog_avanzada.cliente set nombre = ?, apellido = ?, dni = ? , fecha_hora_nacimiento = ?, "
@@ -114,8 +119,17 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 		String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
 		String cuit_cuil = rs.getString("cuit_cuil");
 		String email = rs.getString("email");
+		Integer id_direccion = rs.getInt("id_direccion");
+		Integer id_telefono = rs.getInt("id_telefono");
+		Integer id_pasaporte = rs.getInt("id_pasaporte");
+		Integer id_pf = rs.getInt("id_pasajero_frecuente");
 		
-		Cliente cliente = new Cliente(nombre,apellido,dni,fecha_nacimiento,cuit_cuil,email,null,null,null,null);
+		Direccion d = direccionDAO.getDireccion(id_direccion.toString());
+		Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
+		Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
+		PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+		
+		Cliente cliente = new Cliente(nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 		return cliente;
 		
 	}

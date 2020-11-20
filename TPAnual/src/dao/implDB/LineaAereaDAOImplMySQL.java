@@ -95,12 +95,13 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	    ResultSet rs = ps.executeQuery();
 			    
 		while(rs.next()) {
-			 
+		
+		String id = rs.getString("id_aerolinea");	
 		String numero = (rs.getString(("nombre_aerolinea")));
 	    String alianza = (rs.getString(("alianza")));
 	    alianza.toUpperCase();
 	  
-	    Aerolinea aerolinea = new Aerolinea(numero, Alianza.valueOf(alianza));
+	    Aerolinea aerolinea = new Aerolinea(Integer.parseInt(id), numero, Alianza.valueOf(alianza));
 	    return aerolinea;
 	    
 	}

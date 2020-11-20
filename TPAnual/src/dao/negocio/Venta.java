@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Venta {
 	
-	private int id_Venta;
+	private Integer id_Venta;
 	private Cliente cliente;
 	private Vuelo vuelo;
 	private Aerolinea aerolinea;
@@ -24,7 +24,7 @@ public class Venta {
 	
 	
 
-	public Venta(int id_Venta, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, String fecha, String formaDePago) {
+	public Venta(Integer id_Venta, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, String fecha, String formaDePago) {
 		super();
 		this.id_Venta = id_Venta;
 		this.cliente = cliente;
@@ -34,11 +34,11 @@ public class Venta {
 		this.formaDePago = formaDePago;
 	}
 
-	public int getId_Venta() {
+	public Integer getId_Venta() {
 		return id_Venta;
 	}
 
-	public void setId_Venta(int id_Venta) {
+	public void setId_Venta(Integer id_Venta) {
 		this.id_Venta = id_Venta;
 	}
 

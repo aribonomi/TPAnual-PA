@@ -115,11 +115,12 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 	
 		while(rs.next()) {
 			 
+		Integer id = rs.getInt("id_telefono");	
 	    String personal = (rs.getString("personal"));
 		String celular = (rs.getString("celular"));
 		String laboral = rs.getString("laboral");
 		
-		Telefono telefono = new Telefono(personal,celular,laboral);	
+		Telefono telefono = new Telefono(id,personal,celular,laboral);	
 		return telefono;	
 	}
 	conexion.close();

@@ -9,17 +9,21 @@ import java.util.List;
 
 import com.mysql.cj.xdevapi.Statement;
 
-import dao.Interfaces.DireccionDAO;
-import dao.negocio.Direccion;
-import dao.negocio.Vuelo;
+import Factory.Factory;
+import dao.Interfaces.*;
+import dao.negocio.*;
 import dao.util.ConexionMySQL;
 
 public class DireccionDaoImplMysql implements DireccionDAO{
 	
 	ConexionMySQL sql = new ConexionMySQL();
-	final String add = "INSERT INTO prog_avanzada.direccion (altura, calle, ciudad, codigo_postal) VALUES(?,?,?,?)";
+	
+	PaisDAO paisDAO = new Factory().getPaisDao();
+	ProvinciaDAO provinciaDAO = new Factory().getProvinciaDaoImplMysql();
+	
+	final String add = "INSERT INTO prog_avanzada.direccion (altura, calle, ciudad, codigo_postal, id_pais, id_provincia) VALUES(?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.direccion WHERE id_direccion = ?";
-	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ? WHERE id_direccion = ? ";
+	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ?, id_pais = ?, id_provincia = ? WHERE id_direccion = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.direccion";
 	final String get = "SELECT * FROM prog_avanzada.direccion WHERE id_direccion = ?";
 	final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.direccion ORDER BY id_direccion DESC LIMIT 1";
@@ -38,6 +42,8 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			ps.setString(2, direccion.getCalle());
 			ps.setString(3, direccion.getCiudad());
 			ps.setString(4, direccion.getCodigoPostal());
+			ps.setInt(5, direccion.getPais().getId_pais());
+			ps.setInt(6, direccion.getProvincia().getId_provincia());
 			ps.executeUpdate();	
 		} 
 			catch (SQLException e) { e.printStackTrace();}
@@ -75,6 +81,8 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			ps.setString(2, direccion.getCalle());
 			ps.setString(3, direccion.getCiudad());
 			ps.setString(4, direccion.getCodigoPostal());
+			ps.setInt(5, direccion.getPais().getId_pais());
+			ps.setInt(6, direccion.getProvincia().getId_provincia());
 	     	ps.executeUpdate();
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
@@ -116,11 +124,18 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			    
 		while(rs.next()) {
 		
+		Integer id = rs.getInt("id_direccion");	
 		String altura = (rs.getString(("altura")));
 		String calle = (rs.getString(("calle")));
 		String ciudad = (rs.getString(("ciudad")));
 		String codigo_postal = (rs.getString(("codigo_postal")));
-		Direccion direccion = new Direccion(altura, calle, ciudad, codigo_postal,null,null);
+		Integer id_pais = rs.getInt("id_pais");
+		Integer id_provincia = rs.getInt("id_provincia");
+		
+		Pais p = paisDAO.getPaisPorID(id_pais);
+		Provincia pr = provinciaDAO.getProvincia(id_provincia.toString());
+		
+		Direccion direccion = new Direccion(id, altura, calle, ciudad, codigo_postal,pr,p);
 		return direccion;
 	}
 	conexion.close();
@@ -142,7 +157,13 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 		String calle = (rs.getString(("calle")));
 		String ciudad = (rs.getString(("ciudad")));
 		String codigo_postal = (rs.getString(("codigo_postal")));
-		Direccion direccion = new Direccion(Integer.parseInt(id),altura, calle, ciudad, codigo_postal,null,null);
+		Integer id_pais = rs.getInt("id_pais");
+		Integer id_provincia = rs.getInt("id_provincia");
+		
+		Pais p = paisDAO.getPaisPorID(id_pais);
+		Provincia pr = provinciaDAO.getProvincia(id_provincia.toString());
+		
+		Direccion direccion = new Direccion(Integer.parseInt(id),altura, calle, ciudad, codigo_postal,pr,p);
 		return direccion;
 	}
 	conexion.close();

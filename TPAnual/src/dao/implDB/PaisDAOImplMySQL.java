@@ -22,6 +22,7 @@ public class PaisDAOImplMySQL implements PaisDAO{
     final String ListAll = "SELECT * FROM prog_avanzada.pais";
 	final String get = "SELECT * FROM prog_avanzada.pais WHERE nombre_pais = ?";
 	final static String OBTENERID = "SELECT id_pais FROM prog_avanzada.pais WHERE nombre_pais = ?";	
+	final static String GETPAISPORID = "SELECT * FROM prog_avanzada.pais WHERE id_pais = ?";
 	@Override
 	public void addPais(Pais pais) {
 		
@@ -112,8 +113,9 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		while(rs.next()) {
 			 
 		String nombrepais = (rs.getString(("nombre_pais")));
+		String id = rs.getString("id_pais");
 	    
-		Pais pais = new Pais(nombrepais);
+		Pais pais = new Pais(Integer.parseInt(id),nombrepais);
 		return pais;
 	}
 	conexion.close();
@@ -139,6 +141,30 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		 } catch (SQLException e) {e.printStackTrace();}
 		return lista;	
 	}
+
+	@Override
+	public Pais getPaisPorID(Integer id) {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(GETPAISPORID);
+		    ps.setInt(1, id);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				 
+				String nombrepais = (rs.getString(("nombre_pais")));
+				int id_pais = rs.getInt("id_pais");
+			    
+				Pais pais = new Pais(id_pais,nombrepais);
+				return pais;
+		}
+			conexion.close();
+		}catch (SQLException e) {e.printStackTrace();}
+		return null;
+	}
 }
+	
 
 	

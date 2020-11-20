@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class Aeropuerto {
 	
-	private int id_Aeropuerto;
+	private Integer id_Aeropuerto;
 	private String identificacion;
 	private String ciudad;
 	private Pais pais;
@@ -18,7 +18,7 @@ public class Aeropuerto {
 	
 	
 
-	public Aeropuerto(int id_Aeropuerto, String identificacion, String ciudad, Pais pais, Provincia provincia) {
+	public Aeropuerto(Integer id_Aeropuerto, String identificacion, String ciudad, Pais pais, Provincia provincia) {
 		super();
 		this.id_Aeropuerto = id_Aeropuerto;
 		this.identificacion = identificacion;
@@ -29,11 +29,11 @@ public class Aeropuerto {
 
 
 
-	public int getId_Aeropuerto() {
+	public Integer getId_Aeropuerto() {
 		return id_Aeropuerto;
 	}
 
-	public void setId_Aeropuerto(int id_Aeropuerto) {
+	public void setId_Aeropuerto(Integer id_Aeropuerto) {
 		this.id_Aeropuerto = id_Aeropuerto;
 	}
 

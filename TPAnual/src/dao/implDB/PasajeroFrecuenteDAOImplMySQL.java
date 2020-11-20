@@ -7,7 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Factory.Factory;
+import dao.Interfaces.AerolineaDAO;
+import dao.Interfaces.LineaAereaDAO;
+import dao.Interfaces.PaisDAO;
 import dao.Interfaces.PasajeroFrecuenteDAO;
+import dao.negocio.Aerolinea;
+import dao.negocio.Alianza;
 import dao.negocio.Direccion;
 import dao.negocio.PasajeroFrecuente;
 import dao.negocio.Vuelo;
@@ -16,6 +22,8 @@ import dao.util.ConexionMySQL;
 public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 
     ConexionMySQL sql = new ConexionMySQL();
+    LineaAereaDAO aerolineaDAO = new Factory().getLineaAereaDaoImplMysql();
+    
 	final String add = "INSERT INTO prog_avanzada.pasajero_frecuente (alianza, numero, categoria, id_aerolinea) VALUES(?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.pasajero_frecuente WHERE id_pasajero_frecuente = ?";
 	final String update = "UPDATE prog_avanzada.pasajero_frecuente set alianza=?, categoria = ?, numero = ?, id_aerolinea=?  WHERE id_pasajero_frecuente = ? ";
@@ -114,9 +122,15 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 	    ResultSet rs = ps.executeQuery();
 			    
 		while(rs.next()) {
+		Integer id = rs.getInt("id_pasajero_frecuente");	
 		String categoria = (rs.getString(("categoria")));
 	    String numero = (rs.getString("numero"));
-		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(categoria,numero,null,null);	
+	    String alianza = rs.getString("alianza");
+	    Integer id_aerolinea = rs.getInt("id_aerolinea");
+	    
+	    Aerolinea aerolinea = aerolineaDAO.getLineaArea(id_aerolinea.toString());
+	    
+		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(id,categoria,numero,Alianza.valueOf(alianza),aerolinea);	
 		return pasajerofrecuente;	
 	}
 	conexion.close();
@@ -136,7 +150,12 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 		String id = rs.getString("id_pasajero_frecuente");	
 		String categoria = (rs.getString(("categoria")));
 	    String numero = (rs.getString("numero"));
-		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(Integer.parseInt(id), categoria,numero,null,null);	
+	    String alianza = rs.getString("alianza");
+	    Integer id_aerolinea = rs.getInt("id_aerolinea");
+	    
+	    Aerolinea aerolinea = aerolineaDAO.getLineaArea(id_aerolinea.toString());
+	    
+		PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(Integer.parseInt(id), categoria,numero,Alianza.valueOf(alianza),aerolinea);	
 		return pasajerofrecuente;	
 		}
 		conexion.close();

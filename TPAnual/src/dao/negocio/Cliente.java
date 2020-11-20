@@ -2,7 +2,7 @@ package dao.negocio;
 
 public class Cliente {
 	
-	private int id_cliente;
+	private Integer id_cliente;
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -29,7 +29,7 @@ public class Cliente {
 		this.pasajeroFrecuente = pasajeroFrecuente;
 	}
 	
-	public Cliente(int id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
+	public Cliente(Integer id_cliente, String nombre, String apellido, String dni, String cuit_cuil,
 			String fecha_nacimiento, String email, Direccion direccion, Telefono telefono, Pasaporte pasaporte,
 			PasajeroFrecuente pasajeroFrecuente) {
 		super();
@@ -52,10 +52,10 @@ public class Cliente {
 		
 	}
 
-	public int getId_cliente() {
+	public Integer getId_cliente() {
 		return id_cliente;
 	}
-	public void setId_cliente(int id_cliente) {
+	public void setId_cliente(Integer id_cliente) {
 		this.id_cliente = id_cliente;
 	}
 	public String getNombre() {

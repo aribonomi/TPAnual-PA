@@ -2,18 +2,22 @@ package dao.negocio;
 
 public class Pais {
 	
-	private int id_pais;
+	private Integer id_pais;
 	private String nombrePais;
 	
 	public Pais(String nombrePais) {
+		this.nombrePais = nombrePais;
+	}
+	
+	public Pais(Integer id_pais, String nombrePais) {
 		this.id_pais = id_pais;
 		this.nombrePais = nombrePais;
 	}
 	
-	public int getId_pais() {
+	public Integer getId_pais() {
 		return id_pais;
 	}
-	public void setId_pais(int id_pais) {
+	public void setId_pais(Integer id_pais) {
 		this.id_pais = id_pais;
 	}
 	public String getNombrePais() {
