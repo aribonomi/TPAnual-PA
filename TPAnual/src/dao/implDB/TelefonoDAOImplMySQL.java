@@ -71,6 +71,8 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 			ps.setString(1, telefono.getPersona());
 			ps.setString(2, telefono.getCelular());
 			ps.setString(3, telefono.getLaboral());
+			ps.setInt(4, telefono.getId_Telefono());
+			
 	
 	     	ps.executeUpdate();
 			conexion.close();

@@ -20,6 +20,7 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	final String update = "UPDATE prog_avanzada.provincia set nombre_provincia = ? WHERE id_provincia = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.provincia";
     final String get = "SELECT * FROM prog_avanzada.provincia WHERE id_provincia = ?";
+    final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.provincia WHERE nombre_provincia = ?";
     
 	
 	@Override
@@ -106,9 +107,9 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	    
 		while(rs.next()) {
 	    String nombre_p = (rs.getString("nombre_provincia"));
-	    String id = rs.getString("id_provincia");
+	    Integer id = rs.getInt("id_provincia");
 	    
-		Provincia provincia = new Provincia(Integer.parseInt(id),nombre_p);	
+		Provincia provincia = new Provincia(id,nombre_p);	
 		return provincia;	
 	}
 	conexion.close();
@@ -135,6 +136,28 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 					
 		} catch (SQLException e) {e.printStackTrace();}
 		return lista;	
+	}
+
+	@Override
+	public Provincia getProvinciaPorNombre(String nombre_provincia) {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+		conexion = sql.getConnection();
+	    ps = conexion.prepareStatement(CONSULTAPORNOMBRE);
+	    ps.setString(1, nombre_provincia);
+	    ResultSet rs = ps.executeQuery();
+	    
+		while(rs.next()) {
+	    String nombre_p = (rs.getString("nombre_provincia"));
+	    Integer id = rs.getInt("id_provincia");
+	    
+		Provincia provincia = new Provincia(id,nombre_p);	
+		return provincia;	
+	}
+	conexion.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	return null;
 	}
 
 	

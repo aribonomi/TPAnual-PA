@@ -113,9 +113,9 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		while(rs.next()) {
 			 
 		String nombrepais = (rs.getString(("nombre_pais")));
-		String id = rs.getString("id_pais");
+		Integer id = rs.getInt("id_pais");
 	    
-		Pais pais = new Pais(Integer.parseInt(id),nombrepais);
+		Pais pais = new Pais(id,nombrepais);
 		return pais;
 	}
 	conexion.close();

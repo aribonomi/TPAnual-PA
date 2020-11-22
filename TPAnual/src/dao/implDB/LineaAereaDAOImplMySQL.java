@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.Interfaces.LineaAereaDAO;
 import dao.negocio.Aerolinea;
 import dao.negocio.Alianza;
+import dao.negocio.Pais;
 import dao.negocio.Vuelo;
 import dao.util.ConexionMySQL;
 
@@ -19,6 +22,8 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	final String update = "UPDATE prog_avanzada.aerolinea set nombre_aerolinea = ?, alianza = ? WHERE id_aerolinea = ? ";
 	final String consulta = "SELECT * FROM prog_avanzada.aerolinea";
 	final String get = "SELECT * FROM prog_avanzada.aerolinea WHERE id_aerolinea = ?";
+	final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.aerolinea WHERE nombre_aerolinea = ?";
+	final static String OBTENERNOMBRES = "SELECT nombre_aerolinea FROM prog_avanzada.aerolinea";
 
 
 	
@@ -107,10 +112,53 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	}
 	conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
-	return null;}
-	
+	return null;
+	}
 
-	
+	@Override
+	public Aerolinea consultarPorNombre(String nombre) {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(CONSULTAPORNOMBRE);
+		    ps.setString(1, nombre);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+			
+				String id = rs.getString("id_aerolinea");	
+				String numero = (rs.getString(("nombre_aerolinea")));
+			    String alianza = (rs.getString(("alianza")));
+			    alianza.toUpperCase();
+			  
+			    Aerolinea aerolinea = new Aerolinea(Integer.parseInt(id), numero, Alianza.valueOf(alianza));
+			    return aerolinea;
+			}
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		return null;
+		}
 
+	@Override
+	public List<String> obtenerNombres() {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<String> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERNOMBRES);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+			
+				String nombre = (rs.getString(("nombre_aerolinea")));  
+				lista.add(nombre);
+		    }
+		conexion.close();
+						
+		} catch (SQLException e) {e.printStackTrace();}
+		return lista;
+	}
+	
 	
 }

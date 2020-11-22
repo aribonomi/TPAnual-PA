@@ -10,6 +10,6 @@ public interface VuelosDAO {
 	public void bajaVuelo(String nroDeVuelo);
 	public void modificarVuelo(Vuelo vuelo);
 	public List<Vuelo> ListAllVuelo();
-	public Vuelo getVuelos(String nroDeVuelo);
+	public Vuelo getVuelos(Integer idVuelo);
 	
 }

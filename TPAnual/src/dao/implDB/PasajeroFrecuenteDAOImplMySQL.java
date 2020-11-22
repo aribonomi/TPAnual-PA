@@ -26,7 +26,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
     
 	final String add = "INSERT INTO prog_avanzada.pasajero_frecuente (alianza, numero, categoria, id_aerolinea) VALUES(?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.pasajero_frecuente WHERE id_pasajero_frecuente = ?";
-	final String update = "UPDATE prog_avanzada.pasajero_frecuente set alianza=?, categoria = ?, numero = ?, id_aerolinea=?  WHERE id_pasajero_frecuente = ? ";
+	final String update = "UPDATE prog_avanzada.pasajero_frecuente set alianza=?, categoria = ?, numero = ? WHERE id_pasajero_frecuente = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.pasajero_frecuente";
 	final String get = "SELECT * FROM prog_avanzada.pasajero_frecuente WHERE id_pasajero_frecuente = ?";
 	final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasajero_frecuente ORDER BY id_pasajero_frecuente DESC LIMIT 1";
@@ -82,7 +82,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 			ps.setString(3, pasajerofrecuente.getCategoria());
 			ps.setString(2, pasajerofrecuente.getNumero());
 			ps.setString(1, pasajerofrecuente.getAlianza().toString());
-			ps.setInt(4, pasajerofrecuente.getAerolinea().getId_aeroLinea());
+			ps.setInt(4, pasajerofrecuente.getId_pasajeroFrecuente());
 	     	ps.executeUpdate();
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	

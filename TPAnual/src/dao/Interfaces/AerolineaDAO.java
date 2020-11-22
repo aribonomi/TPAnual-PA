@@ -11,5 +11,6 @@ public interface AerolineaDAO {
 	public void updateAerolinea(Aerolinea aerolinea);
 	public List<Aerolinea> ListAllAerolinea();
 	public Aerolinea getAerolinea(String nombre_Aerolinea);
+	public Aerolinea consultaPorNombre(String nombre);
 	
 }

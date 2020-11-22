@@ -25,7 +25,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	
 	final String add = "INSERT INTO prog_avanzada.pasaporte (numero_pasaporte,autoridad_emision,fecha_emision,fecha_vencimiento, id_pais) VALUES(?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
-	final String update = "UPDATE prog_avanzada.pasaporte set numero_pasaporte = ? , autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ?, id_pais = ? WHERE id_pasaporte = ? ";
+	final String update = "UPDATE prog_avanzada.pasaporte set numero_pasaporte = ? , autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id_pasaporte = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.pasaporte";
     final String get = "SELECT * FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
     final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasaporte ORDER BY id_pasaporte DESC LIMIT 1";
@@ -81,7 +81,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			ps.setString(2, pasaporte.getAutoridadEmision());
 			ps.setString(3, pasaporte.getFechaEmision());
 			ps.setString(4, pasaporte.getFechaVencimiento());
-			ps.setInt(5, pasaporte.getPaisEmision().getId_pais());
+			ps.setInt(5, pasaporte.getId_Pasaporte());
 			
 	     	ps.executeUpdate();
 			conexion.close();

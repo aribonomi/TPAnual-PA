@@ -7,18 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.Interfaces.VuelosDAO;
-import dao.negocio.Vuelo;
+import Factory.Factory;
+import dao.Interfaces.*;
+import dao.negocio.*;
 import dao.util.ConexionMySQL;
 
 public class VuelosDAOImplMySQL implements VuelosDAO{
 	
   ConexionMySQL sql = new ConexionMySQL();
-  final String add = "INSERT INTO prog_avanzada.vuelos (numero_vuelo, cant_asientos, fecha_hora_salida, fecha_hora_llegada, tiempo_vuelo) VALUES(?,?,?,?,?)";
-  final String delete = "DELETE FROM prog_avanzada.vuelos WHERE id_aeropuerto = ?";
-  final String update = "UPDATE prog_avanzada.vuelos set numero_vuelo = ?, cant_asientos = ?, fecha_hora_llegada = ? , fecha_hora_llegada = ?, tiempo_vuelo = ? WHERE numero_vuelo = ? ";
+  
+  AeropuertoDAO aeropDAO = new Factory().getAeropuertoDaoImplMysql();
+  LineaAereaDAO laDAO = new Factory().getLineaAereaDaoImplMysql();
+  
+  final String add = "INSERT INTO prog_avanzada.vuelos (numero_vuelo, cant_asientos, fecha_hora_salida, fecha_hora_llegada, tiempo_vuelo, id_aerolinea, id_aeropuerto_salida, id_aeropuerto_llegada) VALUES(?,?,?,?,?,?,?,?)";
+  final String delete = "DELETE FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
+  final String update = "UPDATE prog_avanzada.vuelos set numero_vuelo = ?, cant_asientos = ?, fecha_hora_llegada = ? , fecha_hora_llegada = ?, tiempo_vuelo = ? WHERE id_vuelo = ? ";
   final String ListAll = "SELECT * FROM prog_avanzada.vuelos";
-  final String get = "SELECT * FROM prog_avanzada.vuelos WHERE numero_vuelo = ?";
+  final String get = "SELECT * FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
 
 @Override
 public void altaVuelo(Vuelo vuelo) {
@@ -33,6 +38,9 @@ public void altaVuelo(Vuelo vuelo) {
 			ps.setString(3, vuelo.getFechaSalida());
 			ps.setString(4, vuelo.getFechaLlegada());
 			ps.setString(5, vuelo.getTiempoVuelo());
+			ps.setInt(6, vuelo.getAerolinea().getId_aeroLinea());
+			ps.setInt(7, vuelo.getAeropuertoSalida().getId_Aeropuerto());
+			ps.setInt(8, vuelo.getAeropuertoLlegada().getId_Aeropuerto());
 			
 			ps.executeUpdate();	
 					} 
@@ -74,6 +82,7 @@ public void altaVuelo(Vuelo vuelo) {
 			ps.setString(3, vuelo.getFechaSalida());
 			ps.setString(4, vuelo.getFechaLlegada());
 			ps.setString(5, vuelo.getTiempoVuelo());
+			ps.setInt(6, vuelo.getId_Vuelo());
 			
 
 	     	ps.executeUpdate();
@@ -99,6 +108,8 @@ public void altaVuelo(Vuelo vuelo) {
 		 String fechaLlegada = (rs.getString("fecha_hora_llegada"));
 	     String fechaSalida = (rs.getString("fecha_hora_salida"));
 		 String tiempoVuelo = rs.getString("tiempo_vuelo");
+		 
+		 
 		 Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null, null);	
 					
 		 lista.add(vuelo);
@@ -111,24 +122,32 @@ public void altaVuelo(Vuelo vuelo) {
 	}
 	
 	@Override
-	public Vuelo getVuelos(String nroDeVuelo) {
+	public Vuelo getVuelos(Integer idVuelo) {
 	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
 		conexion = sql.getConnection();
 	    ps = conexion.prepareStatement(get);
-	    ps.setString(1, nroDeVuelo);
+	    ps.setInt(1, idVuelo);
 	    ResultSet rs = ps.executeQuery();
 			    
 		while(rs.next()) {
-			 
+		Integer id = rs.getInt("id_vuelo");	 
 		String numero = (rs.getString(("numero_vuelo")));
 	    int cant_asientos = (rs.getInt(("cant_asientos")));
 	    String fechaLlegada = (rs.getString("fecha_hora_llegada"));
 		String fechaSalida = (rs.getString("fecha_hora_salida"));
 		String tiempoVuelo = rs.getString("tiempo_vuelo");
-		Vuelo vuelo = new Vuelo(numero, cant_asientos, fechaLlegada,fechaSalida,tiempoVuelo,null,null, null);	
+		Integer id_aerolinea = rs.getInt("id_aerolinea");
+		Integer id_aeropuerto_salida = rs.getInt("id_aeropuerto_salida");
+		Integer id_aeropuerto_llegada = rs.getInt("id_aeropuerto_llegada");
+		
+		Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
+		Aeropuerto aeropuertoSalida = aeropDAO.getAeropuerto(id_aeropuerto_salida);
+		Aeropuerto aeropuertoLlegada = aeropDAO.getAeropuerto(id_aeropuerto_llegada);
+		
+		Vuelo vuelo = new Vuelo(id, numero, cant_asientos, fechaLlegada, fechaSalida, tiempoVuelo, aeropuertoLlegada, aeropuertoSalida, aerolinea);	
 		return vuelo;	
 	}
 	conexion.close();

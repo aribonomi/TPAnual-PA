@@ -1,25 +1,28 @@
 package dao.implDB;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.Interfaces.VentasDAO;
-import dao.negocio.Direccion;
-import dao.negocio.Venta;
-import dao.negocio.Vuelo;
+import Factory.Factory;
+import dao.Interfaces.*;
+import dao.negocio.*;
 import dao.util.ConexionMySQL;
 
 public class VentasDAOImplMySQL implements VentasDAO{
 	
     ConexionMySQL sql = new ConexionMySQL();
-	final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago) VALUES(?,?)";
+    
+    ClienteDAO clienteDAO = new Factory().getClienteDaoImplMysql();
+    LineaAereaDAO laDAO = new Factory().getLineaAereaDaoImplMysql();
+    VuelosDAO vueloDAO = new Factory().getVuelosDaoImplMysql();
+    
+	final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.ventas WHERE id_ventas = ?";
-	final String update = "UPDATE prog_avanzada.ventas set id_ventas = ? , fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
+	final String update = "UPDATE prog_avanzada.ventas set fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
 	final String ListALL = "SELECT * FROM prog_avanzada.ventas";
 	final String get = "SELECT * FROM prog_avanzada.ventas WHERE id_ventas = ?";
 	  
@@ -35,6 +38,9 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			
 			ps.setString(1, venta.getFecha());
 			ps.setString(2, venta.getFormaDePago());
+			ps.setInt(3, venta.getCliente().getId_cliente());
+			ps.setInt(4, venta.getVuelo().getId_Vuelo());
+			ps.setInt(4, venta.getAerolinea().getId_aeroLinea());
 			ps.executeUpdate();	
 					} 
 			catch (SQLException e) { e.printStackTrace();}
@@ -70,6 +76,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			ps = conexion.prepareCall(update);
 			ps.setString(1, venta.getFecha());
 			ps.setString(2, venta.getFormaDePago());
+			ps.setInt(3, venta.getId_Venta());
 	     	ps.executeUpdate();
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
@@ -82,23 +89,23 @@ public class VentasDAOImplMySQL implements VentasDAO{
 		PreparedStatement ps = null;
 		List<Venta> lista= new ArrayList<>();
 		 try {
-		 conexion = sql.getConnection();
-	     ps = conexion.prepareStatement(ListALL);
-		 ResultSet rs = ps.executeQuery();    
-		 while(rs.next()) {
+			 conexion = sql.getConnection();
+		     ps = conexion.prepareStatement(ListALL);
+			 ResultSet rs = ps.executeQuery();    
+			 while(rs.next()) {
+				 
+			
+				String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
+				String forma_pago = (rs.getString("forma_pago"));
+				
+				Venta venta = new Venta(fecha_hora_venta,forma_pago,null,null,null);
+				lista.add(venta);
 			 
-		
-		String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
-		String forma_pago = (rs.getString("forma_pago"));
-		
-		Venta venta = new Venta(fecha_hora_venta,forma_pago,null,null,null);
-		lista.add(venta);
-		 
-	     }
-			conexion.close();
-					
-	} catch (SQLException e) {e.printStackTrace();}
-			return lista;	
+			 }
+			 conexion.close();
+						
+		 } catch (SQLException e) {e.printStackTrace();}
+		 return lista;	
 	}
 		
 	@Override
@@ -107,21 +114,28 @@ public class VentasDAOImplMySQL implements VentasDAO{
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
-		conexion = sql.getConnection();
-	    ps = conexion.prepareStatement(get);
-	    ps.setString(1, id_venta);
-	    ResultSet rs = ps.executeQuery();
-			    
-		while(rs.next()) {
-			 
-	   String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
-		String forma_pago = (rs.getString("forma_pago"));
-			
-		Venta venta = new Venta(fecha_hora_venta,forma_pago,null,null,null);
-		return venta;
-	}
-	conexion.close();
-	} catch (SQLException e) {e.printStackTrace();}
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(get);
+		    ps.setString(1, id_venta);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				 
+			  String fecha_hora_venta = rs.getString("fecha_hora_venta");
+			  String forma_pago = rs.getString("forma_pago");
+			  Integer id_cliente = rs.getInt("id_cliente");
+			  Integer id_aerolinea = rs.getInt("id_aerolinea");
+			  Integer id_vuelo = rs.getInt("id_vuelo");
+			  
+			  Cliente cliente = clienteDAO.consultaPorId(id_cliente);
+			  Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
+			  Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
+			  
+			  Venta venta = new Venta(fecha_hora_venta, forma_pago, cliente, vuelo, aerolinea);
+			  return venta;
+			}
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
 	return null;}
 	}
 

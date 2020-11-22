@@ -121,10 +121,10 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id_cliente=" + id_cliente + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
-				+ ", cuit_cuil=" + cuit_cuil + ", fecha_nacimiento=" + fecha_nacimiento + ", email=" + email
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", pasaporte=" + pasaporte
-				+ ", pasajeroFrecuente=" + pasajeroFrecuente + "]";
+		return "Cliente \nID: " + id_cliente + "\nNombre: " + nombre + "\nApellido: " + apellido + "\nDni: " + dni
+				+ "\nCUIT/CUIL: " + cuit_cuil + "\nFecha de nacimiento: " + fecha_nacimiento + "\nEmail: " + email
+				+ "\nDireccion:" + direccion + "\nTeléfono: " + telefono + "\nPasaporte: " + pasaporte
+				+ "\nPasajero frecuente: " + pasajeroFrecuente;
 	}
 
 	
