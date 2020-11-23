@@ -11,5 +11,6 @@ public interface VuelosDAO {
 	public void modificarVuelo(Vuelo vuelo);
 	public List<Vuelo> ListAllVuelo();
 	public Vuelo getVuelos(Integer idVuelo);
+	public List<Integer> obtenerIDs(); 
 	
 }

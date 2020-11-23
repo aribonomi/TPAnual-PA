@@ -21,9 +21,10 @@ public class VuelosDAOImplMySQL implements VuelosDAO{
   
   final String add = "INSERT INTO prog_avanzada.vuelos (numero_vuelo, cant_asientos, fecha_hora_salida, fecha_hora_llegada, tiempo_vuelo, id_aerolinea, id_aeropuerto_salida, id_aeropuerto_llegada) VALUES(?,?,?,?,?,?,?,?)";
   final String delete = "DELETE FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
-  final String update = "UPDATE prog_avanzada.vuelos set numero_vuelo = ?, cant_asientos = ?, fecha_hora_llegada = ? , fecha_hora_llegada = ?, tiempo_vuelo = ? WHERE id_vuelo = ? ";
+  final String update = "UPDATE prog_avanzada.vuelos set numero_vuelo = ?, cant_asientos = ?, fecha_hora_llegada = ? , fecha_hora_llegada = ?, tiempo_vuelo = ?, id_aerolinea = ?, id_aeropuerto_salida=?, id_aeropuerto_llegada=? WHERE id_vuelo = ? ";
   final String ListAll = "SELECT * FROM prog_avanzada.vuelos";
   final String get = "SELECT * FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
+  final static String OBTENERIDS = "SELECT id_vuelo FROM prog_avanzada.vuelos";
 
 @Override
 public void altaVuelo(Vuelo vuelo) {
@@ -82,7 +83,10 @@ public void altaVuelo(Vuelo vuelo) {
 			ps.setString(3, vuelo.getFechaSalida());
 			ps.setString(4, vuelo.getFechaLlegada());
 			ps.setString(5, vuelo.getTiempoVuelo());
-			ps.setInt(6, vuelo.getId_Vuelo());
+			ps.setInt(6, vuelo.getAerolinea().getId_aeroLinea());
+			ps.setInt(7, vuelo.getAeropuertoSalida().getId_Aeropuerto());
+			ps.setInt(8, vuelo.getAeropuertoLlegada().getId_Aeropuerto());
+			ps.setInt(9, vuelo.getId_Vuelo());
 			
 
 	     	ps.executeUpdate();
@@ -153,4 +157,27 @@ public void altaVuelo(Vuelo vuelo) {
 	conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
 	return null;}
+
+
+	@Override
+	public List<Integer> obtenerIDs() {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<Integer> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERIDS);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+				 
+			    Integer id = rs.getInt("id_vuelo");
+									
+				lista.add(id);
+			 
+		    }
+			conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
+	}
 }

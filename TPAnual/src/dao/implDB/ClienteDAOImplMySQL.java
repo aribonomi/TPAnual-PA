@@ -28,6 +28,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	final String ListAll = "SELECT * FROM prog_avanzada.cliente";
 	final String get = "SELECT * FROM prog_avanzada.cliente WHERE dni = ?";
 	final static String CONSULTAPORID = "SELECT * FROM prog_avanzada.cliente WHERE id_cliente = ?";
+	final static String OBTENERIDS = "SELECT id_cliente FROM prog_avanzada.cliente";
 
 	
 	@Override
@@ -197,6 +198,27 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			conexion.close();
 		} catch (SQLException e) {e.printStackTrace();}
 		return null;
+	}
+
+	@Override
+	public List<Integer> obtenerDnis() {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<Integer> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERIDS);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+				 
+				Integer id = rs.getInt("id_cliente");
+						
+				lista.add(id);
+		     }
+				conexion.close();
+					
+	} catch (SQLException e) {e.printStackTrace();}
+			return lista;	
 	}
 		
 

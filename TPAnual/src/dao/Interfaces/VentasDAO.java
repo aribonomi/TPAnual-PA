@@ -11,5 +11,6 @@ public interface VentasDAO{
 	public void modificarVenta(Venta venta);
 	public List<Venta> ListAllVenta();
 	public Venta getVentas(String id_venta);
+	public List<Integer> obtenerIds();
 
 }

@@ -6,7 +6,7 @@ public class Vuelo {
 	
 	private int id_Vuelo;
 	private String numero;
-	private int cantidadAsientos;
+	private Integer cantidadAsientos;
 	private Aeropuerto aeropuertoLlegada;
 	private Aeropuerto aeropuertoSalida;
 	private String fechaLlegada;
@@ -14,7 +14,7 @@ public class Vuelo {
 	private String tiempoVuelo;
 	private Aerolinea aerolinea;
 	
-	public Vuelo(String numero, int cantidadAsientos,String fechaLlegada, String fechaSalida, String tiempoVuelo, 
+	public Vuelo(String numero, Integer cantidadAsientos,String fechaLlegada, String fechaSalida, String tiempoVuelo, 
 			Aeropuerto aeropuertoLlegada,Aeropuerto aeropuertoSalida, Aerolinea aerolinea) {
 		
 		this.numero = numero;
@@ -28,7 +28,7 @@ public class Vuelo {
 	}
 	public Vuelo() { }
 
-	public Vuelo(Integer id_Vuelo, String numero, int cantidadAsientos, String fechaLlegada, String fechaSalida, 
+	public Vuelo(Integer id_Vuelo, String numero, Integer cantidadAsientos, String fechaLlegada, String fechaSalida, 
 			String tiempoVuelo,Aeropuerto aeropuertoLlegada,Aeropuerto aeropuertoSalida, Aerolinea aerolinea) {
 		super();
 		this.id_Vuelo = id_Vuelo;
@@ -53,10 +53,10 @@ public class Vuelo {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-	public int getCantidadAsientos() {
+	public Integer getCantidadAsientos() {
 		return cantidadAsientos;
 	}
-	public void setCantidadAsientos(int cantidadAsientos) {
+	public void setCantidadAsientos(Integer cantidadAsientos) {
 		this.cantidadAsientos = cantidadAsientos;
 	}
 	public Aeropuerto getAeropuertoLlegada() {

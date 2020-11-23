@@ -13,5 +13,6 @@ public interface ClienteDAO{
 	public Cliente getCliente(String dni);
 	public Cliente consultaPorId(Integer id);
 	public List<Cliente> ListAllCliente();
+	public List<Integer> obtenerDnis();
 
 }

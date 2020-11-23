@@ -22,9 +22,10 @@ public class VentasDAOImplMySQL implements VentasDAO{
     
 	final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.ventas WHERE id_ventas = ?";
-	final String update = "UPDATE prog_avanzada.ventas set fecha_hora_venta = ?, forma_pago = ? WHERE id_ventas = ? ";
+	final String update = "UPDATE prog_avanzada.ventas set fecha_hora_venta = ?, forma_pago = ?, id_cliente=?, id_vuelo=?, id_aerolinea=? WHERE id_ventas = ? ";
 	final String ListALL = "SELECT * FROM prog_avanzada.ventas";
 	final String get = "SELECT * FROM prog_avanzada.ventas WHERE id_ventas = ?";
+	final static String OBTENERIDS = "SELECT id_ventas FROM prog_avanzada.ventas";
 	  
 	@Override
 	public void altaVenta(Venta venta) {
@@ -40,7 +41,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			ps.setString(2, venta.getFormaDePago());
 			ps.setInt(3, venta.getCliente().getId_cliente());
 			ps.setInt(4, venta.getVuelo().getId_Vuelo());
-			ps.setInt(4, venta.getAerolinea().getId_aeroLinea());
+			ps.setInt(5, venta.getAerolinea().getId_aeroLinea());
 			ps.executeUpdate();	
 					} 
 			catch (SQLException e) { e.printStackTrace();}
@@ -76,7 +77,10 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			ps = conexion.prepareCall(update);
 			ps.setString(1, venta.getFecha());
 			ps.setString(2, venta.getFormaDePago());
-			ps.setInt(3, venta.getId_Venta());
+			ps.setInt(3, venta.getCliente().getId_cliente());
+			ps.setInt(4, venta.getVuelo().getId_Vuelo());
+			ps.setInt(5, venta.getAerolinea().getId_aeroLinea());
+			ps.setInt(6, venta.getId_Venta());
 	     	ps.executeUpdate();
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
@@ -137,6 +141,29 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			conexion.close();
 		} catch (SQLException e) {e.printStackTrace();}
 	return null;}
+	
+	
+	@Override
+	public List<Integer> obtenerIds() {
+		Connection conexion = null;
+		PreparedStatement ps = null;
+		List<Integer> lista= new ArrayList<>();
+		try {
+			 conexion = sql.getConnection();
+		     ps = conexion.prepareStatement(ListALL);
+			 ResultSet rs = ps.executeQuery();    
+			 while(rs.next()) {
+	
+				Integer id_venta = rs.getInt("id_ventas");
+				
+				lista.add(id_venta);
+			 
+		}
+		conexion.close();
+						
+		} catch (SQLException e) {e.printStackTrace();}
+		return lista;	
+	}
 	}
 
 	
