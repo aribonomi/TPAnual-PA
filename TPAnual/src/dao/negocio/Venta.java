@@ -84,8 +84,8 @@ public class Venta {
 
 	@Override
 	public String toString() {
-		return "Venta [id_Venta=" + id_Venta + ", cliente=" + cliente + ", vuelo=" + vuelo + ", aerolinea=" + aerolinea
-				+ ", fecha=" + fecha + ", formaDePago=" + formaDePago + "]";
+		return "Venta \nId: " + id_Venta + "\nCliente: " + cliente + "\nVuelo: " + vuelo + "\nAerolinea: " + aerolinea
+				+ "\nFecha: " + fecha + "\nForma de pago: " + formaDePago;
 	}
 	
 	

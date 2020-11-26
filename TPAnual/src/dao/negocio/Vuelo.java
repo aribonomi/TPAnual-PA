@@ -99,10 +99,10 @@ public class Vuelo {
 	}
 	@Override
 	public String toString() {
-		return "Vuelo \nID= " + id_Vuelo + "\nNúmero= " + numero + "\nCantidadAsientos= " + cantidadAsientos
-				+ "\nAeropuerto Llegada= " + aeropuertoLlegada + "\nAeropuerto Salida= " + aeropuertoSalida
-				+ "\nFecha Llegada= " + fechaLlegada + "\nFecha Salida= " + fechaSalida + "\nTiempo Vuelo= " + tiempoVuelo
-				+ "\nAerolinea= " + aerolinea;
+		return "Vuelo \nID: " + id_Vuelo + "\nNúmero: " + numero + "\nCantidad de asientos: " + cantidadAsientos
+				+ "\nAeropuerto Llegada: " + aeropuertoLlegada + "\nAeropuerto Salida: " + aeropuertoSalida
+				+ "\nFecha Llegada: " + fechaLlegada + "\nFecha Salida: " + fechaSalida + "\nTiempo de vuelo: " + tiempoVuelo
+				+ "\nAerolinea: " + aerolinea;
 	}
 	
 	

@@ -12,5 +12,6 @@ public interface VuelosDAO {
 	public List<Vuelo> ListAllVuelo();
 	public Vuelo getVuelos(Integer idVuelo);
 	public List<Integer> obtenerIDs(); 
+	public Vuelo obtenerUltimo();
 	
 }

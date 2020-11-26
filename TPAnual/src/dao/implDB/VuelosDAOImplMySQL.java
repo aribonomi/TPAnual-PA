@@ -25,6 +25,7 @@ public class VuelosDAOImplMySQL implements VuelosDAO{
   final String ListAll = "SELECT * FROM prog_avanzada.vuelos";
   final String get = "SELECT * FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
   final static String OBTENERIDS = "SELECT id_vuelo FROM prog_avanzada.vuelos";
+  final static String OBTENERULTIMO = "SELECT * FROM vuelos ORDER BY id_vuelo DESC LIMIT 1";
 
 @Override
 public void altaVuelo(Vuelo vuelo) {
@@ -180,4 +181,40 @@ public void altaVuelo(Vuelo vuelo) {
 	} catch (SQLException e) {e.printStackTrace();}
 			return lista;	
 	}
+
+
+	@Override
+	public Vuelo obtenerUltimo() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERULTIMO);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				Integer id = rs.getInt("id_vuelo");	 
+				String numero = (rs.getString(("numero_vuelo")));
+			    int cant_asientos = (rs.getInt(("cant_asientos")));
+			    String fechaLlegada = (rs.getString("fecha_hora_llegada"));
+				String fechaSalida = (rs.getString("fecha_hora_salida"));
+				String tiempoVuelo = rs.getString("tiempo_vuelo");
+				Integer id_aerolinea = rs.getInt("id_aerolinea");
+				Integer id_aeropuerto_salida = rs.getInt("id_aeropuerto_salida");
+				Integer id_aeropuerto_llegada = rs.getInt("id_aeropuerto_llegada");
+				
+				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
+				Aeropuerto aeropuertoSalida = aeropDAO.getAeropuerto(id_aeropuerto_salida);
+				Aeropuerto aeropuertoLlegada = aeropDAO.getAeropuerto(id_aeropuerto_llegada);
+				
+				Vuelo vuelo = new Vuelo(id, numero, cant_asientos, fechaLlegada, fechaSalida, tiempoVuelo, aeropuertoLlegada, aeropuertoSalida, aerolinea);	
+				return vuelo;	
+			}
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		return null;}
+	
+	
+	
+	
 }
