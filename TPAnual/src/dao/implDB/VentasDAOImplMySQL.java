@@ -26,6 +26,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 	final String ListALL = "SELECT * FROM prog_avanzada.ventas";
 	final String get = "SELECT * FROM prog_avanzada.ventas WHERE id_ventas = ?";
 	final static String OBTENERIDS = "SELECT id_ventas FROM prog_avanzada.ventas";
+	final static String OBTENERULTIMA = "SELECT * FROM ventas ORDER BY id_ventas DESC LIMIT 1";
 	  
 	@Override
 	public void altaVenta(Venta venta) {
@@ -163,6 +164,35 @@ public class VentasDAOImplMySQL implements VentasDAO{
 						
 		} catch (SQLException e) {e.printStackTrace();}
 		return lista;	
+	}
+	@Override
+	public Venta obtenerUltima() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERULTIMA);
+		    
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				Integer id_venta = rs.getInt("id_ventas");
+				String fecha_hora_venta = rs.getString("fecha_hora_venta");
+				String forma_pago = rs.getString("forma_pago");
+				Integer id_cliente = rs.getInt("id_cliente");
+				Integer id_aerolinea = rs.getInt("id_aerolinea");
+				Integer id_vuelo = rs.getInt("id_vuelo");
+			  
+				Cliente cliente = clienteDAO.consultaPorId(id_cliente);
+				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
+				Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
+			  
+				Venta venta = new Venta(id_venta, cliente, vuelo, aerolinea, fecha_hora_venta, forma_pago);
+				return venta;
+			}
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		return null;
 	}
 	}
 

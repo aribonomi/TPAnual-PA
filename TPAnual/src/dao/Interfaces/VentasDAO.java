@@ -12,5 +12,6 @@ public interface VentasDAO{
 	public List<Venta> ListAllVenta();
 	public Venta getVentas(String id_venta);
 	public List<Integer> obtenerIds();
+	public Venta obtenerUltima();
 
 }
