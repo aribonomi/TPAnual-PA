@@ -23,7 +23,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	
 	final String add = "INSERT INTO prog_avanzada.direccion (altura, calle, ciudad, codigo_postal, id_pais, id_provincia) VALUES(?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.direccion WHERE id_direccion = ?";
-	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ? WHERE id_direccion = ? ";
+	final String update = "UPDATE prog_avanzada.direccion set altura = ?, calle = ?, ciudad = ? , codigo_postal = ?, id_pais = ?, id_provincia = ? WHERE id_direccion = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.direccion";
 	final String get = "SELECT * FROM prog_avanzada.direccion WHERE id_direccion = ?";
 	final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.direccion ORDER BY id_direccion DESC LIMIT 1";
@@ -81,7 +81,9 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			ps.setString(2, direccion.getCalle());
 			ps.setString(3, direccion.getCiudad());
 			ps.setString(4, direccion.getCodigoPostal());
-			ps.setInt(5, direccion.getId_direccion());
+			ps.setInt(5, direccion.getPais().getId_pais());
+			ps.setInt(6, direccion.getProvincia().getId_provincia());
+			ps.setInt(7, direccion.getId_direccion());
 	     	ps.executeUpdate();
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
