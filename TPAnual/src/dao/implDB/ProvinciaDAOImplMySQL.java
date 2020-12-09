@@ -20,7 +20,7 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	final String update = "UPDATE prog_avanzada.provincia set nombre_provincia = ? WHERE id_provincia = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.provincia";
     final String get = "SELECT * FROM prog_avanzada.provincia WHERE id_provincia = ?";
-    final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.provincia WHERE nombre_provincia = ?";
+    final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.provincia WHERE nombre_provincia = ? LIMIT 1";
     
 	
 	@Override

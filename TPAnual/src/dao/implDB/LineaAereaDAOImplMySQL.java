@@ -22,7 +22,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	final String update = "UPDATE prog_avanzada.aerolinea set nombre_aerolinea = ?, alianza = ? WHERE id_aerolinea = ? ";
 	final String consulta = "SELECT * FROM prog_avanzada.aerolinea";
 	final String get = "SELECT * FROM prog_avanzada.aerolinea WHERE id_aerolinea = ?";
-	final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.aerolinea WHERE nombre_aerolinea = ?";
+	final static String CONSULTAPORNOMBRE = "SELECT * FROM prog_avanzada.aerolinea WHERE nombre_aerolinea = ? LIMIT 1";
 	final static String OBTENERNOMBRES = "SELECT nombre_aerolinea FROM prog_avanzada.aerolinea";
 
 

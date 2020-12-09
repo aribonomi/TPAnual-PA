@@ -14,5 +14,6 @@ public interface ClienteDAO{
 	public Cliente consultaPorId(Integer id);
 	public List<Cliente> ListAllCliente();
 	public List<Integer> obtenerDnis();
+	public Cliente obtenerUltimo();
 
 }

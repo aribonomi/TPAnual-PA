@@ -27,8 +27,9 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 		+ "cuit_cuil = ?, email = ? WHERE id_cliente=? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.cliente";
 	final String get = "SELECT * FROM prog_avanzada.cliente WHERE dni = ?";
-	final static String CONSULTAPORID = "SELECT * FROM prog_avanzada.cliente WHERE id_cliente = ?";
-	final static String OBTENERIDS = "SELECT id_cliente FROM prog_avanzada.cliente";
+	final String CONSULTAPORID = "SELECT * FROM prog_avanzada.cliente WHERE id_cliente = ?";
+	final String OBTENERIDS = "SELECT id_cliente FROM prog_avanzada.cliente";
+	final String OBTENERULTIMO = "SELECT * FROM prog_avanzada.cliente ORDER BY id_cliente DESC LIMIT 1";
 
 	
 	@Override
@@ -219,6 +220,42 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 					
 	} catch (SQLException e) {e.printStackTrace();}
 			return lista;	
+	}
+
+	@Override
+	public Cliente obtenerUltimo() {
+		Connection conexion = null;
+	    PreparedStatement ps = null;	    
+		try {	 
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERULTIMO);
+
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				Integer codigo = rs.getInt("id_cliente"); 
+				String nombre = (rs.getString(("nombre")));
+			    String apellido = (rs.getString(("apellido")));
+			    String dni = rs.getNString("dni");
+				String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
+				String cuit_cuil = rs.getString("cuit_cuil");
+				String email = rs.getString("email");
+				Integer id_direccion = rs.getInt("id_direccion");
+				Integer id_telefono = rs.getInt("id_telefono");
+				Integer id_pasaporte = rs.getInt("id_pasaporte");
+				Integer id_pf = rs.getInt("id_pasajero_frecuente");
+				
+				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
+				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
+				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
+				PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+				
+				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
+				return cliente;
+			}
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		return null;
 	}
 		
 
