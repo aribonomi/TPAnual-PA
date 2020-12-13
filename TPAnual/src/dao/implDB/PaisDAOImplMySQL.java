@@ -15,28 +15,37 @@ import dao.util.ConexionMySQL;
 
 public class PaisDAOImplMySQL implements PaisDAO{
 
-    ConexionMySQL sql = new ConexionMySQL();
+//Conexión a mysql    
+	ConexionMySQL sql = new ConexionMySQL();
+	
+//Statements	
 	final String add = "INSERT INTO prog_avanzada.pais (nombre_pais) VALUES(?)";
 	final String delete = "DELETE FROM prog_avanzada.pais WHERE id_pais = ?";
 	final String update = "UPDATE prog_avanzada.pais set nombre_pais = ? WHERE id_pais = ? ";
     final String ListAll = "SELECT * FROM prog_avanzada.pais";
 	final String get = "SELECT * FROM prog_avanzada.pais WHERE nombre_pais = ?";
-	final static String OBTENERID = "SELECT id_pais FROM prog_avanzada.pais WHERE nombre_pais = ? LIMIT 1";	
-	final static String GETPAISPORID = "SELECT * FROM prog_avanzada.pais WHERE id_pais = ?";
+	final String OBTENERID = "SELECT id_pais FROM prog_avanzada.pais WHERE nombre_pais = ? LIMIT 1";	
+	final String GETPAISPORID = "SELECT * FROM prog_avanzada.pais WHERE id_pais = ?";
+	
+	
 	@Override
 	public void addPais(Pais pais) {
 		
+	//Realizo la conexión
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {		
 			conexion = sql.getConnection();
 			ps = conexion.prepareStatement(add);
+			
+		//Seteo el parámetro	
 			ps.setString(1, pais.getNombrePais());
 			ps.executeUpdate();	
 			} 
 			catch (SQLException e) { e.printStackTrace();}
 			finally {	
+		//cierro la conexión		
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
 		}
@@ -45,14 +54,19 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	@Override
 	public void deletePais(String nombre_pais) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
 		conexion = sql.getConnection();
 		ps = conexion.prepareCall(delete);
+		
+	//Seteo el parámetro	
 		ps.setString(1, nombre_pais);
 		ps.executeUpdate();	
+		
+	//Cierro la conexión	
 		conexion.close();
 	} 
 		catch (SQLException e) {e.printStackTrace();}
@@ -61,6 +75,7 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	@Override
 	public void updatePais(Pais pais) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 
@@ -68,8 +83,11 @@ public class PaisDAOImplMySQL implements PaisDAO{
 			conexion = sql.getConnection();
 			ps = conexion.prepareCall(update);
 
+		//Seteo el parámetro	
 			ps.setString(1, pais.getNombrePais());
 	     	ps.executeUpdate();
+	     	
+	    //Cierro la conexión 	
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
 		}
@@ -78,22 +96,26 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	@Override
 	public List<Pais> ListAllPais() {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
-		 PreparedStatement ps = null;
-		 List<Pais> lista= new ArrayList<>();
-		 try {
-		 conexion = sql.getConnection();
-	     ps = conexion.prepareStatement(ListAll);
-		 ResultSet rs = ps.executeQuery();    
-		 while(rs.next()) {
-		
-		String nombrepais = (rs.getString(("nombre_pais")));  
-		Pais pais = new Pais(nombrepais);
-		lista.add(pais);
-	    }
+		PreparedStatement ps = null;
+		List<Pais> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListAll);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+			
+			//Obtengo el nombre del país y creo el objeto	
+				String nombrepais = (rs.getString(("nombre_pais")));  
+				Pais pais = new Pais(nombrepais);
+				
+			//Agrego el país a la lista	
+				lista.add(pais);
+		    }
 			conexion.close();
-					
-	} catch (SQLException e) {e.printStackTrace();}
+						
+		} catch (SQLException e) {e.printStackTrace();}
 			return lista;	
 	}
 		
@@ -102,40 +124,47 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	@Override
 	public Pais getPais(String nombre_pais) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
-		conexion = sql.getConnection();
-	    ps = conexion.prepareStatement(get);
-	    ps.setString(1, nombre_pais);
-	    ResultSet rs = ps.executeQuery();
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(get);
+		    
+		//Seteo el parámetro    
+		    ps.setString(1, nombre_pais);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+			
+			//Obtengo los datos y creo el objeto país	
+				String nombrepais = (rs.getString(("nombre_pais")));
+				Integer id = rs.getInt("id_pais");
 			    
-		while(rs.next()) {
-			 
-		String nombrepais = (rs.getString(("nombre_pais")));
-		Integer id = rs.getInt("id_pais");
-	    
-		Pais pais = new Pais(id,nombrepais);
-		return pais;
-	}
-	conexion.close();
-	} catch (SQLException e) {e.printStackTrace();}
+				Pais pais = new Pais(id,nombrepais);
+				return pais;
+		}
+		conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
 	return null;}
 
 	@Override
 	public List<String> obtenerNombres() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 		 PreparedStatement ps = null;
 		 List<String> lista= new ArrayList<>();
 		 try {
-		 conexion = sql.getConnection();
-	     ps = conexion.prepareStatement(ListAll);
-		 ResultSet rs = ps.executeQuery();    
-		 while(rs.next()) {
-		
-			String nombrepais = (rs.getString(("nombre_pais")));  
-			lista.add(nombrepais);
-	    }
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListAll);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+			
+			//Obtengo el nombre del país y lo agrego a la lista	 
+				String nombrepais = (rs.getString(("nombre_pais")));  
+				lista.add(nombrepais);
+		    }
 			conexion.close();
 					
 		 } catch (SQLException e) {e.printStackTrace();}
@@ -144,6 +173,8 @@ public class PaisDAOImplMySQL implements PaisDAO{
 
 	@Override
 	public Pais getPaisPorID(Integer id) {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
@@ -153,7 +184,8 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		    ResultSet rs = ps.executeQuery();
 				    
 			while(rs.next()) {
-				 
+				
+			//Obtengo los datos del país y creo el objeto	
 				String nombrepais = (rs.getString(("nombre_pais")));
 				int id_pais = rs.getInt("id_pais");
 			    

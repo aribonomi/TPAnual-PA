@@ -20,33 +20,40 @@ import dao.util.ConexionMySQL;
 
 public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	
+//Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
-    PaisDAO paisDAO = new Factory().getPaisDao();
+    
+//Obtengo la implementación del pais	
+	PaisDAO paisDAO = new Factory().getPaisDao();
 	
+//Statements	
 	final String add = "INSERT INTO prog_avanzada.pasaporte (numero_pasaporte,autoridad_emision,fecha_emision,fecha_vencimiento, id_pais) VALUES(?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
 	final String update = "UPDATE prog_avanzada.pasaporte set numero_pasaporte = ? , autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id_pasaporte = ? ";
 	final String ListAll = "SELECT * FROM prog_avanzada.pasaporte";
     final String get = "SELECT * FROM prog_avanzada.pasaporte WHERE id_pasaporte = ?";
-    final static String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasaporte ORDER BY id_pasaporte DESC LIMIT 1";
+    final String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasaporte ORDER BY id_pasaporte DESC LIMIT 1";
     
 	@Override
 	public void addPasaporte(Pasaporte pasaporte) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {		
 			conexion = sql.getConnection();
 			ps = conexion.prepareStatement(add);
+			
+		//Seteo los parámetros	
 			ps.setString(1, pasaporte.getNumero());
 			ps.setString(2, pasaporte.getAutoridadEmision());
 			ps.setString(3, pasaporte.getFechaEmision());
 			ps.setString(4, pasaporte.getFechaVencimiento());
 			ps.setInt(5, pasaporte.getPaisEmision().getId_pais());
 			ps.executeUpdate();	
-					} 
-			catch (SQLException e) { e.printStackTrace();}
+		}catch (SQLException e) { e.printStackTrace();}
+	//Cierro la conexión	
 		finally {	
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -56,14 +63,18 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	@Override
 	public void deletePasaporte(String numero_pasaporte) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
 		conexion = sql.getConnection();
 		ps = conexion.prepareCall(delete);
+		
+	//Seteo el parámetro	
 		ps.setInt(1, Integer.parseInt(numero_pasaporte));
 		ps.executeUpdate();	
+	//Cierro la conexión	
 		conexion.close();
 	} 
 		catch (SQLException e) {e.printStackTrace();}
@@ -72,11 +83,14 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	@Override
 	public void updatePasaporte(Pasaporte pasaporte) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		try {
 			conexion = sql.getConnection();
 			ps = conexion.prepareCall(update);
+			
+		//Seteo los parámetros	
 			ps.setString(1, pasaporte.getNumero());
 			ps.setString(2, pasaporte.getAutoridadEmision());
 			ps.setString(3, pasaporte.getFechaEmision());
@@ -84,6 +98,8 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			ps.setInt(5, pasaporte.getId_Pasaporte());
 			
 	     	ps.executeUpdate();
+	     	
+	     //Cierro la conexión	
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
 		}
@@ -91,79 +107,94 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	@Override
 	public List<Pasaporte> ListAllPasaporte() {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
-		 PreparedStatement ps = null;
-		 List<Pasaporte> lista= new ArrayList<>();
-		 try {
-		 conexion = sql.getConnection();
-	     ps = conexion.prepareStatement(ListAll);
-		 ResultSet rs = ps.executeQuery();    
-		 while(rs.next()) {
-			 
-		String numero = (rs.getString("nombre_pasaporte"));
-		String autoridadEmision = (rs.getString("autoridad_emision"));
-		String fecha_emision = (rs.getString("fecha_emision"));
-		String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
-		Pasaporte pasaporte = new Pasaporte(numero,autoridadEmision,fecha_emision,fecha_vencimiento,null);
-		lista.add(pasaporte);
-	     }
+		PreparedStatement ps = null;
+		List<Pasaporte> lista= new ArrayList<>();
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListAll);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
+				 
+			//Obtengo los datos y creo el objeto pasaporte	
+				String numero = (rs.getString("nombre_pasaporte"));
+				String autoridadEmision = (rs.getString("autoridad_emision"));
+				String fecha_emision = (rs.getString("fecha_emision"));
+				String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
+				Pasaporte pasaporte = new Pasaporte(numero,autoridadEmision,fecha_emision,fecha_vencimiento,null);
+				
+			//Agrego el pasaporte a la lista	
+				lista.add(pasaporte);
+		    }
 			conexion.close();
-					
-	} catch (SQLException e) {e.printStackTrace();}
+						
+		}catch (SQLException e) {e.printStackTrace();}
 			return lista;	
 	}
 	
 	@Override
 	public Pasaporte getPasaporte(String numero_pasaporte) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
-		conexion = sql.getConnection();
-	    ps = conexion.prepareStatement(get);
-	    ps.setString(1, numero_pasaporte);
-	    ResultSet rs = ps.executeQuery();
-		while(rs.next()) {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(get);
+		    ps.setString(1, numero_pasaporte);
+		    ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+		
+			//Obtengo los datos y creo el objeto pasaporte	
+				Integer id = rs.getInt("id_pasaporte");	
+			    String numero = (rs.getString("numero_pasaporte"));
+			    String autoridadEmision = (rs.getString("autoridad_emision"));
+			    String fecha_emision = (rs.getString("fecha_emision"));
+			    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
+			    Integer id_pais = rs.getInt("id_pais");
+			    
+			//Obtengo el país a partir del id    
+			    Pais pais = paisDAO.getPaisPorID(id_pais);
+		
+				Pasaporte pasaporte = new Pasaporte(id,numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
+				return pasaporte;	
+			}
+		//Cierro la conexión	
+			conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		return null;
+	}
 	
-		Integer id = rs.getInt("id_pasaporte");	
-	    String numero = (rs.getString("numero_pasaporte"));
-	    String autoridadEmision = (rs.getString("autoridad_emision"));
-	    String fecha_emision = (rs.getString("fecha_emision"));
-	    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
-	    Integer id_pais = rs.getInt("id_pais");
-	    
-	    Pais pais = paisDAO.getPaisPorID(id_pais);
-
-		Pasaporte pasaporte = new Pasaporte(id,numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
-		return pasaporte;	
-	}
-	conexion.close();
-	} catch (SQLException e) {e.printStackTrace();}
-	return null;
-	}
+	
 	@Override
 	public Pasaporte obtenerUltimo() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
-		conexion = sql.getConnection();
-	    ps = conexion.prepareStatement(OBTENERULTIMO);
-	    ResultSet rs = ps.executeQuery();
-		while(rs.next()) {
-		String id = rs.getString("id_pasaporte");
-	    String numero = (rs.getString("numero_pasaporte"));
-	    String autoridadEmision = (rs.getString("autoridad_emision"));
-	    String fecha_emision = (rs.getString("fecha_emision"));
-	    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
-	    Integer id_pais = rs.getInt("id_pais");
-	    
-	    Pais pais = paisDAO.getPaisPorID(id_pais);
-
-		Pasaporte pasaporte = new Pasaporte(Integer.parseInt(id), numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
-		return pasaporte;	
-	}
-	conexion.close();
-	} catch (SQLException e) {e.printStackTrace();}
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(OBTENERULTIMO);
+		    ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				
+			//Obtengo los datos y creo el objeto	
+				String id = rs.getString("id_pasaporte");
+			    String numero = (rs.getString("numero_pasaporte"));
+			    String autoridadEmision = (rs.getString("autoridad_emision"));
+			    String fecha_emision = (rs.getString("fecha_emision"));
+			    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
+			    Integer id_pais = rs.getInt("id_pais");
+			    
+			//Obtengo el país a partir de su id 
+			    Pais pais = paisDAO.getPaisPorID(id_pais);
+		
+				Pasaporte pasaporte = new Pasaporte(Integer.parseInt(id), numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
+				return pasaporte;	
+		}
+		conexion.close();
+		} catch (SQLException e) {e.printStackTrace();}
 	return null;
 	}
 

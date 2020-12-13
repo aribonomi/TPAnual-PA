@@ -14,13 +14,16 @@ import dao.util.ConexionMySQL;
 
 public class ClienteDAOImplMySQL implements ClienteDAO {
 
-	
+//Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
+	
+//Obtengo las implementaciones de los objetos dentro del cliente	
 	DireccionDAO direccionDAO = new Factory().getDireccionDaoImplMysql();
 	TelefonoDAO telefonoDAO = new Factory().getTelefonoDaoImplMysql();
 	PasaporteDAO pasaporteDAO = new Factory().getPasaporteDaoImplMysql();
 	PasajeroFrecuenteDAO pfDAO = new Factory().getPasajeroFrecuenteDaoImplMysql();
 	
+//Statements	
 	final String add = "INSERT INTO prog_avanzada.cliente (nombre, apellido, dni, fecha_de_nacimiento, cuit_cuil, email, id_direccion, id_telefono, id_pasaporte, id_pasajero_frecuente) VALUES(?,?,?,?,?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.cliente WHERE id_cliente = ?";
 	final String update = "UPDATE prog_avanzada.cliente set nombre = ?, apellido = ?, dni = ? , fecha_de_nacimiento = ?, "
@@ -35,12 +38,15 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	@Override
 	public void altaCliente(Cliente cliente) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {		
 			conexion = sql.getConnection();
 			ps = conexion.prepareStatement(add);
+			
+		//Seteo los parámetros	
 			ps.setString(1, cliente.getNombre());
 			ps.setString(2, cliente.getApellido());
 			ps.setString(3, cliente.getDni());
@@ -56,6 +62,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 					} 
 			catch (SQLException e) { e.printStackTrace();}
 			finally {	
+			//Cierro la conexión	
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
 		}
@@ -65,29 +72,36 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	@Override
 	public void bajaCliente(String dni) {
 	
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
-		conexion = sql.getConnection();
-		ps = conexion.prepareCall(delete);
-		ps.setString(1, dni);
-		ps.executeUpdate();	
-		conexion.close();
-	} 
-		catch (SQLException e) {e.printStackTrace();}
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(delete);
+			
+		//Seteo los parámetros	
+			ps.setString(1, dni);
+			ps.executeUpdate();	
+			
+		//Cierro la conexión	
+			conexion.close();
+		}catch (SQLException e) {e.printStackTrace();}
 	}
 	
 
 	@Override
 	public void modificarCliente(Cliente cliente) {
 	
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
 			conexion = sql.getConnection();
 			ps = conexion.prepareCall(update);
+			
+		//Seteo los parámetros	
 			ps.setString(1, cliente.getNombre());
 			ps.setString(2, cliente.getApellido());
 			ps.setString(3, cliente.getDni());
@@ -97,6 +111,8 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			ps.setInt(7, cliente.getId_cliente());
 
 	     	ps.executeUpdate();
+	     	
+	     //Cierro la conexión	
 			conexion.close();
 			} catch (SQLException e) {e.printStackTrace();}	
 		}
@@ -104,61 +120,72 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	@Override
 	public Cliente getCliente(String dni) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
-		conexion = sql.getConnection();
-	    ps = conexion.prepareStatement(get);
-	    ps.setString(1, dni);
-	    ResultSet rs = ps.executeQuery();
-			    
-		while(rs.next()) {
-			 
-		String nombre = (rs.getString(("nombre")));
-	    String apellido = (rs.getString(("apellido")));
-		String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
-		String cuit_cuil = rs.getString("cuit_cuil");
-		String email = rs.getString("email");
-		Integer id_direccion = rs.getInt("id_direccion");
-		Integer id_telefono = rs.getInt("id_telefono");
-		Integer id_pasaporte = rs.getInt("id_pasaporte");
-		Integer id_pf = rs.getInt("id_pasajero_frecuente");
-		
-		Direccion d = direccionDAO.getDireccion(id_direccion.toString());
-		Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
-		Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
-		PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
-		
-		Cliente cliente = new Cliente(nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
-		return cliente;
-		
-	}
-	conexion.close();
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(get);
+		    
+		//Seteo el parámetro    
+		    ps.setString(1, dni);
+		    ResultSet rs = ps.executeQuery();
+				    
+			while(rs.next()) {
+				
+			//Obtengo los datos y creo un objeto cliente	 
+				String nombre = (rs.getString(("nombre")));
+			    String apellido = (rs.getString(("apellido")));
+				String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
+				String cuit_cuil = rs.getString("cuit_cuil");
+				String email = rs.getString("email");
+				Integer id_direccion = rs.getInt("id_direccion");
+				Integer id_telefono = rs.getInt("id_telefono");
+				Integer id_pasaporte = rs.getInt("id_pasaporte");
+				Integer id_pf = rs.getInt("id_pasajero_frecuente");
+				
+			//Obtengo la dirección, teléfono, pasaporte y pasajero frecuente a partir de sus ids	
+				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
+				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
+				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
+				PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+				
+				Cliente cliente = new Cliente(nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
+				return cliente;
+			
+		}
+		conexion.close();
 	} catch (SQLException e) {e.printStackTrace();}
 	return null;}
 	
 
 	@Override
 	public List<Cliente> ListAllCliente() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 		 PreparedStatement ps = null;
 		 List<Cliente> lista= new ArrayList<>();
 		 try {
-		 conexion = sql.getConnection();
-	     ps = conexion.prepareStatement(ListAll);
-		 ResultSet rs = ps.executeQuery();    
-		 while(rs.next()) {
-			 
-		String nombre = (rs.getString(("nombre")));
-		String apellido = (rs.getString(("apellido")));
-		String dni = (rs.getString("dni"));
-		String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
-		String cuit_cuil = rs.getString("cuit_cuil");
-		String email = rs.getString("email");
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListAll);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
 				
-		Cliente cliente = new Cliente(nombre,apellido,dni,fecha_nacimiento,cuit_cuil,email,null,null,null,null);
-		lista.add(cliente);
-	     }
+			//Obtengo los datos y creo un objeto cliente	
+				String nombre = (rs.getString(("nombre")));
+				String apellido = (rs.getString(("apellido")));
+				String dni = (rs.getString("dni"));
+				String fecha_nacimiento = (rs.getString("fecha_de_nacimiento"));
+				String cuit_cuil = rs.getString("cuit_cuil");
+				String email = rs.getString("email");
+						
+				Cliente cliente = new Cliente(nombre,apellido,dni,fecha_nacimiento,cuit_cuil,email,null,null,null,null);
+				
+			//Agrego el cliente a la lista	
+				lista.add(cliente);
+		    }
+		//Cierro la conexión	
 			conexion.close();
 					
 	} catch (SQLException e) {e.printStackTrace();}
@@ -167,15 +194,21 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 
 	@Override
 	public Cliente consultaPorId(Integer id) {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
 			conexion = sql.getConnection();
 		    ps = conexion.prepareStatement(CONSULTAPORID);
+		    
+		//Seteo el parámetro    
 		    ps.setInt(1, id);
 		    ResultSet rs = ps.executeQuery();
 				    
 			while(rs.next()) {
+				
+			//Obtengo los datos y creo un objeto cliente	
 				Integer codigo = rs.getInt("id_cliente"); 
 				String nombre = (rs.getString(("nombre")));
 			    String apellido = (rs.getString(("apellido")));
@@ -188,6 +221,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Integer id_pasaporte = rs.getInt("id_pasaporte");
 				Integer id_pf = rs.getInt("id_pasajero_frecuente");
 				
+			//Obtengo la dirección, teléfono, pasaporte y pasajero frecuente a partir de sus ids	
 				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
 				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
 				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
@@ -196,13 +230,16 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;
 			}
+		//Cierro la conexión	
 			conexion.close();
-		} catch (SQLException e) {e.printStackTrace();}
+		}catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 
 	@Override
-	public List<Integer> obtenerDnis() {
+	public List<Integer> obtenerIDs() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		List<Integer> lista= new ArrayList<>();
@@ -211,19 +248,23 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 		    ps = conexion.prepareStatement(OBTENERIDS);
 			ResultSet rs = ps.executeQuery();    
 			while(rs.next()) {
-				 
+				
+			//Obtengo el id y lo agrego a la lista	 
 				Integer id = rs.getInt("id_cliente");
 						
 				lista.add(id);
 		     }
-				conexion.close();
+		//Cierro la conexión	
+			conexion.close();
 					
-	} catch (SQLException e) {e.printStackTrace();}
-			return lista;	
+		}catch (SQLException e) {e.printStackTrace();}
+		return lista;	
 	}
 
 	@Override
 	public Cliente obtenerUltimo() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
@@ -233,6 +274,8 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 		    ResultSet rs = ps.executeQuery();
 				    
 			while(rs.next()) {
+				
+			//Obtengo los datos y creo el objeto cliente	
 				Integer codigo = rs.getInt("id_cliente"); 
 				String nombre = (rs.getString(("nombre")));
 			    String apellido = (rs.getString(("apellido")));
@@ -245,6 +288,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Integer id_pasaporte = rs.getInt("id_pasaporte");
 				Integer id_pf = rs.getInt("id_pasajero_frecuente");
 				
+			//Obtengo la dirección, pasaporte, teléfono y pasajero frecuente a partir de sus ids	
 				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
 				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
 				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
@@ -253,6 +297,8 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;
 			}
+			
+		//Cierro la conexión	
 			conexion.close();
 		} catch (SQLException e) {e.printStackTrace();}
 		return null;

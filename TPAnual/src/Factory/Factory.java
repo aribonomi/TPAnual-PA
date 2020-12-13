@@ -4,7 +4,7 @@ import dao.Interfaces.*;
 
 public class Factory {
 
-
+//Métodos que permitirán acceder a las implementaciones
 
 	public static ClienteDAO getClienteDaoImplMysql() {
 

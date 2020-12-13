@@ -14,23 +14,28 @@ import dao.util.ConexionMySQL;
 
 public class VentasDAOImplMySQL implements VentasDAO{
 	
-    ConexionMySQL sql = new ConexionMySQL();
+//Conexión a mysql    
+	ConexionMySQL sql = new ConexionMySQL();
     
-    ClienteDAO clienteDAO = new Factory().getClienteDaoImplMysql();
+//Obtengo las implementaciones de las clases contenidas en la venta    
+	ClienteDAO clienteDAO = new Factory().getClienteDaoImplMysql();
     LineaAereaDAO laDAO = new Factory().getLineaAereaDaoImplMysql();
     VuelosDAO vueloDAO = new Factory().getVuelosDaoImplMysql();
     
-	final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?,?,?)";
+	
+//Statements    
+    final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.ventas WHERE id_ventas = ?";
 	final String update = "UPDATE prog_avanzada.ventas set fecha_hora_venta = ?, forma_pago = ?, id_cliente=?, id_vuelo=?, id_aerolinea=? WHERE id_ventas = ? ";
 	final String ListALL = "SELECT * FROM prog_avanzada.ventas";
 	final String get = "SELECT * FROM prog_avanzada.ventas WHERE id_ventas = ?";
-	final static String OBTENERIDS = "SELECT id_ventas FROM prog_avanzada.ventas";
-	final static String OBTENERULTIMA = "SELECT * FROM ventas ORDER BY id_ventas DESC LIMIT 1";
+	final String OBTENERIDS = "SELECT id_ventas FROM prog_avanzada.ventas";
+	final String OBTENERULTIMA = "SELECT * FROM ventas ORDER BY id_ventas DESC LIMIT 1";
 	  
 	@Override
 	public void altaVenta(Venta venta) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
@@ -38,14 +43,16 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			conexion = sql.getConnection();
 			ps = conexion.prepareStatement(add);
 			
+		//Seteo los parámetros	
 			ps.setString(1, venta.getFecha());
 			ps.setString(2, venta.getFormaDePago());
 			ps.setInt(3, venta.getCliente().getId_cliente());
 			ps.setInt(4, venta.getVuelo().getId_Vuelo());
 			ps.setInt(5, venta.getAerolinea().getId_aeroLinea());
 			ps.executeUpdate();	
-					} 
-			catch (SQLException e) { e.printStackTrace();}
+		}catch (SQLException e) { e.printStackTrace();}
+		
+	//Cierro la conexión	
 		finally {	
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -55,27 +62,35 @@ public class VentasDAOImplMySQL implements VentasDAO{
 	@Override
 	public void bajaVenta(String id_venta) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
-		conexion = sql.getConnection();
-		ps = conexion.prepareCall(delete);
-		ps.setString(1, id_venta);
-		ps.executeUpdate();	
-		conexion.close();
-	} 
-		catch (SQLException e) {e.printStackTrace();}
+			conexion = sql.getConnection();
+			ps = conexion.prepareCall(delete);
+			
+		//Seteo los parámetros	
+			ps.setString(1, id_venta);
+			ps.executeUpdate();	
+			
+		//Cierro la conexión	
+			conexion.close();
+		}catch (SQLException e) {e.printStackTrace();}
 	}
+	
 	@Override
 	public void modificarVenta(Venta venta) {
 	
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		
 		try {
 			conexion = sql.getConnection();
 			ps = conexion.prepareCall(update);
+			
+		//Seteo los parámetros	
 			ps.setString(1, venta.getFecha());
 			ps.setString(2, venta.getFormaDePago());
 			ps.setInt(3, venta.getCliente().getId_cliente());
@@ -83,23 +98,26 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			ps.setInt(5, venta.getAerolinea().getId_aeroLinea());
 			ps.setInt(6, venta.getId_Venta());
 	     	ps.executeUpdate();
+	     	
+	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
-		}
+		} catch (SQLException e) {e.printStackTrace();}	
+	}
 	
 	@Override
 	public List<Venta> ListAllVenta() {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		List<Venta> lista= new ArrayList<>();
-		 try {
-			 conexion = sql.getConnection();
-		     ps = conexion.prepareStatement(ListALL);
-			 ResultSet rs = ps.executeQuery();    
-			 while(rs.next()) {
+		try {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListALL);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
 				 
-			
+			//Obtengo los datos y genero el objeto venta
 				String fecha_hora_venta = (rs.getString(("fecha_hora_venta")));
 				String forma_pago = (rs.getString("forma_pago"));
 				
@@ -109,64 +127,79 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			 }
 			 conexion.close();
 						
-		 } catch (SQLException e) {e.printStackTrace();}
-		 return lista;	
+		}catch (SQLException e) {e.printStackTrace();}
+		return lista;	
 	}
 		
 	@Override
 	public Venta getVentas(String id_venta) {
 		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
 			conexion = sql.getConnection();
 		    ps = conexion.prepareStatement(get);
+		    
+		//Seteo el parámetro    
 		    ps.setString(1, id_venta);
 		    ResultSet rs = ps.executeQuery();
 				    
 			while(rs.next()) {
 				 
-			  String fecha_hora_venta = rs.getString("fecha_hora_venta");
-			  String forma_pago = rs.getString("forma_pago");
-			  Integer id_cliente = rs.getInt("id_cliente");
-			  Integer id_aerolinea = rs.getInt("id_aerolinea");
-			  Integer id_vuelo = rs.getInt("id_vuelo");
+			//Obtengo los datos y creo el objeto venta  
+				String fecha_hora_venta = rs.getString("fecha_hora_venta");
+				String forma_pago = rs.getString("forma_pago");
+				Integer id_cliente = rs.getInt("id_cliente");
+				Integer id_aerolinea = rs.getInt("id_aerolinea");
+				Integer id_vuelo = rs.getInt("id_vuelo");
 			  
-			  Cliente cliente = clienteDAO.consultaPorId(id_cliente);
-			  Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
-			  Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
+			//Obtengo el cliente, la aerolínea y el vuelo a partir de sus ids	
+				Cliente cliente = clienteDAO.consultaPorId(id_cliente);
+				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
+				Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
 			  
-			  Venta venta = new Venta(fecha_hora_venta, forma_pago, cliente, vuelo, aerolinea);
-			  return venta;
+				Venta venta = new Venta(fecha_hora_venta, forma_pago, cliente, vuelo, aerolinea);
+				return venta;
 			}
-			conexion.close();
+			
+	//Cierro la conexión	
+		conexion.close();
 		} catch (SQLException e) {e.printStackTrace();}
-	return null;}
+		return null;
+	}
 	
 	
 	@Override
 	public List<Integer> obtenerIds() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 		PreparedStatement ps = null;
 		List<Integer> lista= new ArrayList<>();
 		try {
-			 conexion = sql.getConnection();
-		     ps = conexion.prepareStatement(ListALL);
-			 ResultSet rs = ps.executeQuery();    
-			 while(rs.next()) {
+			conexion = sql.getConnection();
+		    ps = conexion.prepareStatement(ListALL);
+			ResultSet rs = ps.executeQuery();    
+			while(rs.next()) {
 	
+			//Obtengo el id y lo agrego a la lista	 
 				Integer id_venta = rs.getInt("id_ventas");
 				
 				lista.add(id_venta);
 			 
 		}
+	//Cierro la conexión		
 		conexion.close();
 						
-		} catch (SQLException e) {e.printStackTrace();}
+		}catch (SQLException e) {e.printStackTrace();}
 		return lista;	
 	}
+	
 	@Override
 	public Venta obtenerUltima() {
+		
+	//Realizo la conexión	
 		Connection conexion = null;
 	    PreparedStatement ps = null;	    
 		try {	 
@@ -176,6 +209,8 @@ public class VentasDAOImplMySQL implements VentasDAO{
 		    ResultSet rs = ps.executeQuery();
 				    
 			while(rs.next()) {
+				
+			//Obtiene los datos y crea el objeto venta	
 				Integer id_venta = rs.getInt("id_ventas");
 				String fecha_hora_venta = rs.getString("fecha_hora_venta");
 				String forma_pago = rs.getString("forma_pago");
@@ -183,6 +218,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 				Integer id_aerolinea = rs.getInt("id_aerolinea");
 				Integer id_vuelo = rs.getInt("id_vuelo");
 			  
+			//Obtiene el cliente, la aerolínea y el vuelo a partir de sus ids	
 				Cliente cliente = clienteDAO.consultaPorId(id_cliente);
 				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
 				Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
@@ -190,6 +226,8 @@ public class VentasDAOImplMySQL implements VentasDAO{
 				Venta venta = new Venta(id_venta, cliente, vuelo, aerolinea, fecha_hora_venta, forma_pago);
 				return venta;
 			}
+			
+		//Cierro la conexión	
 			conexion.close();
 		} catch (SQLException e) {e.printStackTrace();}
 		return null;
