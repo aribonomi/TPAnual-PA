@@ -23,8 +23,6 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 //Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
     
-//Obtengo la implementación del pais	
-	PaisDAO paisDAO = new Factory().getPaisDao();
 	
 //Statements	
 	final String add = "INSERT INTO prog_avanzada.pasaporte (numero_pasaporte,autoridad_emision,fecha_emision,fecha_vencimiento, id_pais) VALUES(?,?,?,?,?)";
@@ -35,7 +33,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
     final String OBTENERULTIMO = "SELECT * FROM prog_avanzada.pasaporte ORDER BY id_pasaporte DESC LIMIT 1";
     
 	@Override
-	public void addPasaporte(Pasaporte pasaporte) {
+	public boolean addPasaporte(Pasaporte pasaporte) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -52,7 +50,12 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			ps.setString(4, pasaporte.getFechaVencimiento());
 			ps.setInt(5, pasaporte.getPaisEmision().getId_pais());
 			ps.executeUpdate();	
-		}catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	//Cierro la conexión	
 		finally {	
 			try {ps.close();conexion.close();}
@@ -61,7 +64,7 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 		
 	}
 	@Override
-	public void deletePasaporte(String numero_pasaporte) {
+	public boolean deletePasaporte(String numero_pasaporte) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -76,12 +79,16 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 		ps.executeUpdate();	
 	//Cierro la conexión	
 		conexion.close();
-	} 
-		catch (SQLException e) {e.printStackTrace();}
+		
+		return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 	@Override
-	public void updatePasaporte(Pasaporte pasaporte) {
+	public boolean updatePasaporte(Pasaporte pasaporte) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -101,7 +108,12 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 		
 	@Override
@@ -154,8 +166,8 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
 			    Integer id_pais = rs.getInt("id_pais");
 			    
-			//Obtengo el país a partir del id    
-			    Pais pais = paisDAO.getPaisPorID(id_pais);
+			//Creo el objeto país solo con su id para después obtener el resto de los datos en el mvc
+			    Pais pais = new Pais(id_pais, null);
 		
 				Pasaporte pasaporte = new Pasaporte(id,numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
 				return pasaporte;	
@@ -187,8 +199,8 @@ public class PasaporteDAOImplMySQL implements PasaporteDAO{
 			    String fecha_vencimiento = (rs.getString("fecha_vencimiento"));
 			    Integer id_pais = rs.getInt("id_pais");
 			    
-			//Obtengo el país a partir de su id 
-			    Pais pais = paisDAO.getPaisPorID(id_pais);
+			//Creo el objeto país solo con su id para después obtener el resto de los datos en el mvc
+			    Pais pais = new Pais(id_pais, null);
 		
 				Pasaporte pasaporte = new Pasaporte(Integer.parseInt(id), numero,autoridadEmision,fecha_emision,fecha_vencimiento,pais);
 				return pasaporte;	

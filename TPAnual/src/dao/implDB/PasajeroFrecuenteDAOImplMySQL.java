@@ -22,9 +22,6 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 
 //Conexión a mysql    
 	ConexionMySQL sql = new ConexionMySQL();
-	
-//Obtengo las implementación del objeto contenido dentro de pasajero frecuente	
-    LineaAereaDAO aerolineaDAO = new Factory().getLineaAereaDaoImplMysql();
     
 //Statements	
     final String add = "INSERT INTO prog_avanzada.pasajero_frecuente (alianza, numero, categoria, id_aerolinea) VALUES(?,?,?,?)";
@@ -36,7 +33,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 	
 
 	@Override
-	public void addPasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
+	public boolean addPasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -52,7 +49,12 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 			ps.setString(3, pasajerofrecuente.getCategoria());
 			ps.setInt(4, pasajerofrecuente.getAerolinea().getId_aeroLinea());
 			ps.executeUpdate();	
-		}catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		//Cierro la conexión	
 		finally {	
 			try {ps.close();conexion.close();}
@@ -61,7 +63,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 	}
 
 	@Override
-	public void deletePasajeroFrecuente(String id_pasajero_frecuente) {
+	public boolean deletePasajeroFrecuente(String id_pasajero_frecuente) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -77,12 +79,17 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 		
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 
 	@Override
-	public void updatePasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
+	public boolean updatePasajeroFrecuente(PasajeroFrecuente pasajerofrecuente) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -101,7 +108,12 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 	
 	@Override
@@ -154,9 +166,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 			    String numero = (rs.getString("numero"));
 			    String alianza = rs.getString("alianza");
 			    Integer id_aerolinea = rs.getInt("id_aerolinea");
-			    
-			//Obtengo la aerolínea a partir del id    
-			    Aerolinea aerolinea = aerolineaDAO.getLineaArea(id_aerolinea.toString());
+			    Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
 			    
 				PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(id,categoria,numero,Alianza.valueOf(alianza),aerolinea);	
 				return pasajerofrecuente;	
@@ -184,9 +194,7 @@ public class PasajeroFrecuenteDAOImplMySQL implements PasajeroFrecuenteDAO{
 			    String numero = (rs.getString("numero"));
 			    String alianza = rs.getString("alianza");
 			    Integer id_aerolinea = rs.getInt("id_aerolinea");
-			    
-			//Obtengo la aerolínea a partir del id    
-			    Aerolinea aerolinea = aerolineaDAO.getLineaArea(id_aerolinea.toString());
+			    Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
 			    
 				PasajeroFrecuente pasajerofrecuente = new PasajeroFrecuente(Integer.parseInt(id), categoria,numero,Alianza.valueOf(alianza),aerolinea);	
 				return pasajerofrecuente;	

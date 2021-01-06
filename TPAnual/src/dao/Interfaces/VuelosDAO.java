@@ -7,9 +7,9 @@ import dao.negocio.Vuelo;
 public interface VuelosDAO {
 
 //ABM y consultas	
-	public void altaVuelo(Vuelo vuelo);
-	public void bajaVuelo(String nroDeVuelo);
-	public void modificarVuelo(Vuelo vuelo);
+	public boolean altaVuelo(Vuelo vuelo);
+	public boolean bajaVuelo(String nroDeVuelo);
+	public boolean modificarVuelo(Vuelo vuelo);
 	public List<Vuelo> ListAllVuelo();
 	public Vuelo getVuelos(Integer idVuelo);
 	public List<Integer> obtenerIDs(); 

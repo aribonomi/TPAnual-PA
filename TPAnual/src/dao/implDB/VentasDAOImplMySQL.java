@@ -15,13 +15,7 @@ import dao.util.ConexionMySQL;
 public class VentasDAOImplMySQL implements VentasDAO{
 	
 //Conexión a mysql    
-	ConexionMySQL sql = new ConexionMySQL();
-    
-//Obtengo las implementaciones de las clases contenidas en la venta    
-	ClienteDAO clienteDAO = new Factory().getClienteDaoImplMysql();
-    LineaAereaDAO laDAO = new Factory().getLineaAereaDaoImplMysql();
-    VuelosDAO vueloDAO = new Factory().getVuelosDaoImplMysql();
-    
+	ConexionMySQL sql = new ConexionMySQL();    
 	
 //Statements    
     final String add = "INSERT INTO prog_avanzada.ventas (fecha_hora_venta, forma_pago, id_cliente, id_vuelo, id_aerolinea) VALUES(?,?,?,?,?)";
@@ -33,7 +27,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 	final String OBTENERULTIMA = "SELECT * FROM ventas ORDER BY id_ventas DESC LIMIT 1";
 	  
 	@Override
-	public void altaVenta(Venta venta) {
+	public boolean altaVenta(Venta venta) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -50,7 +44,12 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			ps.setInt(4, venta.getVuelo().getId_Vuelo());
 			ps.setInt(5, venta.getAerolinea().getId_aeroLinea());
 			ps.executeUpdate();	
-		}catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		
 	//Cierro la conexión	
 		finally {	
@@ -60,7 +59,7 @@ public class VentasDAOImplMySQL implements VentasDAO{
 		
 	}
 	@Override
-	public void bajaVenta(String id_venta) {
+	public boolean bajaVenta(String id_venta) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -76,11 +75,16 @@ public class VentasDAOImplMySQL implements VentasDAO{
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 	@Override
-	public void modificarVenta(Venta venta) {
+	public boolean modificarVenta(Venta venta) {
 	
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -101,7 +105,12 @@ public class VentasDAOImplMySQL implements VentasDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-		} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 	@Override
@@ -153,11 +162,9 @@ public class VentasDAOImplMySQL implements VentasDAO{
 				Integer id_cliente = rs.getInt("id_cliente");
 				Integer id_aerolinea = rs.getInt("id_aerolinea");
 				Integer id_vuelo = rs.getInt("id_vuelo");
-			  
-			//Obtengo el cliente, la aerolínea y el vuelo a partir de sus ids	
-				Cliente cliente = clienteDAO.consultaPorId(id_cliente);
-				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
-				Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
+				Cliente cliente = new Cliente(id_cliente, null, null, null, null, null, null, null, null, null, null);
+				Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
+				Vuelo vuelo = new Vuelo(id_vuelo, null, null, null, null, null, null, null, null);
 			  
 				Venta venta = new Venta(fecha_hora_venta, forma_pago, cliente, vuelo, aerolinea);
 				return venta;
@@ -217,11 +224,9 @@ public class VentasDAOImplMySQL implements VentasDAO{
 				Integer id_cliente = rs.getInt("id_cliente");
 				Integer id_aerolinea = rs.getInt("id_aerolinea");
 				Integer id_vuelo = rs.getInt("id_vuelo");
-			  
-			//Obtiene el cliente, la aerolínea y el vuelo a partir de sus ids	
-				Cliente cliente = clienteDAO.consultaPorId(id_cliente);
-				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
-				Vuelo vuelo = vueloDAO.getVuelos(id_vuelo);
+				Cliente cliente = new Cliente(id_cliente, null, null, null, null, null, null, null, null, null, null);
+				Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
+				Vuelo vuelo = new Vuelo(id_vuelo, null, null, null, null, null, null, null, null);
 			  
 				Venta venta = new Venta(id_venta, cliente, vuelo, aerolinea, fecha_hora_venta, forma_pago);
 				return venta;

@@ -17,12 +17,6 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 //Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
 	
-//Obtengo las implementaciones de los objetos dentro del cliente	
-	DireccionDAO direccionDAO = new Factory().getDireccionDaoImplMysql();
-	TelefonoDAO telefonoDAO = new Factory().getTelefonoDaoImplMysql();
-	PasaporteDAO pasaporteDAO = new Factory().getPasaporteDaoImplMysql();
-	PasajeroFrecuenteDAO pfDAO = new Factory().getPasajeroFrecuenteDaoImplMysql();
-	
 //Statements	
 	final String add = "INSERT INTO prog_avanzada.cliente (nombre, apellido, dni, fecha_de_nacimiento, cuit_cuil, email, id_direccion, id_telefono, id_pasaporte, id_pasajero_frecuente) VALUES(?,?,?,?,?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.cliente WHERE id_cliente = ?";
@@ -36,7 +30,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 
 	
 	@Override
-	public void altaCliente(Cliente cliente) {
+	public boolean altaCliente(Cliente cliente) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -59,9 +53,11 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			ps.setInt(10, cliente.getpasajeroFrecuente().getId_pasajeroFrecuente());
 
 			ps.executeUpdate();	
-					} 
-			catch (SQLException e) { e.printStackTrace();}
-			finally {	
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}finally {	
 			//Cierro la conexión	
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -70,7 +66,7 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	}
 
 	@Override
-	public void bajaCliente(String dni) {
+	public boolean bajaCliente(String dni) {
 	
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -86,12 +82,17 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
+		
 	}
 	
 
 	@Override
-	public void modificarCliente(Cliente cliente) {
+	public boolean modificarCliente(Cliente cliente) {
 	
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -114,7 +115,11 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 	
 	@Override
@@ -144,11 +149,11 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Integer id_pasaporte = rs.getInt("id_pasaporte");
 				Integer id_pf = rs.getInt("id_pasajero_frecuente");
 				
-			//Obtengo la dirección, teléfono, pasaporte y pasajero frecuente a partir de sus ids	
-				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
-				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
-				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
-				PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+			//Creo los objetos que contiene el cliente solo con su id para obtener el resto de los datos en el mvc	
+				Direccion d = new Direccion(id_direccion, null, null, null, null, null, null);
+				Telefono t = new Telefono(id_telefono, null, null, null);
+				Pasaporte p = new Pasaporte(id_pasaporte.toString(), null, null, null, null);
+				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf.toString(), null, null, null);
 				
 				Cliente cliente = new Cliente(nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;
@@ -221,11 +226,11 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Integer id_pasaporte = rs.getInt("id_pasaporte");
 				Integer id_pf = rs.getInt("id_pasajero_frecuente");
 				
-			//Obtengo la dirección, teléfono, pasaporte y pasajero frecuente a partir de sus ids	
-				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
-				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
-				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
-				PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+			//Creo los objetos que contiene el cliente solo con su id para obtener el resto de los datos en el mvc	
+				Direccion d = new Direccion(id_direccion, null, null, null, null, null, null);
+				Telefono t = new Telefono(id_telefono, null, null, null);
+				Pasaporte p = new Pasaporte(id_pasaporte.toString(), null, null, null, null);
+				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf.toString(), null, null, null);
 				
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;
@@ -288,11 +293,11 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 				Integer id_pasaporte = rs.getInt("id_pasaporte");
 				Integer id_pf = rs.getInt("id_pasajero_frecuente");
 				
-			//Obtengo la dirección, pasaporte, teléfono y pasajero frecuente a partir de sus ids	
-				Direccion d = direccionDAO.getDireccion(id_direccion.toString());
-				Telefono t = telefonoDAO.getTelefono(id_telefono.toString());
-				Pasaporte p = pasaporteDAO.getPasaporte(id_pasaporte.toString());
-				PasajeroFrecuente pf = pfDAO.getPasajeroFrecuente(id_pf.toString());
+			//Creo los objetos que contiene el cliente solo con su id para obtener el resto de los datos en el mvc	
+				Direccion d = new Direccion(id_direccion, null, null, null, null, null, null);
+				Telefono t = new Telefono(id_telefono, null, null, null);
+				Pasaporte p = new Pasaporte(id_pasaporte.toString(), null, null, null, null);
+				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf.toString(), null, null, null);
 				
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;

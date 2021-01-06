@@ -19,10 +19,6 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 //Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
 	
-//Obtengo las implementaciones d elos objetos contenidos en la dirección	
-	PaisDAO paisDAO = new Factory().getPaisDao();
-	ProvinciaDAO provinciaDAO = new Factory().getProvinciaDaoImplMysql();
-	
 //Statements	
 	final String add = "INSERT INTO prog_avanzada.direccion (altura, calle, ciudad, codigo_postal, id_pais, id_provincia) VALUES(?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.direccion WHERE id_direccion = ?";
@@ -33,7 +29,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	
 
 	@Override
-	public void altaDireccion(Direccion direccion) {
+	public boolean altaDireccion(Direccion direccion) {
 	
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -52,9 +48,11 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			ps.setInt(6, direccion.getProvincia().getId_provincia());
 			ps.executeUpdate();
 			
-		}catch (SQLException e) { e.printStackTrace();}
-		finally {	
-			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}finally {				
 		//Cierro la conexión	
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -62,7 +60,7 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	}
 
 	@Override
-	public void bajaDireccion(String id_direccion) {
+	public boolean bajaDireccion(String id_direccion) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -77,11 +75,15 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 		
 	@Override
-	public void modificacionDireccion(Direccion direccion) {
+	public boolean modificacionDireccion(Direccion direccion) {
 	
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -103,7 +105,11 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 	
 	@Override
@@ -161,12 +167,11 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 				String codigo_postal = (rs.getString(("codigo_postal")));
 				Integer id_pais = rs.getInt("id_pais");
 				Integer id_provincia = rs.getInt("id_provincia");
+			    Pais pais = new Pais(id_pais, null);
+			    Provincia provincia = new Provincia(id_provincia, null);
+
 				
-			//Obtengo el país y la provincia a partir de sus ids	
-				Pais p = paisDAO.getPaisPorID(id_pais);
-				Provincia pr = provinciaDAO.getProvincia(id_provincia.toString());
-				
-				Direccion direccion = new Direccion(id, altura, calle, ciudad, codigo_postal,pr,p);
+				Direccion direccion = new Direccion(id, altura, calle, ciudad, codigo_postal,provincia,pais);
 				return direccion;
 			}
 		conexion.close();
@@ -194,12 +199,10 @@ public class DireccionDaoImplMysql implements DireccionDAO{
 				String codigo_postal = (rs.getString(("codigo_postal")));
 				Integer id_pais = rs.getInt("id_pais");
 				Integer id_provincia = rs.getInt("id_provincia");
+			    Pais pais = new Pais(id_pais, null);
+			    Provincia provincia = new Provincia(id_provincia, null);
 				
-			//Obtengo el país y la provincia a partir de sus ids	
-				Pais p = paisDAO.getPaisPorID(id_pais);
-				Provincia pr = provinciaDAO.getProvincia(id_provincia.toString());
-				
-				Direccion direccion = new Direccion(Integer.parseInt(id),altura, calle, ciudad, codigo_postal,pr,p);
+				Direccion direccion = new Direccion(Integer.parseInt(id),altura, calle, ciudad, codigo_postal,provincia,pais);
 				return direccion;
 		}
 		conexion.close();

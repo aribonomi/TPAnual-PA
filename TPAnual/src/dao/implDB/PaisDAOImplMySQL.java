@@ -29,7 +29,7 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	
 	
 	@Override
-	public void addPais(Pais pais) {
+	public boolean addPais(Pais pais) {
 		
 	//Realizo la conexión
 		Connection conexion = null;
@@ -42,9 +42,12 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		//Seteo el parámetro	
 			ps.setString(1, pais.getNombrePais());
 			ps.executeUpdate();	
-			} 
-			catch (SQLException e) { e.printStackTrace();}
-			finally {	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}finally {	
 		//cierro la conexión		
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -52,7 +55,7 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	}
 
 	@Override
-	public void deletePais(String nombre_pais) {
+	public boolean deletePais(String nombre_pais) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -68,12 +71,16 @@ public class PaisDAOImplMySQL implements PaisDAO{
 		
 	//Cierro la conexión	
 		conexion.close();
-	} 
-		catch (SQLException e) {e.printStackTrace();}
+		
+		return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 }
 
 	@Override
-	public void updatePais(Pais pais) {
+	public boolean updatePais(Pais pais) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -89,7 +96,12 @@ public class PaisDAOImplMySQL implements PaisDAO{
 	     	
 	    //Cierro la conexión 	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 	
 

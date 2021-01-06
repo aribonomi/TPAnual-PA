@@ -7,9 +7,9 @@ import dao.negocio.Pais;
 public interface PaisDAO{
 
 //ABM y consultas	
-	public void addPais(Pais pais);
-	public void deletePais(String nombre_pais);
-	public void updatePais(Pais pais);
+	public boolean addPais(Pais pais);
+	public boolean deletePais(String nombre_pais);
+	public boolean updatePais(Pais pais);
 	public List<Pais> ListAllPais();
 	public Pais getPaisPorID(Integer id);
 	

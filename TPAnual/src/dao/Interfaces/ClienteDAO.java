@@ -8,9 +8,9 @@ import dao.negocio.Cliente;
 public interface ClienteDAO{
 	
 //ABM y consultas	
-	public void altaCliente(Cliente cliente);
-	public void bajaCliente(String dni);
-	public void modificarCliente(Cliente cliente);
+	public boolean altaCliente(Cliente cliente);
+	public boolean bajaCliente(String dni);
+	public boolean modificarCliente(Cliente cliente);
 
 //Consulta por dni	
 	public Cliente getCliente(String dni);

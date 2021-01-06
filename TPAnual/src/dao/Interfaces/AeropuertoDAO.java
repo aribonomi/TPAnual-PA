@@ -7,9 +7,9 @@ import dao.negocio.Aeropuerto;
 public interface AeropuertoDAO{
 	
 //ABM y consultas	
-	public void altaAeropuerto(Aeropuerto aeropuerto);
-	public void bajaAeropuerto(String codigo_aeropuerto);
-	public void modificacionAeropuerto(Aeropuerto aeropuerto);
+	public boolean altaAeropuerto(Aeropuerto aeropuerto);
+	public boolean bajaAeropuerto(String codigo_aeropuerto);
+	public boolean modificacionAeropuerto(Aeropuerto aeropuerto);
 	public List<Aeropuerto> ListAllAeropuerto();
 	public Aeropuerto getAeropuerto(Integer id_aeropuerto);
 	

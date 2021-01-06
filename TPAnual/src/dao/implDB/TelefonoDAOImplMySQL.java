@@ -28,7 +28,7 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 	
 	
 	@Override
-	public void addTelefono(Telefono telefono) {
+	public boolean addTelefono(Telefono telefono) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -43,8 +43,12 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 			ps.setString(2, telefono.getCelular());
 			ps.setString(3, telefono.getLaboral());
 			ps.executeUpdate();	
-			} 
-		catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	//Cierro la conexión		
 		finally {	
 			try {ps.close();conexion.close();}
@@ -53,7 +57,7 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 	}
 		
 	@Override
-	public void deleteTelefono(String id_telefono) {
+	public boolean deleteTelefono(String id_telefono) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -68,11 +72,16 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 	@Override
-	public void updateTelefono(Telefono telefono) {
+	public boolean updateTelefono(Telefono telefono) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -92,8 +101,13 @@ public class TelefonoDAOImplMySQL implements TelefonoDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
 		}
+	}
 	
 	
 	@Override

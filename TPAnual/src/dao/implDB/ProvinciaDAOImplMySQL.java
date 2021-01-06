@@ -27,7 +27,7 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
     
 	
 	@Override
-	public void addProvincia(Provincia provincia) {
+	public boolean addProvincia(Provincia provincia) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -39,7 +39,12 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 		//Seteo el parámetro	
 			ps.setString(1, provincia.getNombreProvincia());
 			ps.executeUpdate();	
-		}catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	//Cierro la conexión	
 		finally {	
 			try {ps.close();conexion.close();}
@@ -49,7 +54,7 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	}
 
 	@Override
-	public void deleteProvincia(String nombre_provincia) {
+	public boolean deleteProvincia(String nombre_provincia) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -64,11 +69,16 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 
 	@Override
-	public void updateProvincia(Provincia provincia) {
+	public boolean updateProvincia(Provincia provincia) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -83,7 +93,12 @@ public class ProvinciaDAOImplMySQL implements ProvinciaDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-		} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 	@Override

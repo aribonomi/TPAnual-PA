@@ -17,10 +17,6 @@ public class VuelosDAOImplMySQL implements VuelosDAO{
 //Conexión a mysql  
 	ConexionMySQL sql = new ConexionMySQL();
   
-//Obtengo las implementaciones de los objetos contenidos dentro del vuelo  
-	AeropuertoDAO aeropDAO = new Factory().getAeropuertoDaoImplMysql();
-	LineaAereaDAO laDAO = new Factory().getLineaAereaDaoImplMysql();
-  
 //Statements  
 	final String add = "INSERT INTO prog_avanzada.vuelos (numero_vuelo, cant_asientos, fecha_hora_salida, fecha_hora_llegada, tiempo_vuelo, id_aerolinea, id_aeropuerto_salida, id_aeropuerto_llegada) VALUES(?,?,?,?,?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.vuelos WHERE id_vuelo = ?";
@@ -31,7 +27,7 @@ public class VuelosDAOImplMySQL implements VuelosDAO{
 	final String OBTENERULTIMO = "SELECT * FROM vuelos ORDER BY id_vuelo DESC LIMIT 1";
 
 @Override
-public void altaVuelo(Vuelo vuelo) {
+public boolean altaVuelo(Vuelo vuelo) {
 		
 //Realizo la conexión	
 	Connection conexion = null;
@@ -52,7 +48,12 @@ public void altaVuelo(Vuelo vuelo) {
 		ps.setInt(8, vuelo.getAeropuertoLlegada().getId_Aeropuerto());
 			
 		ps.executeUpdate();	
-	}catch (SQLException e) { e.printStackTrace();}
+		
+		return true;
+	}catch (SQLException e) {
+		e.printStackTrace(); 
+		return false;
+	}
 	//Cierro la conexión	
 	finally {	
 		try {ps.close();conexion.close();}
@@ -62,7 +63,7 @@ public void altaVuelo(Vuelo vuelo) {
 
 
 	@Override
-	public void bajaVuelo(String nroDeVuelo) {
+	public boolean bajaVuelo(String nroDeVuelo) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -78,11 +79,16 @@ public void altaVuelo(Vuelo vuelo) {
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 		
 	@Override
-	public void modificarVuelo(Vuelo vuelo) {
+	public boolean modificarVuelo(Vuelo vuelo) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -108,7 +114,12 @@ public void altaVuelo(Vuelo vuelo) {
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-		} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 	
 
@@ -171,11 +182,9 @@ public void altaVuelo(Vuelo vuelo) {
 				Integer id_aerolinea = rs.getInt("id_aerolinea");
 				Integer id_aeropuerto_salida = rs.getInt("id_aeropuerto_salida");
 				Integer id_aeropuerto_llegada = rs.getInt("id_aeropuerto_llegada");
-				
-			//Obtengo la aerolínea y los aeropuertos mediante sus ids	
-				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
-				Aeropuerto aeropuertoSalida = aeropDAO.getAeropuerto(id_aeropuerto_salida);
-				Aeropuerto aeropuertoLlegada = aeropDAO.getAeropuerto(id_aeropuerto_llegada);
+				Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
+				Aeropuerto aeropuertoSalida = new Aeropuerto(id_aeropuerto_salida.toString(), null, null, null);
+				Aeropuerto aeropuertoLlegada = new Aeropuerto(id_aeropuerto_llegada.toString(), null, null, null);
 				
 				Vuelo vuelo = new Vuelo(id, numero, cant_asientos, fechaLlegada, fechaSalida, tiempoVuelo, aeropuertoLlegada, aeropuertoSalida, aerolinea);	
 				return vuelo;	
@@ -234,11 +243,9 @@ public void altaVuelo(Vuelo vuelo) {
 				Integer id_aerolinea = rs.getInt("id_aerolinea");
 				Integer id_aeropuerto_salida = rs.getInt("id_aeropuerto_salida");
 				Integer id_aeropuerto_llegada = rs.getInt("id_aeropuerto_llegada");
-				
-			//Obtengo la aerolínea y los aeropuertos a partir de sus ids	
-				Aerolinea aerolinea = laDAO.getLineaArea(id_aerolinea.toString());
-				Aeropuerto aeropuertoSalida = aeropDAO.getAeropuerto(id_aeropuerto_salida);
-				Aeropuerto aeropuertoLlegada = aeropDAO.getAeropuerto(id_aeropuerto_llegada);
+				Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
+				Aeropuerto aeropuertoSalida = new Aeropuerto(id_aeropuerto_salida.toString(), null, null, null);
+				Aeropuerto aeropuertoLlegada = new Aeropuerto(id_aeropuerto_llegada.toString(), null, null, null);
 				
 				Vuelo vuelo = new Vuelo(id, numero, cant_asientos, fechaLlegada, fechaSalida, tiempoVuelo, aeropuertoLlegada, aeropuertoSalida, aerolinea);	
 				return vuelo;	

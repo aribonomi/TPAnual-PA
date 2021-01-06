@@ -17,10 +17,6 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 //Conexión a mysql	
 	ConexionMySQL sql = new ConexionMySQL();
 	
-//Obtengo las implementaciones de los objetos contenidos en el aeropuerto	
-	PaisDAO paisDAO = new Factory().getPaisDao();
-	ProvinciaDAO provinciaDAO = new Factory().getProvinciaDaoImplMysql();
-	
 //Statements	
 	final String add = "INSERT INTO prog_avanzada.aeropuerto (codigo_aeropuerto, ciudad, id_pais, id_provincia) VALUES(?,?,?,?)";
 	final String delete = "DELETE FROM prog_avanzada.aeropuerto WHERE id_aeropuerto = ?";
@@ -32,7 +28,7 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 	
 	
 	@Override
-	public void altaAeropuerto(Aeropuerto aeropuerto) {
+	public boolean altaAeropuerto(Aeropuerto aeropuerto) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -48,9 +44,12 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 			ps.setInt(3, aeropuerto.getPais().getId_pais());
 			ps.setInt(4, aeropuerto.getProvincia().getId_provincia());
 			ps.executeUpdate();	
-			} 
-			catch (SQLException e) { e.printStackTrace();}
-			finally {	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}finally {	
 		//Cierro las conexiones		
 			try {ps.close();conexion.close();}
 			catch(Exception e) {e.printStackTrace();}
@@ -60,7 +59,7 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 		
 
 	@Override
-	public void bajaAeropuerto(String codigo_aeropuerto) {
+	public boolean bajaAeropuerto(String codigo_aeropuerto) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -77,12 +76,15 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 		//Cierro la conexión	
 			ps.close();
 			conexion.close();
-			
-		}catch (SQLException e) {e.printStackTrace();}
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 
 	@Override
-	public void modificacionAeropuerto(Aeropuerto aeropuerto) {
+	public boolean modificacionAeropuerto(Aeropuerto aeropuerto) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -101,7 +103,11 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 	     //Cierro la conexión
 	     	ps.close();
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}	
 		}
 
 	@Override
@@ -156,10 +162,8 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 			    String ciudad = (rs.getString("ciudad"));
 			    Integer id_pais = rs.getInt("id_pais");
 			    Integer id_provincia = rs.getInt("id_provincia");
-			    
-			//Obtengo los objetos país y provincia a partir de su id    
-			    Pais pais = paisDAO.getPaisPorID(id_pais);
-			    Provincia provincia = provinciaDAO.getProvincia(id_provincia.toString());
+			    Pais pais = new Pais(id_pais, null);
+			    Provincia provincia = new Provincia(id_provincia, null);
 			   
 				Aeropuerto aeropuerto = new Aeropuerto(id, codigo, ciudad,pais,provincia);
 				return aeropuerto;
@@ -192,10 +196,8 @@ public class AeropuertoDaoImplMysql implements AeropuertoDAO {
 			    String ciudad = (rs.getString("ciudad"));
 			    Integer id_pais = rs.getInt("id_pais");
 			    Integer id_provincia = rs.getInt("id_provincia");
-			    
-			//Obtengo un país y una provincia a partir de sus ids    
-			    Pais pais = paisDAO.getPaisPorID(id_pais);
-			    Provincia provincia = provinciaDAO.getProvincia(id_provincia.toString());
+			    Pais pais = new Pais(id_pais, null);
+			    Provincia provincia = new Provincia(id_provincia, null);
 			   
 				Aeropuerto aeropuerto = new Aeropuerto(id, codigo, ciudad,pais,provincia);
 				return aeropuerto;

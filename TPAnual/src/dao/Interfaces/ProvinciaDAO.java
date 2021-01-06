@@ -7,9 +7,9 @@ import dao.negocio.Provincia;
 public interface ProvinciaDAO{
 
 //ABM y consultas	
-	public void addProvincia(Provincia provincia);
-	public void deleteProvincia(String nombre_provincia);
-	public void updateProvincia(Provincia provincia);
+	public boolean addProvincia(Provincia provincia);
+	public boolean deleteProvincia(String nombre_provincia);
+	public boolean updateProvincia(Provincia provincia);
 	public List<Provincia> ListAllProvincia();
 	public Provincia getProvincia(String id_provincia);
 	

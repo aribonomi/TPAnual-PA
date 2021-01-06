@@ -8,9 +8,9 @@ public interface DireccionDAO{
 	
 	
 //ABM y consultas	
-	public void altaDireccion(Direccion direccion);
-	public void bajaDireccion(String id_direccion);
-	public void modificacionDireccion(Direccion direccion);
+	public boolean altaDireccion(Direccion direccion);
+	public boolean bajaDireccion(String id_direccion);
+	public boolean modificacionDireccion(Direccion direccion);
 	public List<Direccion> ListAllDireccion();
 	public Direccion getDireccion(String id_direccion);
 	

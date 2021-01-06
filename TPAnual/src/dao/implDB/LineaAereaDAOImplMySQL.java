@@ -31,7 +31,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 
 	
 	@Override
-	public void altaLineaAerea(Aerolinea aerolinea) {
+	public boolean altaLineaAerea(Aerolinea aerolinea) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -45,8 +45,12 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 			ps.setString(1, aerolinea.getNombre());
 			ps.setString(2, aerolinea.getAlianza().name());
 			ps.executeUpdate();	
-					} 
-			catch (SQLException e) { e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 			finally {	
 			//Cierro la conexión	
 			try {ps.close();conexion.close();}
@@ -56,7 +60,7 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	}
 
 	@Override
-	public void bajaLineaAerea(String id_aerolinea) {
+	public boolean bajaLineaAerea(String id_aerolinea) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -72,13 +76,18 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 			
 		//Cierro la conexión	
 			conexion.close();
-		}catch (SQLException e) {e.printStackTrace();}
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 	}
 		
 	
 
 	@Override
-	public void modificarLineaAerea(Aerolinea aerolinea) {
+	public boolean modificarLineaAerea(Aerolinea aerolinea) {
 		
 	//Realizo la conexión	
 		Connection conexion = null;
@@ -97,7 +106,12 @@ public class LineaAereaDAOImplMySQL implements LineaAereaDAO{
 	     	
 	     //Cierro la conexión	
 			conexion.close();
-			} catch (SQLException e) {e.printStackTrace();}	
+			
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
 		}
 	
 
