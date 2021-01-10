@@ -229,8 +229,8 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			//Creo los objetos que contiene el cliente solo con su id para obtener el resto de los datos en el mvc	
 				Direccion d = new Direccion(id_direccion, null, null, null, null, null, null);
 				Telefono t = new Telefono(id_telefono, null, null, null);
-				Pasaporte p = new Pasaporte(id_pasaporte.toString(), null, null, null, null);
-				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf.toString(), null, null, null);
+				Pasaporte p = new Pasaporte(id_pasaporte, null, null, null, null, null);
+				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf, null, null, null, null);
 				
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;
@@ -296,8 +296,8 @@ public class ClienteDAOImplMySQL implements ClienteDAO {
 			//Creo los objetos que contiene el cliente solo con su id para obtener el resto de los datos en el mvc	
 				Direccion d = new Direccion(id_direccion, null, null, null, null, null, null);
 				Telefono t = new Telefono(id_telefono, null, null, null);
-				Pasaporte p = new Pasaporte(id_pasaporte.toString(), null, null, null, null);
-				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf.toString(), null, null, null);
+				Pasaporte p = new Pasaporte(id_pasaporte, null, null, null, null, null);
+				PasajeroFrecuente pf = new PasajeroFrecuente(id_pf, null, null, null, null);
 				
 				Cliente cliente = new Cliente(codigo,nombre,apellido,dni,cuit_cuil,fecha_nacimiento,email,d,t,p,pf);
 				return cliente;

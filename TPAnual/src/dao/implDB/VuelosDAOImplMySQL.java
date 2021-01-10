@@ -183,8 +183,8 @@ public boolean altaVuelo(Vuelo vuelo) {
 				Integer id_aeropuerto_salida = rs.getInt("id_aeropuerto_salida");
 				Integer id_aeropuerto_llegada = rs.getInt("id_aeropuerto_llegada");
 				Aerolinea aerolinea = new Aerolinea(id_aerolinea, null, null);
-				Aeropuerto aeropuertoSalida = new Aeropuerto(id_aeropuerto_salida.toString(), null, null, null);
-				Aeropuerto aeropuertoLlegada = new Aeropuerto(id_aeropuerto_llegada.toString(), null, null, null);
+				Aeropuerto aeropuertoSalida = new Aeropuerto(id_aeropuerto_salida, null, null, null, null);
+				Aeropuerto aeropuertoLlegada = new Aeropuerto(id_aeropuerto_llegada, null, null, null, null);
 				
 				Vuelo vuelo = new Vuelo(id, numero, cant_asientos, fechaLlegada, fechaSalida, tiempoVuelo, aeropuertoLlegada, aeropuertoSalida, aerolinea);	
 				return vuelo;	
